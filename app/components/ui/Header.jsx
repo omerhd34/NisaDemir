@@ -66,7 +66,7 @@ const Header = () => {
       <button
        type="button"
        onClick={toggleTheme}
-       className="relative p-2.5 xl:p-3 rounded-xl bg-orange-a backdrop-blur-sm transition-all duration-500 hover:shadow-2xl hover:shadow-orange-500/30 dark:hover:shadow-orange-500/20 shadow-lg group overflow-hidden "
+       className="relative p-2.5 xl:p-3 rounded-xl bg-orange-a backdrop-blur-sm transition-all duration-500 hover:shadow-2xl hover:shadow-orange-500/30 dark:hover:shadow-orange-500/20 shadow-lg group overflow-hidden cursor-pointer"
        aria-label="Toggle theme"
       >
        {/* Glow effect */}
@@ -84,7 +84,7 @@ const Header = () => {
       </button>
 
       <button
-       className="lg:hidden p-2.5 rounded-xl transition-all duration-300 text-gray-700 dark:text-gray-300 hover:shadow-md hover:bg-orange-a relative overflow-hidden group"
+       className="lg:hidden p-2.5 rounded-xl transition-all duration-300 text-gray-700 dark:text-gray-300 hover:shadow-md hover:bg-orange-a relative overflow-hidden group cursor-pointer"
        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
        aria-label="Toggle menu"
       >
