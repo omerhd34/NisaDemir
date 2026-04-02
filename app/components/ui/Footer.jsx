@@ -26,7 +26,7 @@ export default function Footer() {
  const workingHours = data?.footer?.workingHours || [];
 
  return (
-  <footer className="relative overflow-hidden border-t border-gray-300 dark:border-dark-500 py-16 md:py-20 bg-linear-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-dark-900 dark:via-dark-800 dark:to-dark-700 transition-colors duration-500">
+  <footer className="relative overflow-hidden border-t border-gray-300 dark:border-dark-500 pt-16 pb-8 md:pt-20 md:pb-10 bg-linear-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-dark-900 dark:via-dark-800 dark:to-dark-700 transition-colors duration-500">
    <div className="absolute inset-0 opacity-5 dark:opacity-10">
     <div className="absolute top-0 left-0 w-72 h-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-800 dark:bg-gray-200 blur-3xl"></div>
     <div className="absolute bottom-0 right-0 w-96 h-96 translate-x-1/3 translate-y-1/3 rounded-full bg-gray-800 dark:bg-gray-200 blur-3xl"></div>
@@ -88,8 +88,8 @@ export default function Footer() {
        ))}
 
        {workingHours.length > 0 && (
-        <div className="flex items-start justify-center gap-3 rounded-xl border border-gray-200/50 dark:border-gray-700/50 bg-white/40 dark:bg-white/5 px-3 py-2.5 text-sm text-gray-700 dark:text-gray-300 backdrop-blur-sm hover:bg-primary dark:hover:bg-primary-dark hover:text-white dark:hover:text-white transition-all duration-300 md:justify-start">
-         <Clock className="mt-0.5 w-5 h-5 shrink-0 group-hover:scale-110" />
+        <div className="flex items-center justify-center gap-3 rounded-xl border border-gray-200/50 dark:border-gray-700/50 bg-white/40 dark:bg-white/5 px-3 py-2.5 text-sm text-gray-700 dark:text-gray-300 backdrop-blur-sm hover:bg-primary dark:hover:bg-primary-dark hover:text-white dark:hover:text-white transition-all duration-300 md:justify-start">
+         <Clock className="w-5 h-5 shrink-0 group-hover:scale-110" />
          <div className="flex flex-col space-y-1.5">
           {workingHours.map((hours, idx) => (
            <p key={idx} className="font-medium">{hours}</p>
