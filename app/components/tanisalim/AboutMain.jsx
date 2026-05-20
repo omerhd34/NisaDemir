@@ -25,7 +25,7 @@ const AboutMain = () => {
      <div className="relative max-w-xs sm:max-w-sm mx-auto lg:max-w-none">
       <div className="relative aspect-4/5 rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 dark:ring-white/5">
        <Image
-        src="/sand.jpg"
+        src="/nisa.jpeg"
         alt="Nisa Demir"
         fill
         sizes="(max-width: 1024px) 80vw, 30vw"
