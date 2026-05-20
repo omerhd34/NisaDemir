@@ -2,146 +2,143 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, User, Briefcase, FileText, Mail, Menu, X, Moon, Sun } from 'lucide-react';
+import { Home, User, Briefcase, FileText, Mail, Menu, Moon, Sun } from 'lucide-react';
 import { useAppContext } from '@/context/AppContext';
 import Logo from './Logo';
+import { Button } from '@/components/ui/button';
+import {
+ Sheet,
+ SheetContent,
+ SheetHeader,
+ SheetTitle,
+ SheetTrigger,
+} from '@/components/ui/sheet';
+import { Separator } from '@/components/ui/separator';
+
+const menuItems = [
+ { id: 'home', label: 'Ana Sayfa', icon: Home, href: '/' },
+ { id: 'about', label: 'Tanışalım', icon: User, href: '/tanisalim' },
+ { id: 'work', label: 'Çalışma Alanlarım', icon: Briefcase, href: '/calisma_alanlarim' },
+ { id: 'articles', label: 'Yazılarım', icon: FileText, href: '/yazilarim' },
+ { id: 'contact', label: 'İletişim', icon: Mail, href: '/iletisim' },
+];
 
 const Header = () => {
  const { theme, toggleTheme } = useAppContext();
- const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+ const [open, setOpen] = useState(false);
  const pathname = usePathname();
 
- const menuItems = [
-  { id: 'home', label: "Ana Sayfa", icon: Home, href: '/' },
-  { id: 'about', label: "Tanışalım", icon: User, href: '/tanisalim' },
-  { id: 'work', label: "Çalışma Alanlarım", icon: Briefcase, href: '/calisma_alanlarim' },
-  { id: 'articles', label: "Yazılarım", icon: FileText, href: '/yazilarim' },
-  { id: 'contact', label: "İletişim", icon: Mail, href: '/iletisim' }
- ];
-
  const isActive = (href) => {
-  if (href === '/') {
-   return pathname === '/';
-  }
+  if (href === '/') return pathname === '/';
   return pathname.startsWith(href);
  };
 
  return (
-  <header className="sticky top-0 z-50 backdrop-blur-xl bg-linear-to-b from-gray-100/95 via-gray-100/90 to-gray-100/85 dark:from-dark-800/95 dark:via-dark-800/90 dark:to-dark-800/85 border-b border-gray-300/30 dark:border-dark-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
-   <div className="container mx-auto px-4 lg:px-8">
-    <div className="flex justify-between items-center py-4 lg:py-5">
-     <Logo />
+  <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-dark-900/80 border-b border-gray-200/70 dark:border-dark-500/40">
+   <div className="container mx-auto px-5 sm:px-6 lg:px-8">
+    <div className="flex justify-between items-center h-16 lg:h-20">
+     <div className="flex items-center gap-3">
+      <Logo />
+      <div className="hidden sm:flex flex-col leading-none">
+       <span className="font-serif text-lg lg:text-xl text-heading">Nisa Demir</span>
+       <span className="text-[0.68rem] uppercase tracking-[0.2em] text-muted mt-0.5">Klinik Psikolog</span>
+      </div>
+     </div>
 
-     <nav className="hidden lg:flex items-center space-x-3 xl:space-x-4">
-      {menuItems.map(item => {
+     <nav className="hidden lg:flex items-center gap-1">
+      {menuItems.map((item) => {
        const active = isActive(item.href);
        return (
         <Link
          key={item.id}
          href={item.href}
-         className={`group relative flex items-center space-x-2 px-4 xl:px-5 py-2.5 xl:py-3 rounded-xl transition-all duration-700 ease-out overflow-hidden ${active
-          ? 'bg-orange-a shadow-lg shadow-orange-500/20 dark:shadow-orange-500/10 text-black dark:text-white'
-          : 'text-black dark:text-white hover:shadow-md hover:bg-orange-a'
-          }`}
+         className={`relative px-3.5 py-2 rounded-md text-sm font-medium tracking-wide transition-colors duration-300 ${
+          active
+           ? 'text-primary dark:text-primary-dark-light'
+           : 'text-gray-700 dark:text-dark-100 hover:text-primary dark:hover:text-primary-dark-light'
+         }`}
         >
-         <item.icon
-          size={18}
-          className={`relative z-10 transition-all duration-700 ${active
-           ? 'text-black dark:text-white drop-shadow-sm'
-           : 'group-hover:text-black dark:group-hover:text-white'
-           }`}
+         {item.label}
+         <span
+          className={`absolute left-3.5 right-3.5 -bottom-0.5 h-px bg-primary dark:bg-primary-dark transition-all duration-300 ${
+           active ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-50'
+          }`}
          />
-         <span className={`relative z-10 text-sm xl:text-base font-medium transition-all duration-700 ${active
-          ? 'font-bold text-black dark:text-white drop-shadow-sm'
-          : 'group-hover:font-semibold'
-          }`}>
-          {item.label}
-         </span>
         </Link>
        );
       })}
      </nav>
 
-     <div className="flex items-center gap-2 xl:gap-3">
-      <button
+     <div className="flex items-center gap-2">
+      <Button asChild size="sm" className="hidden md:inline-flex">
+       <Link href="/iletisim">Randevu Al</Link>
+      </Button>
+
+      <Button
        type="button"
        onClick={toggleTheme}
-       className="relative p-2.5 xl:p-3 rounded-xl bg-orange-a backdrop-blur-sm transition-all duration-500 hover:shadow-2xl hover:shadow-orange-500/30 dark:hover:shadow-orange-500/20 shadow-lg group overflow-hidden cursor-pointer"
+       variant="ghost"
+       size="icon"
        aria-label="Toggle theme"
+       className="rounded-full"
       >
-       {/* Glow effect */}
-       <div className="absolute inset-0 bg-linear-to-br from-white/30 via-white/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-       <div className="absolute inset-0 bg-white/20 dark:bg-black/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+       {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+      </Button>
 
-       {/* Pulse ring */}
-       <span className="absolute inset-0 rounded-xl border-2 border-white/30 opacity-0 group-hover:opacity-100 transition-all duration-500"></span>
-
-       {theme === 'dark' ? (
-        <Sun size={20} className="relative z-10 text-gray-800 dark:text-gray-100 group-hover:rotate-180 transition-all duration-500 drop-shadow-sm" />
-       ) : (
-        <Moon size={20} className="relative z-10 text-gray-800 dark:text-gray-100 group-hover:rotate-180 transition-all duration-500 drop-shadow-sm" />
-       )}
-      </button>
-
-      <button
-       className="lg:hidden p-2.5 rounded-xl transition-all duration-300 text-gray-700 dark:text-gray-300 hover:shadow-md hover:bg-orange-a relative overflow-hidden group cursor-pointer"
-       onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-       aria-label="Toggle menu"
-      >
-       <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></span>
-       {mobileMenuOpen ? (
-        <X size={24} className="relative z-10 transition-all duration-300 rotate-90" />
-       ) : (
-        <Menu size={24} className="relative z-10 transition-all duration-300" />
-       )}
-      </button>
-     </div>
-    </div>
-
-    <div className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-     }`}>
-     <nav className="pb-6 border-t border-gray-300/30 dark:border-dark-500/30 mt-2 pt-4">
-      {menuItems.map((item, index) => {
-       const active = isActive(item.href);
-       return (
-        <Link
-         key={item.id}
-         href={item.href}
-         onClick={() => setMobileMenuOpen(false)}
-         className={`group relative flex items-center space-x-3 py-3.5 px-5 rounded-xl transition-all duration-500 w-full mb-2 overflow-hidden ${active
-          ? 'bg-orange-a text-black dark:text-white shadow-lg shadow-orange-500/20 dark:shadow-orange-500/10'
-          : 'text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-linear-to-r hover:from-gray-200/70 hover:to-gray-200/50 dark:hover:from-dark-700/70 dark:hover:to-dark-700/50 hover:shadow-md'
-          }`}
-         style={{ animationDelay: `${index * 50}ms` }}
+      <Sheet open={open} onOpenChange={setOpen}>
+       <SheetTrigger asChild>
+        <Button
+         variant="ghost"
+         size="icon"
+         className="lg:hidden rounded-full"
+         aria-label="Menüyü aç"
         >
-         {active && (
-          <>
-           <span className="absolute left-0 top-0 bottom-0 w-1.5 bg-linear-to-b from-white/90 via-white to-white/90 rounded-r-full shadow-lg shadow-white/50"></span>
-           <span className="absolute inset-0 bg-linear-to-r from-white/10 via-white/20 to-white/10 rounded-xl"></span>
-          </>
-         )}
+         <Menu size={20} />
+        </Button>
+       </SheetTrigger>
+       <SheetContent side="right" className="flex flex-col p-0">
+        <SheetHeader>
+         <SheetTitle className="text-2xl">
+          Nisa <span className="italic text-primary dark:text-primary-dark-light">Demir</span>
+         </SheetTitle>
+         <p className="text-xs uppercase tracking-[0.2em] text-muted">
+          Klinik Psikolog
+         </p>
+        </SheetHeader>
 
-         {!active && (
-          <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></span>
-         )}
+        <Separator />
 
-         <item.icon
-          size={20}
-          className={`relative z-10 transition-all duration-500 ${active
-           ? 'text-black dark:text-white drop-shadow-sm group-hover:rotate-6'
-           : 'group-hover:rotate-6 group-hover:text-black dark:group-hover:text-white'
-           }`}
-         />
-         <span className={`relative z-10 font-medium transition-all duration-500 ${active
-          ? 'font-bold text-black dark:text-white drop-shadow-sm'
-          : 'group-hover:font-semibold'
-          }`}>
-          {item.label}
-         </span>
-        </Link>
-       );
-      })}
-     </nav>
+        <nav className="flex-1 overflow-y-auto px-3 py-4">
+         {menuItems.map((item) => {
+          const active = isActive(item.href);
+          return (
+           <Link
+            key={item.id}
+            href={item.href}
+            onClick={() => setOpen(false)}
+            className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-[15px] font-medium transition-colors duration-300 ${
+             active
+              ? 'text-primary dark:text-primary-dark-light bg-primary/10 dark:bg-primary-dark/15'
+              : 'text-gray-800 dark:text-dark-100 hover:bg-gray-100 dark:hover:bg-dark-800'
+            }`}
+           >
+            <item.icon size={18} className="shrink-0" />
+            <span>{item.label}</span>
+           </Link>
+          );
+         })}
+        </nav>
+
+        <div className="p-5 border-t border-gray-200 dark:border-dark-500/40">
+         <Button asChild className="w-full" size="lg">
+          <Link href="/iletisim" onClick={() => setOpen(false)}>
+           Randevu Al
+          </Link>
+         </Button>
+        </div>
+       </SheetContent>
+      </Sheet>
+     </div>
     </div>
    </div>
   </header>

@@ -14,9 +14,9 @@ export const useAppContext = () => {
 export const AppProvider = ({ children }) => {
  const [theme, setTheme] = useState(() => {
   if (typeof window !== 'undefined') {
-   return localStorage.getItem('theme') || 'dark';
+   return localStorage.getItem('theme') || 'light';
   }
-  return 'dark';
+  return 'light';
  });
  const [siteData, setSiteData] = useState(null);
  const [dataLoading, setDataLoading] = useState(true);

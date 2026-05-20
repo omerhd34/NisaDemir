@@ -1,26 +1,39 @@
 'use client';
 
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+
 const SectionHero = ({
  icon: Icon,
  pillText,
  title,
  subtitle,
- className = ''
+ className = '',
 }) => {
+ const words = (title || '').trim().split(' ');
+ const lastWord = words.length > 1 ? words.pop() : null;
+ const leading = words.join(' ');
+
  return (
-  <div className={`text-center mb-16 animate-fadeIn ${className}`}>
-   <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full mb-6 shadow-lg border bg-orange-a border-gray-600 dark:border-gray-700">
-    <Icon className="w-5 h-5 text-white dark:text-black" />
-    <span className="text-sm font-semibold text-white dark:text-black">
-     {pillText}
-    </span>
-   </div>
-   <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-heading">
-    {title}
+  <div className={`text-center mb-12 md:mb-16 animate-fadeIn ${className}`}>
+   {pillText && (
+    <Badge variant="eyebrow" className="mx-auto">
+     {Icon && <Icon className="w-3.5 h-3.5" />}
+     <span>{pillText}</span>
+    </Badge>
+   )}
+   <h1 className="display-serif text-4xl sm:text-5xl md:text-6xl mt-5 mb-4 text-heading">
+    {lastWord ? (
+     <>
+      {leading} <span className="italic font-normal text-primary dark:text-primary-dark-light">{lastWord}</span>
+     </>
+    ) : (
+     title
+    )}
    </h1>
-   <div className="w-20 sm:w-24 md:w-32 h-1 mx-auto bg-primary dark:bg-primary-dark rounded-full mb-5"></div>
+   <Separator className="w-16 h-px mx-auto bg-primary/50 dark:bg-primary-dark/50 my-5" />
    {subtitle && (
-    <p className="text-lg md:text-xl max-w-3xl mx-auto text-body">
+    <p className="text-base sm:text-lg max-w-2xl mx-auto text-body leading-relaxed">
      {subtitle}
     </p>
    )}
@@ -29,4 +42,3 @@ const SectionHero = ({
 };
 
 export default SectionHero;
-

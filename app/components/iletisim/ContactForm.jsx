@@ -1,6 +1,18 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
-import { Send, CheckCircle2, ChevronDown } from 'lucide-react';
+import { useState } from 'react';
+import { Send, CheckCircle2 } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import {
+ Select,
+ SelectContent,
+ SelectItem,
+ SelectTrigger,
+ SelectValue,
+} from '@/components/ui/select';
 
 const SUBJECT_OPTIONS = [
  'Bireysel Terapi',
@@ -12,7 +24,6 @@ const SUBJECT_OPTIONS = [
 
 const ContactForm = () => {
  const [errors, setErrors] = useState({});
-
  const [formData, setFormData] = useState({
   name: '',
   email: '',
@@ -22,25 +33,9 @@ const ContactForm = () => {
  const [submitted, setSubmitted] = useState(false);
  const [isSubmitting, setIsSubmitting] = useState(false);
 
- const [isDropdownOpen, setIsDropdownOpen] = useState(false);
- const dropdownRef = useRef(null);
-
- useEffect(() => {
-  function handleClickOutside(event) {
-   if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-    setIsDropdownOpen(false);
-   }
-  }
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => {
-   document.removeEventListener("mousedown", handleClickOutside);
-  };
- }, [dropdownRef]);
-
- const handleSubmit = async () => {
+ const validate = () => {
   const { name, email, subject, message } = formData;
   const newErrors = {};
-
   if (!name) newErrors.name = 'Lütfen adınızı girin.';
   if (!email) newErrors.email = 'Lütfen e-posta adresinizi girin.';
   if (!subject) newErrors.subject = 'Lütfen bir konu seçin.';
@@ -50,33 +45,31 @@ const ContactForm = () => {
   if (email && !emailRegex.test(email)) {
    newErrors.email = 'Lütfen geçerli bir e-posta adresi girin.';
   }
-
   if (message && message.trim().length < 15) {
    newErrors.message = 'Mesaj en az 15 karakter olmalıdır.';
   }
+  return newErrors;
+ };
 
+ const handleSubmit = async (e) => {
+  e?.preventDefault?.();
+  const newErrors = validate();
   setErrors(newErrors);
-
   if (Object.keys(newErrors).length > 0) return;
 
   setIsSubmitting(true);
-
   try {
    const response = await fetch('/api/contact', {
     method: 'POST',
-    headers: {
-     'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData),
    });
-
    const result = await response.json();
-
    if (response.ok) {
     setSubmitted(true);
     setFormData({ name: '', email: '', subject: '', message: '' });
     setErrors({});
-    setTimeout(() => setSubmitted(false), 3000);
+    setTimeout(() => setSubmitted(false), 4000);
    } else {
     setErrors({ general: result.error || 'Mesaj gönderilirken bir hata oluştu.' });
    }
@@ -90,176 +83,128 @@ const ContactForm = () => {
 
  const handleChange = (e) => {
   const { name, value } = e.target;
-  setFormData({
-   ...formData,
-   [name]: value,
-  });
-
-  if (name === 'message') {
-   if (value.trim().length < 15) {
-    if (errors.message) {
-     setErrors({
-      ...errors,
-      message: value.trim().length === 0 ? 'Lütfen bir mesaj girin.' : 'Mesaj en az 15 karakter olmalıdır.',
-     });
-    }
-   } else {
-    setErrors({
-     ...errors,
-     message: undefined,
-    });
-   }
-  } else {
-   if (errors[name]) {
-    setErrors({
-     ...errors,
-     [name]: undefined,
-    });
-   }
+  setFormData((prev) => ({ ...prev, [name]: value }));
+  if (errors[name]) {
+   setErrors((prev) => ({ ...prev, [name]: undefined }));
   }
  };
 
- const handleSubjectSelect = (subject) => {
-  setFormData((prev) => ({ ...prev, subject }));
-  setIsDropdownOpen(false);
-
-  if (errors.subject) {
-   setErrors({
-    ...errors,
-    subject: undefined,
-   });
-  }
+ const handleSubjectSelect = (value) => {
+  setFormData((prev) => ({ ...prev, subject: value }));
+  if (errors.subject) setErrors((prev) => ({ ...prev, subject: undefined }));
  };
 
  return (
-  <div className="rounded-3xl shadow-2xl p-6 md:p-8 animate-slideUp flex flex-col transition-all duration-500 border-2 border-gray-400 dark:border-gray-700 relative w-full h-full bg-gray-100 dark:bg-gray-900">
-   <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-    <div className="absolute inset-0 bg-linear-to-r from-orange-50/50 to-amber-50/50 dark:from-orange-900/20 dark:to-amber-900/20 rounded-3xl"></div>
-   </div>
-   <h2 className="text-xl md:text-2xl font-bold mb-6 text-heading relative z-10">
-    Benimle İletişime Geçin
-   </h2>
+  <Card className="w-full h-full animate-slideUp flex flex-col">
+   <CardHeader className="pb-2">
+    <CardTitle className="font-serif text-2xl md:text-3xl text-heading">
+     Benimle İletişime <span className="italic font-normal text-primary dark:text-primary-dark-light">Geçin</span>
+    </CardTitle>
+    <p className="text-sm text-body mt-1">
+     Sorularınız veya randevu talepleriniz için formu doldurabilirsiniz.
+    </p>
+   </CardHeader>
 
-   {submitted && (
-    <div className="mb-6 p-4 border rounded-xl flex items-center gap-3 animate-fadeIn bg-gray-800/20 dark:bg-gray-800/20 border-dark-500 dark:border-dark-500 relative z-10">
-     <CheckCircle2 className="w-6 h-6 shrink-0 text-gray-700 dark:text-gray-100" />
-     <span className="font-semibold text-gray-700 dark:text-gray-100">Mesajınız başarıyla gönderildi!</span>
-    </div>
-   )}
+   <CardContent className="pt-4">
+    {submitted && (
+     <div className="mb-6 p-4 rounded-xl flex items-center gap-3 animate-fadeIn bg-primary/10 dark:bg-primary-dark/15 border border-primary/30 dark:border-primary-dark/30">
+      <CheckCircle2 className="w-5 h-5 shrink-0 text-primary dark:text-primary-dark-light" />
+      <span className="text-sm font-medium text-heading">
+       Mesajınız başarıyla gönderildi. En kısa sürede dönüş yapılacaktır.
+      </span>
+     </div>
+    )}
 
-   <div className="flex flex-col gap-4 relative z-10 flex-1">
-    <div className="transform transition-all duration-300">
-     <label
-      htmlFor="name"
-      className="label-base"
-     >
-      Adınız ve Soyadınız: <span className="text-red-500">*</span>
-     </label>
-     <input
-      type="text"
-      id="name"
-      name="name"
-      value={formData.name}
-      onChange={handleChange}
-      className="input-base"
-      placeholder="Adınız ve Soyadınız"
-     />
-     {errors.name && (
-      <p className="text-red-500 text-sm mt-2">{errors.name}</p>
-     )}
-    </div>
+    {errors.general && (
+     <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 text-sm text-red-700 dark:text-red-300">
+      {errors.general}
+     </div>
+    )}
 
-    <div className="transform  transition-all duration-300">
-     <label
-      htmlFor="email"
-      className="label-base"
-     >
-      E-posta: <span className="text-red-500">*</span>
-     </label>
-     <input
-      type="email"
-      id="email"
-      name="email"
-      value={formData.email}
-      onChange={handleChange}
-      className="input-base"
-      placeholder="ornek@email.com"
-     />
-     {errors.email && (
-      <p className="text-red-500 text-sm mt-2">{errors.email}</p>
-     )}
-    </div>
-
-    <div className="transform transition-all duration-300 relative z-50" ref={dropdownRef}>
-     <label
-      htmlFor="subject"
-      className="label-base"
-     >
-      Konu: <span className="text-red-500">*</span>
-     </label>
-
-     <button
-      type="button"
-      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-      className="input-base pr-4 cursor-pointer flex justify-between items-center"
-     >
-      <span className={formData.subject ? 'text-heading' : 'text-body'}>{formData.subject || 'Konu seçiniz'}</span>
-      <ChevronDown className={`w-5 h-5 transition-transform duration-300 text-primary dark:text-primary-dark ${isDropdownOpen ? 'rotate-180' : ''}`} />
-     </button>
-     {isDropdownOpen && (
-      <ul className="absolute z-100 w-full mt-2 rounded-xl shadow-xl border max-h-52 overflow-y-auto animate-fadeIn bg-orange-a border-gray-400 dark:border-dark-500">
-       {SUBJECT_OPTIONS.map(
-        (option) => (
-         <li
-          key={option}
-          onClick={() => handleSubjectSelect(option)}
-          className={`px-3 py-2 cursor-pointer transition-all duration-200 text-sm first:rounded-t-xl last:rounded-b-xl relative z-10 ${formData.subject === option
-           ? 'bg-black/20 dark:bg-black/30 text-white dark:text-white font-semibold'
-           : 'text-white dark:text-white hover:bg-black/15 dark:hover:bg-black/25'
-           }`}
-         >
-          {option}
-         </li>
-        )
+    <form onSubmit={handleSubmit} className="space-y-5">
+     <div className="grid sm:grid-cols-2 gap-4">
+      <div className="space-y-2">
+       <Label htmlFor="name">
+        Adınız ve Soyadınız <span className="text-primary">*</span>
+       </Label>
+       <Input
+        id="name"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Adınız Soyadınız"
+        aria-invalid={!!errors.name}
+       />
+       {errors.name && (
+        <p className="text-xs text-red-600 dark:text-red-400">{errors.name}</p>
        )}
-      </ul>
-     )}
+      </div>
 
-     {errors.subject && (
-      <p className="text-red-500 text-sm mt-2">{errors.subject}</p>
-     )}
-    </div>
+      <div className="space-y-2">
+       <Label htmlFor="email">
+        E-posta <span className="text-primary">*</span>
+       </Label>
+       <Input
+        id="email"
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="ornek@email.com"
+        aria-invalid={!!errors.email}
+       />
+       {errors.email && (
+        <p className="text-xs text-red-600 dark:text-red-400">{errors.email}</p>
+       )}
+      </div>
+     </div>
 
-    <div className="transform transition-all duration-300 flex flex-col flex-1">
-     <label
-      htmlFor="message"
-      className="label-base"
-     >
-      Mesaj: <span className="text-red-500">*</span>
-     </label>
-     <textarea
-      id="message"
-      name="message"
-      value={formData.message}
-      onChange={handleChange}
-      className="input-base flex-1 resize-none"
-      placeholder="Mesajınızı buraya yazın..."
-     ></textarea>
-     {errors.message && (
-      <p className="text-red-500 text-sm mt-2">{errors.message}</p>
-     )}
-    </div>
+     <div className="space-y-2">
+      <Label htmlFor="subject">
+       Konu <span className="text-primary">*</span>
+      </Label>
+      <Select value={formData.subject} onValueChange={handleSubjectSelect}>
+       <SelectTrigger id="subject" aria-invalid={!!errors.subject}>
+        <SelectValue placeholder="Konu seçiniz" />
+       </SelectTrigger>
+       <SelectContent>
+        {SUBJECT_OPTIONS.map((opt) => (
+         <SelectItem key={opt} value={opt}>
+          {opt}
+         </SelectItem>
+        ))}
+       </SelectContent>
+      </Select>
+      {errors.subject && (
+       <p className="text-xs text-red-600 dark:text-red-400">{errors.subject}</p>
+      )}
+     </div>
 
-    <button
-     onClick={handleSubmit}
-     disabled={isSubmitting}
-     className="w-full px-6 py-3 rounded-xl font-bold text-white hover:scale-103 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-primary-dark/50 focus:ring-offset-2 dark:focus:ring-primary-dark/50 transform transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-90 disabled:cursor-not-allowed bg-orange-a bg-cover bg-center relative overflow-hidden"
-    >
-     <Send className="w-5 h-5 relative z-10" />
-     <span className="relative z-10">{isSubmitting ? 'Mesajınız gönderiliyor...' : 'Gönder'}</span>
-    </button>
-   </div>
-  </div>
+     <div className="space-y-2">
+      <Label htmlFor="message">
+       Mesaj <span className="text-primary">*</span>
+      </Label>
+      <Textarea
+       id="message"
+       name="message"
+       value={formData.message}
+       onChange={handleChange}
+       rows={6}
+       placeholder="Mesajınızı buraya yazın..."
+       aria-invalid={!!errors.message}
+      />
+      {errors.message && (
+       <p className="text-xs text-red-600 dark:text-red-400">{errors.message}</p>
+      )}
+     </div>
+
+     <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+      <Send className="w-4 h-4" />
+      {isSubmitting ? 'Gönderiliyor...' : 'Gönder'}
+     </Button>
+    </form>
+   </CardContent>
+  </Card>
  );
 };
 

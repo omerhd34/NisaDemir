@@ -1,116 +1,81 @@
 'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Users, Mail, Clock, MapPin, Briefcase, Video, User } from 'lucide-react';
-import { FaInstagram } from 'react-icons/fa';
+import { Clock, MapPin } from 'lucide-react';
 import { useAppContext } from '@/context/AppContext';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
 const ContactInfo = () => {
  const { data } = useAppContext();
-
- const socialMedia = [
-  { icon: Mail, link: 'mailto:psikolognisademir@gmail.com' },
-  { icon: FaInstagram, link: 'https://instagram.com/psikolognisademir' },
- ];
-
- const contactInfo = [
-  {
-   icon: Clock,
-   title: 'Çalışma Saatleri:',
-   type: 'schedule',
-   schedule: data?.contact?.workingHours
-  },
-  {
-   icon: MapPin,
-   title: 'Lokasyon:',
-   content: 'İstanbul',
-   type: 'text',
-  },
-  {
-   icon: Users,
-   title: 'İletişim:',
-   type: 'social',
-   socialLinks: socialMedia,
-  },
-  {
-   icon: Briefcase,
-   title: 'Çalışma Alanlarım:',
-   type: 'area',
-   areas: [
-    { text: 'Bireysel Terapi', icon: User },
-    { text: 'Online Terapi', icon: Video },
-   ],
-  },
- ];
+ const workingHours = data?.contact?.workingHours || [];
 
  return (
-  <div className="flex flex-col gap-7 h-full w-full">
-   {contactInfo.map((info, index) => (
-    <div
-     key={index}
-     style={{ animationDelay: `${200 + index * 100}ms` }}
-     className="border-2 rounded-2xl shadow-xl p-6 transform hover:scale-[1.02] hover:-translate-y-1 transition-all duration-500 animate-slideUp bg-gray-100 dark:bg-gray-900 border-gray-400 dark:border-gray-700 relative overflow-hidden"
-    >
-     <div className="absolute inset-0 ">
-      <div className="absolute inset-0 bg-linear-to-r from-orange-50/50 to-amber-50/50 dark:from-orange-900/20 dark:to-amber-900/20"></div>
+  <div className="flex flex-col gap-6 h-full w-full animate-slideUp">
+   <Card className="overflow-hidden bg-linear-to-br from-primary/8 via-transparent to-accent/5 dark:from-primary-dark/10 dark:to-accent-dark/8">
+    <CardContent className="p-6 md:p-7">
+     <CardSectionHeader>Bilgiler</CardSectionHeader>
+     <h3 className="font-serif text-2xl text-heading mb-4 leading-tight">
+      Görüşmek üzere
+     </h3>
+     <p className="text-sm leading-relaxed text-body">
+      Aşağıdaki bilgilerden bana ulaşabilir veya yandaki formu doldurabilirsiniz. Tüm görüşmeler gizlilik içinde yürütülür.
+     </p>
+    </CardContent>
+   </Card>
+
+   <Card className="flex-1 flex flex-col">
+    <CardContent className="p-6 md:p-7 flex flex-col flex-1">
+     <CardSectionHeader>İletişim</CardSectionHeader>
+     <div className="flex flex-col flex-1 justify-around gap-5">
+      <InfoRow icon={MapPin} label="Lokasyon">
+       <p className="text-base text-heading">İstanbul</p>
+       <p className="text-sm text-body mt-0.5">Yüz yüze & Online</p>
+      </InfoRow>
+
+      {workingHours.length > 0 && (
+       <>
+        <Separator />
+        <InfoRow icon={Clock} label="Çalışma Saatleri">
+         <ul className="space-y-1 text-sm text-body">
+          {workingHours.map((line, i) => (
+           <li key={i}>{line}</li>
+          ))}
+         </ul>
+        </InfoRow>
+       </>
+      )}
      </div>
-     <div className="flex flex-col sm:flex-row items-start gap-4 relative z-10">
-      <div className="w-14 h-14 shrink-0 rounded-xl flex items-center justify-center shadow-lg  bg-cover bg-center relative overflow-hidden">
-       <div className="absolute inset-0 bg-primary dark:bg-primary-dark"></div>
-       <info.icon className="w-7 h-7 text-heading relative z-10" />
-      </div>
-
-      <div className="flex-1 min-w-0">
-       <h3 className="text-base font-bold mb-2 text-heading">
-        {info.title}
-       </h3>
-
-       {info.type === 'schedule' && (
-        <ul className="text-sm leading-relaxed space-y-1 text-body">
-         {info.schedule.map((line, i) => (
-          <li key={i}>{line}</li>
-         ))}
-        </ul>
-       )}
-
-       {info.type === 'text' && (
-        <p className="whitespace-pre-line text-sm leading-relaxed text-body">
-         {info.content}
-        </p>
-       )}
-
-       {info.type === 'area' && (
-        <ul className="text-sm leading-relaxed space-y-1 text-body">
-         {info.areas.map((area, i) => (
-          <li key={i} className="flex items-center gap-2">
-           <area.icon className="w-4 h-4 shrink-0 text-primary dark:text-primary-dark" />
-           <span>{area.text}</span>
-          </li>
-         ))}
-        </ul>
-       )}
-
-       {info.type === 'social' && (
-        <div className="flex gap-4 mt-3">
-         {info.socialLinks.map((social, idx) => (
-          <Link
-           key={idx}
-           href={social.link}
-           target="_blank"
-           rel="noopener noreferrer"
-           className="transition-all duration-300 transform hover:scale-110 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-400"
-          >
-           <social.icon className="w-7 h-7 text-primary dark:text-primary-dark" />
-          </Link>
-         ))}
-        </div>
-       )}
-      </div>
-     </div>
-    </div>
-   ))}
+    </CardContent>
+   </Card>
   </div>
  );
 };
+
+function CardSectionHeader({ children }) {
+ return (
+  <div className="flex items-center gap-3 mb-5">
+   <Badge variant="eyebrow" className="px-0 shrink-0">
+    {children}
+   </Badge>
+   <span className="flex-1 h-px bg-linear-to-r from-primary/40 via-primary/20 to-transparent dark:from-primary-dark/40 dark:via-primary-dark/20" />
+  </div>
+ );
+}
+
+function InfoRow({ icon: Icon, label, children }) {
+ return (
+  <div className="flex items-start gap-4">
+   <span className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 dark:bg-primary-dark/15 text-primary dark:text-primary-dark-light shrink-0">
+    <Icon size={18} />
+   </span>
+   <div className="flex-1 min-w-0">
+    <p className="text-[0.7rem] uppercase tracking-[0.18em] font-medium text-muted mb-1.5">
+     {label}
+    </p>
+    <div>{children}</div>
+   </div>
+  </div>
+ );
+}
 
 export default ContactInfo;

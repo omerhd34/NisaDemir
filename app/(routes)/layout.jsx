@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import "../globals.css";
 import { AppProvider } from "@/context/AppContext";
 import Header from "@/app/components/ui/Header";
@@ -8,7 +8,19 @@ import LoadingErrorHandler from "@/app/components/ui/LoadingErrorHandler";
 import SiteJsonLd from "@/app/components/seo/SiteJsonLd";
 import { getSiteUrl } from "@/lib/site";
 
-const inter = Inter({ subsets: ["latin", "latin-ext"] });
+const inter = Inter({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+  display: "swap",
+});
 
 const siteUrl = getSiteUrl();
 
@@ -72,7 +84,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{
             __html: `
       (function() {
-        const theme = localStorage.getItem('theme') || 'dark';
+        const theme = localStorage.getItem('theme') || 'light';
         document.documentElement.classList.toggle('dark', theme === 'dark');
       })();
     `,
@@ -80,7 +92,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${inter.className} bg-gray-100 dark:bg-dark-900 text-gray-950 dark:text-gray-50 transition-colors duration-300`}
+        className={`${inter.variable} ${cormorant.variable} font-sans bg-gray-50 dark:bg-dark-900 text-gray-950 dark:text-gray-50 transition-colors duration-300 antialiased`}
       >
         <SiteJsonLd />
         <AppProvider>

@@ -1,7 +1,10 @@
 'use client';
 import Link from 'next/link';
-import { BookOpen, Clock, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight, Clock, BookOpen } from 'lucide-react';
 import { useAppContext } from '@/context/AppContext';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const ArticlesGrid = () => {
  const { data } = useAppContext();
@@ -9,7 +12,7 @@ const ArticlesGrid = () => {
  if (!data?.articles || !Array.isArray(data.articles)) {
   return (
    <div className="text-center py-16">
-    <p className="text-lg text-gray-600 dark:text-gray-300">
+    <p className="text-base text-body">
      {data?.articles ? 'Makaleler yükleniyor...' : 'Makale bulunamadı'}
     </p>
    </div>
@@ -17,50 +20,70 @@ const ArticlesGrid = () => {
  }
 
  return (
-  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
    {data.articles.map((article, index) => (
     <Link
-     key={index}
+     key={article.slug || index}
      href={`/yazilarim/${article.slug}`}
-     className={`group card overflow-hidden hover-card cursor-pointer animate-fadeIn flex flex-col`}
-     style={{ animationDelay: `${index * 100}ms` }}
+     className="group block animate-slideUp"
+     style={{ animationDelay: `${(index % 9) * 60}ms` }}
     >
-     <div
-      className={`relative h-64 flex items-center justify-center p-8 bg-center bg-cover shrink-0`}
-      style={{
-       backgroundImage: `url(${article.image})`,
-      }}
-     >
-      <div className="absolute inset-0 bg-black/30"></div>
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-500"></div>
+     <Card className="overflow-hidden h-full flex flex-col hover-card border-gray-200/80 dark:border-dark-500/40">
+      <div className="relative aspect-5/4 overflow-hidden">
+       <Image
+        src={article.image}
+        alt={article.title}
+        fill
+        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+        className="object-cover transition-transform duration-1200 ease-out group-hover:scale-110"
+        unoptimized
+       />
+       <div className="absolute inset-0 bg-linear-to-t from-gray-950/80 via-gray-900/20 to-transparent" />
+       <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-transparent mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-      <div className="absolute top-6 right-6 bg-primary dark:bg-primary-dark backdrop-blur-sm p-3 rounded-xl">
-       <BookOpen className="w-6 h-6 text-white" />
-      </div>
-
-      <h3 className="relative z-10 text-2xl md:text-3xl font-bold text-center leading-tight group-hover:scale-105 transition-transform duration-500 text-gray-100 dark:text-gray-100">
-       {article.title}
-      </h3>
-     </div>
-
-     <div className="p-6 md:p-8 flex flex-col flex-1">
-      <div className="flex items-center gap-4 mb-4">
-       <div className="flex items-center gap-2 text-body">
-        <Clock className="w-4 h-4 text-primary dark:text-primary-dark" />
-        <span className="text-sm">{article.readTime}</span>
+       <div className="absolute top-4 left-4">
+        <Badge className="backdrop-blur-md bg-white/90 dark:bg-dark-900/85 border border-white/40 dark:border-white/10 text-primary dark:text-primary-dark-light shadow-sm">
+         <BookOpen className="w-3 h-3" />
+         Psikoloji
+        </Badge>
        </div>
-       <div className="px-3 py-1 rounded-full text-xs font-semibold bg-primary dark:bg-primary-dark text-white dark:text-white/70">
-        Psikoloji
+
+       {article.readTime && (
+        <div className="absolute bottom-4 left-4 right-4">
+         <span className="inline-flex items-center gap-1.5 text-[0.7rem] uppercase tracking-[0.18em] font-medium backdrop-blur-md bg-black/30 px-3 py-1.5 rounded-full border border-white/15 text-white/90">
+          <Clock className="w-3 h-3" />
+          {article.readTime}
+         </span>
+        </div>
+       )}
+      </div>
+
+      <CardContent className="p-6 md:p-7 flex flex-col flex-1 relative">
+       <span
+        aria-hidden
+        className="absolute top-0 left-6 right-6 h-px bg-linear-to-r from-transparent via-primary/30 dark:via-primary-dark/30 to-transparent"
+       />
+
+       <h3 className="font-serif text-xl md:text-[1.45rem] leading-snug text-heading mb-3 group-hover:text-primary dark:group-hover:text-primary-dark-light transition-colors duration-500">
+        {article.title}
+       </h3>
+
+       {article.excerpt && (
+        <p className="text-sm leading-relaxed text-body line-clamp-3 mb-6 flex-1">
+         {article.excerpt}
+        </p>
+       )}
+
+       <div className="flex items-center justify-between pt-4 mt-auto border-t border-gray-100 dark:border-dark-500/30">
+        <span className="inline-flex items-center gap-2 text-sm font-medium text-primary dark:text-primary-dark-light">
+         Devamını oku
+        </span>
+        <span className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-primary/30 dark:border-primary-dark/30 text-primary dark:text-primary-dark-light group-hover:bg-primary group-hover:text-white group-hover:border-primary dark:group-hover:bg-primary-dark dark:group-hover:text-gray-950 dark:group-hover:border-primary-dark transition-all duration-500">
+         <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+        </span>
        </div>
-      </div>
-      <p className="text-base leading-relaxed mb-6 text-body flex-1">
-       {article.excerpt}
-      </p>
-      <div className="group/btn flex items-center gap-2 font-semibold hover:gap-3 transition-all duration-300 text-primary dark:text-primary-dark mt-auto">
-       Devamını Oku
-       <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform " />
-      </div>
-     </div>
+      </CardContent>
+     </Card>
     </Link>
    ))}
   </div>
