@@ -219,7 +219,7 @@ async function clearAndReseed() {
    data: {
     subtitle: "Size nasıl yardımcı olabilirim? Benimle iletişime geçin.",
     workingHours: [
-     "Pazartesi & Cumartesi: 10:00 - 20:00",
+     "Pazartesi - Cumartesi: 10:00 - 20:00",
     ],
    },
   });
@@ -230,7 +230,7 @@ async function clearAndReseed() {
     description:
      "Bireysel ve online terapi hizmetleriyle yanınızdayım. Ruh sağlığınız için profesyonel destek.",
     workingHours: [
-     "Pazartesi & Cumartesi: 10:00 - 20:00",
+     "Pazartesi - Cumartesi: 10:00 - 20:00",
     ],
    },
   });

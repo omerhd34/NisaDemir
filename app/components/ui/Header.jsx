@@ -39,10 +39,6 @@ const Header = () => {
     <div className="flex justify-between items-center h-16 lg:h-20">
      <div className="flex items-center gap-3">
       <Logo />
-      <div className="hidden sm:flex flex-col leading-none">
-       <span className="font-serif text-lg lg:text-xl text-heading">Nisa Demir</span>
-       <span className="text-[0.68rem] uppercase tracking-[0.2em] text-muted mt-0.5">Klinik Psikolog</span>
-      </div>
      </div>
 
      <nav className="hidden lg:flex items-center gap-1">
@@ -52,17 +48,15 @@ const Header = () => {
         <Link
          key={item.id}
          href={item.href}
-         className={`relative px-3.5 py-2 rounded-md text-sm font-medium tracking-wide transition-colors duration-300 ${
-          active
-           ? 'text-primary dark:text-primary-dark-light'
-           : 'text-gray-700 dark:text-dark-100 hover:text-primary dark:hover:text-primary-dark-light'
-         }`}
+         className={`relative px-3.5 py-2 rounded-md text-sm font-medium tracking-wide transition-colors duration-300 ${active
+          ? 'text-primary dark:text-primary-dark-light'
+          : 'text-gray-700 dark:text-dark-100 hover:text-primary dark:hover:text-primary-dark-light'
+          }`}
         >
          {item.label}
          <span
-          className={`absolute left-3.5 right-3.5 -bottom-0.5 h-px bg-primary dark:bg-primary-dark transition-all duration-300 ${
-           active ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-50'
-          }`}
+          className={`absolute left-3.5 right-3.5 -bottom-0.5 h-px bg-primary dark:bg-primary-dark transition-all duration-300 ${active ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-50'
+           }`}
          />
         </Link>
        );
@@ -80,7 +74,7 @@ const Header = () => {
        variant="ghost"
        size="icon"
        aria-label="Toggle theme"
-       className="rounded-full"
+       className="rounded-full cursor-pointer"
       >
        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
       </Button>
@@ -116,11 +110,10 @@ const Header = () => {
             key={item.id}
             href={item.href}
             onClick={() => setOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-[15px] font-medium transition-colors duration-300 ${
-             active
-              ? 'text-primary dark:text-primary-dark-light bg-primary/10 dark:bg-primary-dark/15'
-              : 'text-gray-800 dark:text-dark-100 hover:bg-gray-100 dark:hover:bg-dark-800'
-            }`}
+            className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-[15px] font-medium transition-colors duration-300 ${active
+             ? 'text-primary dark:text-primary-dark-light bg-primary/10 dark:bg-primary-dark/15'
+             : 'text-gray-800 dark:text-dark-100 hover:bg-gray-100 dark:hover:bg-dark-800'
+             }`}
            >
             <item.icon size={18} className="shrink-0" />
             <span>{item.label}</span>

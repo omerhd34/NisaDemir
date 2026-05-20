@@ -1,29 +1,31 @@
 'use client';
 import Link from 'next/link';
 import { Mail } from 'lucide-react';
-import { FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 const SOCIALS = [
  {
+  href: 'https://wa.me/905366404701',
+  icon: FaWhatsapp,
+  label: 'WhatsApp',
+ },
+ {
   href: 'mailto:psikolognisademir@gmail.com',
   icon: Mail,
   label: 'E-posta',
-  hint: 'psikolognisademir@gmail.com',
  },
  {
   href: 'https://instagram.com/psikolognisademir',
   icon: FaInstagram,
   label: 'Instagram',
-  hint: '@psikolognisademir',
   external: true,
  },
  {
   href: 'https://www.linkedin.com/in/nisa-demir-798815202/',
   icon: FaLinkedin,
   label: 'LinkedIn',
-  hint: 'Nisa Demir',
   external: true,
  },
 ];
@@ -39,8 +41,8 @@ const SocialCard = () => {
      <span className="flex-1 h-px bg-linear-to-r from-primary/40 via-primary/20 to-transparent dark:from-primary-dark/40 dark:via-primary-dark/20" />
     </div>
 
-    <div className="grid sm:grid-cols-3 gap-3">
-     {SOCIALS.map(({ href, icon: Icon, label, hint, external }) => (
+    <div className="grid sm:grid-cols-4 gap-3">
+     {SOCIALS.map(({ href, icon: Icon, label, external }) => (
       <Link
        key={label}
        href={href}
@@ -60,7 +62,6 @@ const SocialCard = () => {
         <span className="font-medium text-heading text-[0.95rem] leading-tight group-hover:text-primary dark:group-hover:text-primary-dark-light transition-colors duration-300">
          {label}
         </span>
-        <span className="text-xs text-muted truncate mt-0.5">{hint}</span>
        </div>
       </Link>
      ))}

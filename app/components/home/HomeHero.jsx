@@ -1,10 +1,18 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Calendar, MapPin, Mail, Sparkles } from 'lucide-react';
+import { ArrowRight, Calendar, Mail, Sparkles } from 'lucide-react';
+import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import { useAppContext } from '@/context/AppContext';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+
+const SOCIALS = [
+ { href: 'https://wa.me/905366404701', icon: FaWhatsapp, label: 'WhatsApp' },
+ { href: 'mailto:psikolognisademir@gmail.com', icon: Mail, label: 'E-posta' },
+ { href: 'https://instagram.com/psikolognisademir', icon: FaInstagram, label: 'Instagram', external: true },
+ { href: 'https://www.linkedin.com/in/nisa-demir-798815202/', icon: FaLinkedin, label: 'LinkedIn', external: true },
+];
 
 const HomeHero = () => {
  const { data } = useAppContext();
@@ -25,7 +33,7 @@ const HomeHero = () => {
    />
 
    <div className="container relative mx-auto px-5 sm:px-6 lg:px-8 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-16 md:pb-24">
-    <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-center max-w-7xl mx-auto">
+    <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-center lg:items-start max-w-7xl mx-auto">
      <div className="lg:col-span-7 text-center lg:text-left animate-slideUp">
       <Badge variant="eyebrow" className="px-0 mx-auto lg:mx-0">
        <Sparkles className="w-3.5 h-3.5" />
@@ -36,11 +44,12 @@ const HomeHero = () => {
        Nisa <span className="italic font-normal text-primary dark:text-primary-dark-light">Demir</span>
       </h1>
 
-      <p className="font-serif italic text-xl sm:text-2xl md:text-3xl mt-1 mb-7 font-light text-gray-600 dark:text-dark-100 tracking-wide">
-       Bireysel & Online Psikoterapi
-      </p>
-
-      <div className="divider-line w-24 mx-auto lg:mx-0 mb-7" />
+      <div className="w-fit mx-auto lg:mx-0 mb-7">
+       <p className="font-serif italic text-xl sm:text-2xl md:text-3xl mt-1 font-light text-gray-600 dark:text-dark-100 tracking-wide">
+        Bireysel & Online Psikoterapi
+       </p>
+       <div className="divider-line w-full mt-4" />
+      </div>
 
       {bio ? (
        <p className="text-[1.02rem] sm:text-lg leading-[1.8] text-body max-w-2xl mx-auto lg:mx-0 mb-9">
@@ -70,8 +79,8 @@ const HomeHero = () => {
       <div className="relative max-w-xs sm:max-w-sm lg:max-w-md mx-auto">
        <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 dark:ring-white/5">
         <Image
-         src="/yol.jpeg"
-         alt="Sakin bir yol, dingin bir terapötik yolculuk"
+         src="/nisa.jpeg"
+         alt="Klinik Psikolog Nisa Demir, muayenehane ortamında portresi"
          fill
          sizes="(max-width: 768px) 80vw, (max-width: 1024px) 45vw, 32vw"
          className="object-cover"
@@ -80,16 +89,12 @@ const HomeHero = () => {
         <div className="absolute inset-0 bg-linear-to-t from-gray-950/80 via-gray-900/20 to-transparent" />
         <div className="absolute inset-0 bg-linear-to-br from-primary/15 via-transparent to-transparent mix-blend-overlay" />
 
-        <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 text-white">
-         <p className="eyebrow text-primary-dark-lighter mb-1.5">
-          <span className="w-5 h-px bg-primary-dark-lighter" />
-          Muayenehane
-         </p>
+        <div className="absolute inset-x-0 bottom-0 px-5 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-5 text-white">
          <h3 className="font-serif text-2xl sm:text-3xl font-medium leading-tight">
-          İstanbul
+          İstanbul <span className="text-primary-dark-lighter">&</span> Online
          </h3>
-         <p className="text-xs sm:text-sm text-gray-200 mt-0.5 font-light">
-          Yüz yüze ve Online Terapi
+         <p className="text-xs sm:text-sm text-gray-200 mt-1 font-light">
+          Sessiz ve güvenli bir alan
          </p>
         </div>
        </div>
@@ -99,25 +104,7 @@ const HomeHero = () => {
       </div>
 
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5 max-w-md mx-auto">
-       <InfoRow
-        icon={MapPin}
-        label="Konum"
-        value="İstanbul & Online"
-       />
-       <InfoRow
-        icon={Mail}
-        label="E-posta"
-        value="psikolognisademir@gmail.com"
-        href="mailto:psikolognisademir@gmail.com"
-        small
-       />
-       {workingHours.length > 0 && (
-        <InfoRow
-         icon={Calendar}
-         label="Çalışma Saatleri"
-         value={workingHours[0]}
-        />
-       )}
+       <SocialRow />
       </div>
      </div>
     </div>
@@ -126,29 +113,28 @@ const HomeHero = () => {
  );
 };
 
-function InfoRow({ icon: Icon, label, value, href, small = false }) {
- const inner = (
-  <div className="group flex items-center gap-4 p-3.5 rounded-xl border border-gray-200 dark:border-dark-500 bg-white/70 dark:bg-dark-800/70 backdrop-blur-sm hover:border-primary/40 dark:hover:border-primary-dark/40 hover:bg-white dark:hover:bg-dark-800 transition-all duration-300">
-   <span className="shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 dark:bg-primary-dark/15 text-primary dark:text-primary-dark-light group-hover:bg-primary group-hover:text-white dark:group-hover:bg-primary-dark dark:group-hover:text-gray-950 transition-colors duration-300">
-    <Icon size={18} />
-   </span>
-   <div className="min-w-0">
-    <div className="eyebrow text-muted">{label}</div>
-    <div className={`font-medium text-gray-900 dark:text-gray-50 truncate ${small ? 'text-sm' : 'text-[0.95rem]'}`}>
-     {value}
-    </div>
-   </div>
+function SocialRow() {
+ return (
+  <div className="flex items-center justify-center gap-3 p-3.5 rounded-xl border border-gray-200 dark:border-dark-500 bg-white/70 dark:bg-dark-800/70 backdrop-blur-sm transition-colors duration-300">
+   {SOCIALS.map(({ href, icon: Icon, label, external }) => (
+    <Link
+     key={label}
+     href={href}
+     target={external ? '_blank' : undefined}
+     rel={external ? 'noopener noreferrer' : undefined}
+     aria-label={label}
+     title={label}
+     className="group relative inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/25 dark:border-primary-dark/25 text-primary dark:text-primary-dark-light overflow-hidden transition-colors duration-300"
+    >
+     <span
+      aria-hidden
+      className="absolute inset-0 scale-0 rounded-full bg-linear-to-br from-primary to-primary-light dark:from-primary-dark dark:to-primary-dark-light group-hover:scale-100 transition-transform duration-500 ease-out"
+     />
+     <Icon className="relative z-10 w-[18px] h-[18px] group-hover:text-white dark:group-hover:text-gray-950 transition-colors duration-300" />
+    </Link>
+   ))}
   </div>
  );
-
- if (href) {
-  return (
-   <Link href={href} className="block">
-    {inner}
-   </Link>
-  );
- }
- return inner;
 }
 
 export default HomeHero;
