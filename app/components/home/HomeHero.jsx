@@ -11,7 +11,6 @@ const SOCIALS = [
 ];
 
 const HomeHero = () => {
- const bio = about?.text3 || about?.text1;
 
  return (
   <section className="relative overflow-hidden bg-paper">
@@ -39,16 +38,9 @@ const HomeHero = () => {
        </p>
        <div className="divider-line w-full mt-4" />
       </div>
-
-      {bio ? (
-       <p className="text-[1.02rem] sm:text-lg leading-[1.8] text-body max-w-2xl mx-auto lg:mx-0 mb-9">
-        {bio}
-       </p>
-      ) : (
-       <p className="text-[1.02rem] sm:text-lg leading-[1.8] text-body max-w-2xl mx-auto lg:mx-0 mb-9">
-        Yetişkin bireylerle psikanalitik yönelimli psikoterapi çalışmaları yürütüyorum. Yüz yüze ve online seanslarla; kaygı, depresyon, ilişki ve kimlik temalı sorgulamalarda iç dünyanıza eşlik etmeyi amaçlıyorum.
-       </p>
-      )}
+      <p className="text-[0.95rem] sm:text-base leading-[1.7] text-body max-w-2xl mx-auto lg:mx-0 mb-9">
+       {about?.text3}
+      </p>
 
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
        <Button asChild size="lg" className="group">
