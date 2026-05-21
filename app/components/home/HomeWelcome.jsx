@@ -44,7 +44,7 @@ const HomeWelcome = () => {
        return (
         <article
          key={index}
-         className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-center animate-slideUp"
+         className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-14 xl:gap-16 items-center animate-slideUp"
          style={{ animationDelay: `${index * 120}ms` }}
         >
          <div

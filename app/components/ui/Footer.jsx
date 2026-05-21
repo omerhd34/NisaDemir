@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Clock, Mail, MapPin } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa';
-import { footer, social } from '@/lib/siteData';
+import { contact, social } from '@/lib/siteData';
 import Logo from './Logo';
 
 export default function Footer() {
@@ -12,7 +12,7 @@ export default function Footer() {
   { icon: FaInstagram, link: social.instagram.url, label: 'Instagram' },
  ];
 
- const workingHours = footer?.workingHours || [];
+ const workingHours = contact?.workingHours || [];
 
  return (
   <footer className="relative bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-500/40">
@@ -22,10 +22,6 @@ export default function Footer() {
       <div className="flex items-center gap-3 mb-5">
        <Logo />
       </div>
-      <p className="text-sm leading-relaxed text-body max-w-sm">
-       {footer?.description ||
-        'Bireysel ve online terapi hizmetleriyle yanınızdayım.  Ruh sağlığınız için profesyonel destek.'}
-      </p>
      </div>
 
      <div>

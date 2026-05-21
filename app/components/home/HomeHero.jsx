@@ -75,8 +75,6 @@ const HomeHero = () => {
          className="object-cover"
          priority
         />
-        <div className="absolute inset-0 bg-linear-to-t from-gray-950/80 via-gray-900/20 to-transparent" />
-        <div className="absolute inset-0 bg-linear-to-br from-primary/15 via-transparent to-transparent mix-blend-overlay" />
        </div>
 
        <div className="absolute -top-3 -left-3 hidden md:block w-20 h-20 border border-primary/25 dark:border-primary-dark/25 rounded-2xl -z-10" />

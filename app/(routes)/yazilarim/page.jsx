@@ -11,7 +11,6 @@ export default function ArticlesPage() {
      icon={BookOpen}
      pillText="Blog & Makaleler"
      title="Yazılarım"
-     subtitle="Ruh sağlığı, psikanaliz ve insan ruhuna dair seçili yazılar."
     />
     <ArticlesGrid />
    </div>

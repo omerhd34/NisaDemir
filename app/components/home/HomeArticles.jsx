@@ -61,8 +61,6 @@ const HomeArticles = () => {
            className="object-cover transition-transform duration-1200 ease-out group-hover:scale-110"
            unoptimized
           />
-          <div className="absolute inset-0 bg-linear-to-t from-gray-950/80 via-gray-900/20 to-transparent" />
-          <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-transparent mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
           <div className="absolute top-4 left-4">
            <Badge className="backdrop-blur-md bg-white/90 dark:bg-dark-900/85 border border-white/40 dark:border-white/10 text-primary dark:text-primary-dark-light shadow-sm">

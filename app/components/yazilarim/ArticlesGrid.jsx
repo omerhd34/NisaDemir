@@ -33,8 +33,6 @@ const ArticlesGrid = () => {
         className="object-cover transition-transform duration-1200 ease-out group-hover:scale-110"
         unoptimized
        />
-       <div className="absolute inset-0 bg-linear-to-t from-gray-950/80 via-gray-900/20 to-transparent" />
-       <div className="absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-transparent mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
        <div className="absolute top-4 left-4">
         <Badge className="backdrop-blur-md bg-white/90 dark:bg-dark-900/85 border border-white/40 dark:border-white/10 text-primary dark:text-primary-dark-light shadow-sm">
@@ -54,11 +52,6 @@ const ArticlesGrid = () => {
       </div>
 
       <CardContent className="p-6 md:p-7 flex flex-col flex-1 relative">
-       <span
-        aria-hidden
-        className="absolute top-0 left-6 right-6 h-px bg-linear-to-r from-transparent via-primary/30 dark:via-primary-dark/30 to-transparent"
-       />
-
        <h3 className="font-serif text-xl md:text-[1.45rem] leading-snug text-heading mb-3 group-hover:text-primary dark:group-hover:text-primary-dark-light transition-colors duration-500">
         {article.title}
        </h3>
