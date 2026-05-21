@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 const sections = [
  { key: 'text1', icon: GraduationCap, label: 'Eğitim' },
  { key: 'text2', icon: BookMarked, label: 'Süpervizyon ve Eğitimler' },
- { key: 'text3', icon: Sparkles, label: 'Bugün' },
+ { key: 'text4', icon: Sparkles, label: 'Bugün' },
 ];
 
 const AboutMain = () => {
@@ -48,11 +48,6 @@ const AboutMain = () => {
        <div className="flex flex-col">
         <span className="eyebrow text-muted">Yaklaşım</span>
         <span className="font-serif text-lg text-heading">Psikanalitik Psikoterapi</span>
-       </div>
-       <Separator />
-       <div className="flex flex-col">
-        <span className="eyebrow text-muted">Format</span>
-        <span className="font-serif text-lg text-heading">Yüz yüze · Online</span>
        </div>
        <Separator />
        <Button asChild className="w-full mt-2">

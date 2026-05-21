@@ -34,7 +34,7 @@ const HomeHero = () => {
 
       <div className="w-fit mx-auto lg:mx-0 mb-7">
        <p className="font-serif italic text-xl sm:text-2xl md:text-3xl mt-1 font-light text-gray-600 dark:text-dark-100 tracking-wide">
-        Bireysel & Online Psikoterapi
+        Klinik Psikolog & Psikoterapist
        </p>
        <div className="divider-line w-full mt-4" />
       </div>

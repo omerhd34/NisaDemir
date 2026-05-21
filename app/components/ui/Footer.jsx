@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import { Clock, Mail, MapPin } from 'lucide-react';
+import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa';
 import { contact, social } from '@/lib/siteData';
-import Logo from './Logo';
 
 export default function Footer() {
  const currentYear = new Date().getFullYear();
@@ -17,53 +16,46 @@ export default function Footer() {
  return (
   <footer className="relative bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-500/40">
    <div className="container mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-    <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-10">
-     <div>
-      <div className="flex items-center gap-3 mb-5">
-       <Logo />
-      </div>
-     </div>
-
-     <div>
-      <h4 className="font-serif text-lg text-heading mb-5">İletişim</h4>
-      <ul className="space-y-3.5 text-sm text-body">
+    <div className="flex flex-col items-center text-center">
+     <h4 className="font-serif text-2xl md:text-3xl font-medium text-heading mb-6">İletişim</h4>
+     <ul className="space-y-3.5 text-sm text-body inline-block text-left">
+      <li className="flex items-start gap-3">
+       <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary dark:text-primary-dark-light" />
+       <span>İstanbul/Kadıköy & Online</span>
+      </li>
+      {workingHours.length > 0 && (
        <li className="flex items-start gap-3">
-        <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary dark:text-primary-dark-light" />
-        <span>İstanbul/Kadıköy & Online Terapi</span>
+        <Clock className="w-4 h-4 mt-0.5 shrink-0 text-primary dark:text-primary-dark-light" />
+        <p className="leading-relaxed">
+         <span>Çalışma saatleri:</span>{' '}
+         <span>{workingHours.join(', ')}</span>
+        </p>
        </li>
-       {workingHours.length > 0 && (
-        <li className="flex items-start gap-3">
-         <Clock className="w-4 h-4 mt-0.5 shrink-0 text-primary dark:text-primary-dark-light" />
-         <div className="space-y-1">
-          {workingHours.map((hours, idx) => (
-           <p key={idx} className="leading-relaxed">
-            {hours}
-           </p>
-          ))}
-         </div>
-        </li>
-       )}
-      </ul>
+      )}
+      <li className="flex items-start gap-3">
+       <Phone className="w-4 h-4 mt-0.5 shrink-0 text-primary dark:text-primary-dark-light" />
+       <span>Ayrıntılı bilgi için lütfen telefonla bilgi alınız.</span>
+      </li>
+     </ul>
 
-      <div className="mt-3 flex flex-wrap gap-3">
-       {socialMedia.map((s, i) => (
-        <Link
-         key={i}
-         href={s.link}
-         target={s.link.startsWith('http') ? '_blank' : undefined}
-         rel={s.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-         aria-label={s.label}
-         title={s.label}
-         className="group relative inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/25 dark:border-primary-dark/25 text-primary dark:text-primary-dark-light overflow-hidden transition-colors duration-300"
-        >
-         <span
-          aria-hidden
-          className="absolute inset-0 scale-0 rounded-full bg-linear-to-br from-primary to-primary-light dark:from-primary-dark dark:to-primary-dark-light group-hover:scale-100 transition-transform duration-500 ease-out"
-         />
-         <s.icon className="relative z-10 w-[18px] h-[18px] group-hover:text-white dark:group-hover:text-gray-950 transition-colors duration-300" />
-        </Link>
-       ))}
-      </div>
+     <div className="mt-5 flex flex-wrap justify-center gap-3">
+      {socialMedia.map((s, i) => (
+       <Link
+        key={i}
+        href={s.link}
+        target={s.link.startsWith('http') ? '_blank' : undefined}
+        rel={s.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+        aria-label={s.label}
+        title={s.label}
+        className="group relative inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/25 dark:border-primary-dark/25 text-primary dark:text-primary-dark-light overflow-hidden transition-colors duration-300"
+       >
+        <span
+         aria-hidden
+         className="absolute inset-0 scale-0 rounded-full bg-linear-to-br from-primary to-primary-light dark:from-primary-dark dark:to-primary-dark-light group-hover:scale-100 transition-transform duration-500 ease-out"
+        />
+        <s.icon className="relative z-10 w-[18px] h-[18px] group-hover:text-white dark:group-hover:text-gray-950 transition-colors duration-300" />
+       </Link>
+      ))}
      </div>
     </div>
 

@@ -19,16 +19,11 @@ const HomeWelcome = () => {
    <div className="container relative mx-auto px-5 sm:px-6 lg:px-8">
     <div className="max-w-5xl mx-auto">
      <div className="text-center mb-8 md:mb-10 animate-fadeIn">
-      <span className="eyebrow text-primary dark:text-primary-dark-light">
-       <span className="w-6 h-px bg-primary dark:bg-primary-dark-light" />
-       Sözler
-       <span className="w-6 h-px bg-primary dark:bg-primary-dark-light" />
-      </span>
       <h2 className="display-serif text-2xl sm:text-3xl md:text-[2.1rem] mt-3 mb-2 text-heading">
        <span className="italic font-normal">Dinlemenin</span> sanatı
       </h2>
       <p className="text-sm sm:text-base text-body max-w-xl mx-auto leading-relaxed">
-       Psikoterapi yolculuğunda bize eşlik eden bazı sözler ve düşünürler.
+       Psikoterapi yolculuğunda bize eşlik eden bazı söz ve düşünürler.
       </p>
      </div>
 
