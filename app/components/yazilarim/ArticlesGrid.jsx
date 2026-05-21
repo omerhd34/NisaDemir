@@ -1,27 +1,22 @@
-'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Clock, BookOpen } from 'lucide-react';
-import { useAppContext } from '@/context/AppContext';
+import { articles } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 const ArticlesGrid = () => {
- const { data } = useAppContext();
-
- if (!data?.articles || !Array.isArray(data.articles)) {
+ if (!articles || articles.length === 0) {
   return (
    <div className="text-center py-16">
-    <p className="text-base text-body">
-     {data?.articles ? 'Makaleler yükleniyor...' : 'Makale bulunamadı'}
-    </p>
+    <p className="text-base text-body">Makale bulunamadı</p>
    </div>
   );
  }
 
  return (
   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-   {data.articles.map((article, index) => (
+   {articles.map((article, index) => (
     <Link
      key={article.slug || index}
      href={`/yazilarim/${article.slug}`}

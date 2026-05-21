@@ -1,8 +1,7 @@
-'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, GraduationCap, BookMarked, Sparkles } from 'lucide-react';
-import { useAppContext } from '@/context/AppContext';
+import { about } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -15,8 +14,6 @@ const sections = [
 ];
 
 const AboutMain = () => {
- const { data } = useAppContext();
- if (!data?.about) return null;
 
  return (
   <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 max-w-6xl mx-auto animate-slideUp">
@@ -71,7 +68,7 @@ const AboutMain = () => {
 
    <div className="lg:col-span-8 space-y-8">
     {sections.map(({ key, icon: Icon, label }, idx) => {
-     const text = data.about[key];
+     const text = about[key];
      if (!text) return null;
      return (
       <Card key={key} className="overflow-hidden">

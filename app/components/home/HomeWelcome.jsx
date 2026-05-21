@@ -1,17 +1,12 @@
-'use client';
 import Image from 'next/image';
 import { Quote } from 'lucide-react';
-import { useAppContext } from '@/context/AppContext';
+import { home } from '@/lib/siteData';
 
 const HomeWelcome = () => {
- const { data } = useAppContext();
-
- if (!data?.home) return null;
-
- const { texts = [], images = [], titles = [], books = [] } = data.home;
+ const { texts, images, titles, books } = home;
 
  return (
-  <section className="relative py-16 sm:py-20 md:py-24 lg:py-28 bg-gray-50 dark:bg-dark-900 section-curve-top">
+  <section className="relative py-10 sm:py-12 md:py-14 bg-gray-50 dark:bg-dark-900 section-curve-top">
    <div
     aria-hidden
     className="pointer-events-none absolute inset-0 opacity-50 dark:opacity-30"
@@ -22,22 +17,22 @@ const HomeWelcome = () => {
    />
 
    <div className="container relative mx-auto px-5 sm:px-6 lg:px-8">
-    <div className="max-w-6xl mx-auto">
-     <div className="text-center mb-14 md:mb-20 animate-fadeIn">
+    <div className="max-w-5xl mx-auto">
+     <div className="text-center mb-8 md:mb-10 animate-fadeIn">
       <span className="eyebrow text-primary dark:text-primary-dark-light">
        <span className="w-6 h-px bg-primary dark:bg-primary-dark-light" />
        Sözler
        <span className="w-6 h-px bg-primary dark:bg-primary-dark-light" />
       </span>
-      <h2 className="display-serif text-4xl sm:text-5xl md:text-6xl mt-5 mb-4 text-heading">
+      <h2 className="display-serif text-2xl sm:text-3xl md:text-[2.1rem] mt-3 mb-2 text-heading">
        <span className="italic font-normal">Dinlemenin</span> sanatı
       </h2>
-      <p className="text-base sm:text-lg text-body max-w-2xl mx-auto leading-relaxed">
+      <p className="text-sm sm:text-base text-body max-w-xl mx-auto leading-relaxed">
        Psikoterapi yolculuğunda bize eşlik eden bazı sözler ve düşünürler.
       </p>
      </div>
 
-     <div className="space-y-12 md:space-y-16 lg:space-y-20">
+     <div className="space-y-8 md:space-y-10">
       {texts.map((text, index) => {
        const image = images[index];
        const title = titles[index];
@@ -49,47 +44,47 @@ const HomeWelcome = () => {
        return (
         <article
          key={index}
-         className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 lg:gap-14 items-center animate-slideUp"
+         className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-center animate-slideUp"
          style={{ animationDelay: `${index * 120}ms` }}
         >
          <div
-          className={`lg:col-span-5 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}
+          className={`lg:col-span-3 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}
          >
-          <div className="relative group">
-           <div className="relative w-full aspect-4/5 rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 dark:ring-white/5">
+          <div className="relative group max-w-[200px] sm:max-w-[220px] lg:max-w-none mx-auto">
+           <div className="relative w-full aspect-square rounded-xl overflow-hidden shadow-md ring-1 ring-black/5 dark:ring-white/5">
             <Image
              src={image}
              fill
              alt={text}
              className="object-cover transition-transform duration-700 group-hover:scale-105"
-             sizes="(max-width: 1024px) 90vw, 40vw"
-             quality={90}
+             sizes="(max-width: 1024px) 40vw, 20vw"
+             quality={85}
              unoptimized
             />
             <div className="absolute inset-0 bg-linear-to-t from-gray-950/30 via-transparent to-transparent" />
            </div>
 
            <div
-            className={`hidden md:block absolute -z-10 w-full h-full rounded-2xl border border-primary/25 dark:border-primary-dark/20 ${isEven ? '-bottom-4 -right-4' : '-bottom-4 -left-4'}`}
+            className={`hidden md:block absolute -z-10 w-full h-full rounded-xl border border-primary/20 dark:border-primary-dark/15 ${isEven ? '-bottom-2 -right-2' : '-bottom-2 -left-2'}`}
            />
           </div>
          </div>
 
          <div
-          className={`lg:col-span-7 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}
+          className={`lg:col-span-9 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}
          >
           <Quote
-           className="w-10 h-10 text-primary/30 dark:text-primary-dark/30 mb-4"
+           className="w-7 h-7 text-primary/30 dark:text-primary-dark/30 mb-2.5"
            strokeWidth={1.5}
           />
 
-          <blockquote className="font-serif text-2xl sm:text-3xl md:text-[2.1rem] lg:text-[2.35rem] leading-[1.3] font-normal text-heading">
+          <blockquote className="font-serif text-lg sm:text-xl md:text-2xl leading-[1.35] font-normal text-heading">
            {text}
           </blockquote>
 
           {title && (
-           <div className="mt-7 flex items-center gap-4">
-            <span className="w-10 h-px bg-primary dark:bg-primary-dark" />
+           <div className="mt-4 flex items-center gap-3">
+            <span className="w-8 h-px bg-primary dark:bg-primary-dark" />
             <div>
              <div className="text-base sm:text-lg font-medium text-heading">
               {title}

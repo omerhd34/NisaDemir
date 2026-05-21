@@ -11,16 +11,16 @@ export default function ContactPage() {
    <div className="container mx-auto px-5 sm:px-6 lg:px-8">
     <ContactHero />
     <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
-     <div className="grid lg:grid-cols-5 gap-8 md:gap-10 items-stretch">
+     <div className="grid lg:grid-cols-5 gap-8 md:gap-10 items-start">
       <div className="lg:col-span-3 flex">
        <ContactForm />
       </div>
-      <div className="lg:col-span-2 flex">
+      <div className="lg:col-span-2 flex flex-col gap-6 md:gap-8 w-full">
        <ContactInfo />
+       <SocialCard />
       </div>
      </div>
      <ServicesCard />
-     <SocialCard />
     </div>
    </div>
   </div>

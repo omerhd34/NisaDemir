@@ -7,8 +7,8 @@ export default function HomePage() {
  return (
   <div className="transition-colors duration-300">
    <HomeHero />
-   <HomeWelcome />
    <HomeArticles />
+   <HomeWelcome />
   </div>
  );
 }

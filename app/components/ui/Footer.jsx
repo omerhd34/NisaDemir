@@ -1,23 +1,18 @@
-'use client';
-
 import Link from 'next/link';
 import { Clock, Mail, MapPin } from 'lucide-react';
-import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
-import { useAppContext } from '@/context/AppContext';
+import { FaInstagram } from 'react-icons/fa';
+import { footer, social } from '@/lib/siteData';
 import Logo from './Logo';
 
 export default function Footer() {
- const { data } = useAppContext();
  const currentYear = new Date().getFullYear();
 
  const socialMedia = [
-  { icon: FaWhatsapp, link: 'https://wa.me/905366404701', label: 'WhatsApp' },
-  { icon: Mail, link: 'mailto:psikolognisademir@gmail.com', label: 'psikolognisademir@gmail.com' },
-  { icon: FaInstagram, link: 'https://instagram.com/psikolognisademir', label: 'Instagram' },
-  { icon: FaLinkedin, link: 'https://www.linkedin.com/in/nisa-demir-798815202/', label: 'LinkedIn' },
+  { icon: Mail, link: `mailto:${social.email}`, label: social.email },
+  { icon: FaInstagram, link: social.instagram.url, label: 'Instagram' },
  ];
 
- const workingHours = data?.footer?.workingHours || [];
+ const workingHours = footer?.workingHours || [];
 
  return (
   <footer className="relative bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-500/40">
@@ -28,7 +23,7 @@ export default function Footer() {
        <Logo />
       </div>
       <p className="text-sm leading-relaxed text-body max-w-sm">
-       {data?.footer?.description ||
+       {footer?.description ||
         'Bireysel ve online terapi hizmetleriyle yanınızdayım.  Ruh sağlığınız için profesyonel destek.'}
       </p>
      </div>
@@ -38,7 +33,7 @@ export default function Footer() {
       <ul className="space-y-3.5 text-sm text-body">
        <li className="flex items-start gap-3">
         <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary dark:text-primary-dark-light" />
-        <span>İstanbul & Online Terapi</span>
+        <span>İstanbul/Kadıköy & Online Terapi</span>
        </li>
        {workingHours.length > 0 && (
         <li className="flex items-start gap-3">

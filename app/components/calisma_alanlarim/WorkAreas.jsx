@@ -1,7 +1,6 @@
-'use client';
 import Link from 'next/link';
 import { User, Video, ArrowRight, Headphones, Users, Brain } from 'lucide-react';
-import { useAppContext } from '@/context/AppContext';
+import { work } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -15,12 +14,11 @@ const iconMap = {
 };
 
 const WorkAreas = () => {
- const { data } = useAppContext();
- if (!data?.work?.workAreas) return null;
+ if (!work?.workAreas) return null;
 
  return (
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
-   {data.work.workAreas.map((area, index) => {
+   {work.workAreas.map((area, index) => {
     const IconComponent = iconMap[area.icon] || User;
     return (
      <Card

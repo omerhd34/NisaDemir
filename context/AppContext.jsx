@@ -18,9 +18,6 @@ export const AppProvider = ({ children }) => {
   }
   return 'light';
  });
- const [siteData, setSiteData] = useState(null);
- const [dataLoading, setDataLoading] = useState(true);
- const [dataError, setDataError] = useState(null);
 
  useEffect(() => {
   if (typeof document !== 'undefined') {
@@ -40,51 +37,9 @@ export const AppProvider = ({ children }) => {
   setTheme(prev => prev === 'light' ? 'dark' : 'light');
  };
 
- useEffect(() => {
-  async function loadData() {
-   try {
-    const endpoints = ['home', 'about', 'work', 'articles', 'contact', 'footer'];
-    const promises = endpoints.map(endpoint =>
-     fetch(`/api/data/${endpoint}`)
-      .then(res => {
-       if (!res.ok) {
-        throw new Error(`Failed to fetch ${endpoint}: ${res.status}`);
-       }
-       return res.json();
-      })
-    );
-
-    const results = await Promise.all(promises);
-
-    window.data = {
-     home: results[0],
-     about: results[1],
-     work: results[2],
-     articles: results[3],
-     contact: results[4],
-     footer: results[5],
-    };
-
-    setSiteData(window.data);
-    setDataError(null);
-   } catch (error) {
-    console.error('Data loading error:', error);
-    setDataError(error.message);
-    setSiteData(null);
-   } finally {
-    setDataLoading(false);
-   }
-  }
-
-  loadData();
- }, []);
-
  const value = {
   theme,
   toggleTheme,
-  data: siteData,
-  dataLoading,
-  dataError,
  };
 
  return (

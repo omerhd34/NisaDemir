@@ -1,15 +1,13 @@
-'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Clock, BookOpen } from 'lucide-react';
-import { useAppContext } from '@/context/AppContext';
+import { articles as allArticles } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
 const HomeArticles = () => {
- const { data } = useAppContext();
- const articles = Array.isArray(data?.articles) ? data.articles.slice(0, 3) : [];
+ const articles = allArticles.slice(0, 3);
 
  if (articles.length === 0) return null;
 
@@ -30,7 +28,7 @@ const HomeArticles = () => {
         Yazılarım
        </Badge>
        <h2 className="display-serif text-4xl sm:text-5xl md:text-6xl mt-4 text-heading">
-        Son <span className="italic font-normal text-primary dark:text-primary-dark-light">yazılar</span>
+        Son <span className="italic font-normal text-primary dark:text-primary-dark-light">yazılarım</span>
        </h2>
        <p className="text-base sm:text-lg text-body mt-4 max-w-2xl leading-relaxed">
         Ruh sağlığı, psikanaliz ve insan ruhuna dair yazılar.

@@ -1,53 +1,48 @@
-'use client';
-import { Clock, MapPin } from 'lucide-react';
-import { useAppContext } from '@/context/AppContext';
+import { Clock, Mail, MapPin } from 'lucide-react';
+import { contact, social } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 
 const ContactInfo = () => {
- const { data } = useAppContext();
- const workingHours = data?.contact?.workingHours || [];
+ const workingHours = contact?.workingHours || [];
 
  return (
-  <div className="flex flex-col gap-6 h-full w-full animate-slideUp">
-   <Card className="overflow-hidden bg-linear-to-br from-primary/8 via-transparent to-accent/5 dark:from-primary-dark/10 dark:to-accent-dark/8">
-    <CardContent className="p-6 md:p-7">
-     <CardSectionHeader>Bilgiler</CardSectionHeader>
-     <h3 className="font-serif text-2xl text-heading mb-4 leading-tight">
-      Görüşmek üzere
-     </h3>
-     <p className="text-sm leading-relaxed text-body">
-      Aşağıdaki bilgilerden bana ulaşabilir veya yandaki formu doldurabilirsiniz. Tüm görüşmeler gizlilik içinde yürütülür.
-     </p>
-    </CardContent>
-   </Card>
+  <Card className="w-full animate-slideUp">
+   <CardContent className="p-6 md:p-7">
+    <CardSectionHeader>İletişim</CardSectionHeader>
+    <div className="flex flex-col gap-5">
+     <InfoRow icon={MapPin} label="Lokasyon">
+      <p className="text-base text-heading">İstanbul/Kadıköy</p>
+      <p className="text-sm text-body mt-0.5">Yüz yüze & Online</p>
+     </InfoRow>
 
-   <Card className="flex-1 flex flex-col">
-    <CardContent className="p-6 md:p-7 flex flex-col flex-1">
-     <CardSectionHeader>İletişim</CardSectionHeader>
-     <div className="flex flex-col flex-1 justify-around gap-5">
-      <InfoRow icon={MapPin} label="Lokasyon">
-       <p className="text-base text-heading">İstanbul</p>
-       <p className="text-sm text-body mt-0.5">Yüz yüze & Online</p>
-      </InfoRow>
+     <Separator />
 
-      {workingHours.length > 0 && (
-       <>
-        <Separator />
-        <InfoRow icon={Clock} label="Çalışma Saatleri">
-         <ul className="space-y-1 text-sm text-body">
-          {workingHours.map((line, i) => (
-           <li key={i}>{line}</li>
-          ))}
-         </ul>
-        </InfoRow>
-       </>
-      )}
-     </div>
-    </CardContent>
-   </Card>
-  </div>
+     <InfoRow icon={Mail} label="E-posta">
+      <a
+       href={`mailto:${social.email}`}
+       className="text-sm sm:text-base text-heading hover:text-primary dark:hover:text-primary-dark-light transition-colors break-all"
+      >
+       {social.email}
+      </a>
+     </InfoRow>
+
+     {workingHours.length > 0 && (
+      <>
+       <Separator />
+       <InfoRow icon={Clock} label="Çalışma Saatleri">
+        <ul className="space-y-1 text-sm text-body">
+         {workingHours.map((line, i) => (
+          <li key={i}>{line}</li>
+         ))}
+        </ul>
+       </InfoRow>
+      </>
+     )}
+    </div>
+   </CardContent>
+  </Card>
  );
 };
 

@@ -7,7 +7,6 @@ const SectionHero = ({
  icon: Icon,
  pillText,
  title,
- subtitle,
  className = '',
 }) => {
  const words = (title || '').trim().split(' ');
@@ -32,11 +31,6 @@ const SectionHero = ({
     )}
    </h1>
    <Separator className="w-16 h-px mx-auto bg-primary/50 dark:bg-primary-dark/50 my-5" />
-   {subtitle && (
-    <p className="text-base sm:text-lg max-w-2xl mx-auto text-body leading-relaxed">
-     {subtitle}
-    </p>
-   )}
   </div>
  );
 };

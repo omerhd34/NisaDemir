@@ -1,23 +1,17 @@
-'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Calendar, Mail, Sparkles } from 'lucide-react';
-import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
-import { useAppContext } from '@/context/AppContext';
+import { ArrowRight, Calendar, Mail } from 'lucide-react';
+import { FaInstagram } from 'react-icons/fa';
+import { about, social } from '@/lib/siteData';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 
 const SOCIALS = [
- { href: 'https://wa.me/905366404701', icon: FaWhatsapp, label: 'WhatsApp' },
- { href: 'mailto:psikolognisademir@gmail.com', icon: Mail, label: 'E-posta' },
- { href: 'https://instagram.com/psikolognisademir', icon: FaInstagram, label: 'Instagram', external: true },
- { href: 'https://www.linkedin.com/in/nisa-demir-798815202/', icon: FaLinkedin, label: 'LinkedIn', external: true },
+ { href: `mailto:${social.email}`, icon: Mail, label: 'E-posta', text: social.email },
+ { href: social.instagram.url, icon: FaInstagram, label: 'Instagram', external: true },
 ];
 
 const HomeHero = () => {
- const { data } = useAppContext();
- const bio = data?.about?.text3 || data?.about?.text1;
- const workingHours = data?.contact?.workingHours || data?.footer?.workingHours || [];
+ const bio = about?.text3 || about?.text1;
 
  return (
   <section className="relative overflow-hidden bg-paper">
@@ -35,11 +29,6 @@ const HomeHero = () => {
    <div className="container relative mx-auto px-5 sm:px-6 lg:px-8 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-16 md:pb-24">
     <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-center lg:items-start max-w-7xl mx-auto">
      <div className="lg:col-span-7 text-center lg:text-left animate-slideUp">
-      <Badge variant="eyebrow" className="px-0 mx-auto lg:mx-0">
-       <Sparkles className="w-3.5 h-3.5" />
-       Uzman Klinik Psikolog
-      </Badge>
-
       <h1 className="display-serif mt-5 text-[3.25rem] sm:text-7xl md:text-[5.5rem] lg:text-[6.25rem] xl:text-[7rem] text-heading">
        Nisa <span className="italic font-normal text-primary dark:text-primary-dark-light">Demir</span>
       </h1>
@@ -88,15 +77,6 @@ const HomeHero = () => {
         />
         <div className="absolute inset-0 bg-linear-to-t from-gray-950/80 via-gray-900/20 to-transparent" />
         <div className="absolute inset-0 bg-linear-to-br from-primary/15 via-transparent to-transparent mix-blend-overlay" />
-
-        <div className="absolute inset-x-0 bottom-0 px-5 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-5 text-white">
-         <h3 className="font-serif text-2xl sm:text-3xl font-medium leading-tight">
-          İstanbul <span className="text-primary-dark-lighter">&</span> Online
-         </h3>
-         <p className="text-xs sm:text-sm text-gray-200 mt-1 font-light">
-          Sessiz ve güvenli bir alan
-         </p>
-        </div>
        </div>
 
        <div className="absolute -top-3 -left-3 hidden md:block w-20 h-20 border border-primary/25 dark:border-primary-dark/25 rounded-2xl -z-10" />
@@ -115,8 +95,8 @@ const HomeHero = () => {
 
 function SocialRow() {
  return (
-  <div className="flex items-center justify-center gap-3 p-3.5 rounded-xl border border-gray-200 dark:border-dark-500 bg-white/70 dark:bg-dark-800/70 backdrop-blur-sm transition-colors duration-300">
-   {SOCIALS.map(({ href, icon: Icon, label, external }) => (
+  <div className="flex flex-wrap items-center justify-center gap-3 p-3.5 rounded-xl border border-gray-200 dark:border-dark-500 bg-white/70 dark:bg-dark-800/70 backdrop-blur-sm transition-colors duration-300">
+   {SOCIALS.map(({ href, icon: Icon, label, external, text }) => (
     <Link
      key={label}
      href={href}
@@ -124,13 +104,18 @@ function SocialRow() {
      rel={external ? 'noopener noreferrer' : undefined}
      aria-label={label}
      title={label}
-     className="group relative inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/25 dark:border-primary-dark/25 text-primary dark:text-primary-dark-light overflow-hidden transition-colors duration-300"
+     className={`group relative inline-flex items-center justify-center h-11 ${text ? 'gap-2 px-4 rounded-full' : 'w-11 rounded-full'} border border-primary/25 dark:border-primary-dark/25 text-primary dark:text-primary-dark-light overflow-hidden transition-colors duration-300`}
     >
      <span
       aria-hidden
       className="absolute inset-0 scale-0 rounded-full bg-linear-to-br from-primary to-primary-light dark:from-primary-dark dark:to-primary-dark-light group-hover:scale-100 transition-transform duration-500 ease-out"
      />
      <Icon className="relative z-10 w-[18px] h-[18px] group-hover:text-white dark:group-hover:text-gray-950 transition-colors duration-300" />
+     {text ? (
+      <span className="relative z-10 text-sm font-medium tracking-wide group-hover:text-white dark:group-hover:text-gray-950 transition-colors duration-300">
+       {text}
+      </span>
+     ) : null}
     </Link>
    ))}
   </div>

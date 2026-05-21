@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { social } from "@/lib/siteData";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 export const dynamic = "force-dynamic";
@@ -17,10 +18,10 @@ export async function POST(request) {
 
     const { data, error } = await resend.emails.send({
       from: "İletişim Formu <onboarding@resend.dev>",
-      to: ["psikolognisademir@gmail.com"],
-      replyTo: email,
-      subject: `Web Sitesinden Mesaj - ${name}`,
-      html: `
+      to: [social.email],
+   replyTo: email,
+   subject: `Web Sitesinden Mesaj - ${name}`,
+   html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #f59e0b; border-bottom: 3px solid #f59e0b; padding-bottom: 10px;">
             Yeni İletişim Formu Mesajı
@@ -57,29 +58,29 @@ export async function POST(request) {
           </p>
         </div>
       `,
-    });
+  });
 
-    if (error) {
-      console.error("Resend hatası:", error);
-      return NextResponse.json(
-        { error: "Email gönderilirken bir hata oluştu." },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Mesajınız başarıyla kaydedildi ve gönderildi.",
-        data,
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("Email gönderme hatası:", error);
-    return NextResponse.json(
-      { error: "Mesaj gönderilirken bir hata oluştu.", details: error.message },
-      { status: 500 }
-    );
+  if (error) {
+   console.error("Resend hatası:", error);
+   return NextResponse.json(
+    { error: "Email gönderilirken bir hata oluştu." },
+    { status: 500 }
+   );
   }
+
+  return NextResponse.json(
+   {
+    success: true,
+    message: "Mesajınız başarıyla kaydedildi ve gönderildi.",
+    data,
+   },
+   { status: 200 }
+  );
+ } catch (error) {
+  console.error("Email gönderme hatası:", error);
+  return NextResponse.json(
+   { error: "Mesaj gönderilirken bir hata oluştu.", details: error.message },
+   { status: 500 }
+  );
+ }
 }
