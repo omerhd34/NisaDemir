@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ export default function AdminLoginForm() {
  const router = useRouter();
  const [username, setUsername] = useState("");
  const [password, setPassword] = useState("");
+ const [showPassword, setShowPassword] = useState(false);
  const [error, setError] = useState("");
  const [loading, setLoading] = useState(false);
 
@@ -36,7 +38,7 @@ export default function AdminLoginForm() {
  }
 
  return (
-  <Card className="w-full max-w-md">
+  <Card className="w-full max-w-sm">
    <CardContent className="p-8">
     <div className="mb-6 text-center">
      <h1 className="font-serif text-3xl text-heading">Admin Girişi</h1>
@@ -58,15 +60,26 @@ export default function AdminLoginForm() {
      </div>
      <div className="space-y-2">
       <Label htmlFor="password">Şifre</Label>
-      <Input
-       id="password"
-       type="password"
-       placeholder="Şifreniz"
-       value={password}
-       onChange={(e) => setPassword(e.target.value)}
-       autoComplete="current-password"
-       required
-      />
+      <div className="relative">
+       <Input
+        id="password"
+        type={showPassword ? "text" : "password"}
+        placeholder="Şifreniz"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        autoComplete="current-password"
+        className="pr-11"
+        required
+       />
+       <button
+        type="button"
+        onClick={() => setShowPassword((prev) => !prev)}
+        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-body hover:text-heading transition-colors"
+        aria-label={showPassword ? "Şifreyi gizle" : "Şifreyi göster"}
+       >
+        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+       </button>
+      </div>
      </div>
      {error ? <p className="text-sm text-red-500">{error}</p> : null}
      <Button type="submit" className="w-full" disabled={loading}>
