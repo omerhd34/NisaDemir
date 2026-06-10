@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Clock, BookOpen, Quote, BookMarked } from "lucide-react";
+import { ArrowLeft, BookOpen, Quote, BookMarked } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,12 +25,6 @@ export default function ArticleDetailClient({ article }) {
        <BookOpen className="w-3 h-3" />
        Psikoloji
       </Badge>
-      {article.readTime && (
-       <span className="inline-flex items-center gap-1.5 text-xs text-muted tracking-wide uppercase">
-        <Clock className="w-3.5 h-3.5" />
-        {article.readTime}
-       </span>
-      )}
      </div>
 
      <h1 className="display-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] mb-6 text-heading animate-slideUp">

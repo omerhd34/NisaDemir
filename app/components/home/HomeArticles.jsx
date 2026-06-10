@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Clock, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import { articles as allArticles } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -68,15 +68,6 @@ const HomeArticles = () => {
             Psikoloji
            </Badge>
           </div>
-
-          {article.readTime && (
-           <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white/90">
-            <span className="inline-flex items-center gap-1.5 text-[0.7rem] uppercase tracking-[0.18em] font-medium backdrop-blur-md bg-black/30 px-3 py-1.5 rounded-full border border-white/15">
-             <Clock className="w-3 h-3" />
-             {article.readTime}
-            </span>
-           </div>
-          )}
          </div>
 
          <CardContent className="p-6 md:p-7 flex flex-col flex-1 relative">
