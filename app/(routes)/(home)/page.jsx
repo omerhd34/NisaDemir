@@ -1,14 +1,12 @@
-'use client';
-import HomeHero from '@/app/components/home/HomeHero';
-import HomeWelcome from '@/app/components/home/HomeWelcome';
-import HomeArticles from '@/app/components/home/HomeArticles';
+import { getHome, getSocial, getArticles } from '@/lib/siteData';
+import HomePageClient from './HomePageClient';
 
-export default function HomePage() {
- return (
-  <div className="transition-colors duration-300">
-   <HomeHero />
-   <HomeArticles />
-   <HomeWelcome />
-  </div>
- );
+export default async function HomePage() {
+ const [home, social, articles] = await Promise.all([
+  getHome(),
+  getSocial(),
+  getArticles(),
+ ]);
+
+ return <HomePageClient home={home} social={social} articles={articles} />;
 }

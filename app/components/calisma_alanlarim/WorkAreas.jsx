@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { User, Video, ArrowRight, Headphones, Users, Brain } from 'lucide-react';
-import { work } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -13,7 +12,7 @@ const iconMap = {
  Brain,
 };
 
-const WorkAreas = () => {
+const WorkAreas = ({ work }) => {
  if (!work?.workAreas) return null;
 
  return (

@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
-import { social } from "@/lib/siteData";
+import { getSocial } from "@/lib/siteData";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 export const dynamic = "force-dynamic";
@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 export async function POST(request) {
   try {
     const { name, email, subject, message } = await request.json();
+    const social = await getSocial();
 
     if (!name || !email || !message) {
       return NextResponse.json(

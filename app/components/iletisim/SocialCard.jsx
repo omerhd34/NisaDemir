@@ -1,25 +1,24 @@
 import Link from 'next/link';
 import { Mail } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa';
-import { social } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-const SOCIALS = [
- {
-  href: `mailto:${social.email}`,
-  icon: Mail,
-  label: 'E-posta',
- },
- {
-  href: social.instagram.url,
-  icon: FaInstagram,
-  label: 'Instagram',
-  external: true,
- },
-];
+const SocialCard = ({ social }) => {
+ const SOCIALS = [
+  {
+   href: `mailto:${social.email}`,
+   icon: Mail,
+   label: 'E-posta',
+  },
+  {
+   href: social.instagram.url,
+   icon: FaInstagram,
+   label: 'Instagram',
+   external: true,
+  },
+ ];
 
-const SocialCard = () => {
  return (
   <Card className="w-full overflow-hidden animate-slideUp animation-delay-100">
    <CardContent className="p-6 md:p-7">

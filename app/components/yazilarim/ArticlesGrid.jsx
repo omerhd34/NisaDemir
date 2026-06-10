@@ -1,11 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, BookOpen } from 'lucide-react';
-import { articles } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-const ArticlesGrid = () => {
+const ArticlesGrid = ({ articles = [] }) => {
  if (!articles || articles.length === 0) {
   return (
    <div className="text-center py-16">

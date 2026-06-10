@@ -1,25 +1,9 @@
-import { Inter, Cormorant_Garamond } from "next/font/google";
-import "../globals.css";
 import { AppProvider } from "@/context/AppContext";
 import Header from "@/app/components/ui/Header";
 import Footer from "@/app/components/ui/Footer";
 import ScrollToTop from "@/app/components/ui/ScrollToTop";
 import SiteJsonLd from "@/app/components/seo/SiteJsonLd";
 import { getSiteUrl } from "@/lib/site";
-
-const inter = Inter({
- subsets: ["latin", "latin-ext"],
- variable: "--font-sans",
- display: "swap",
-});
-
-const cormorant = Cormorant_Garamond({
- subsets: ["latin", "latin-ext"],
- weight: ["400", "500", "600", "700"],
- style: ["normal", "italic"],
- variable: "--font-serif",
- display: "swap",
-});
 
 const siteUrl = getSiteUrl();
 
@@ -64,8 +48,7 @@ export const metadata = {
  twitter: {
   card: "summary_large_image",
   title: "Uzman Klinik Psikolog Nisa Demir",
-  description:
-   "Bireysel ve online terapi, psikolojik danışmanlık hizmetleri.",
+  description: "Bireysel ve online terapi, psikolojik danışmanlık hizmetleri.",
  },
  category: "health",
 };
@@ -75,34 +58,18 @@ export const viewport = {
  initialScale: 1,
 };
 
-export default function RootLayout({ children }) {
+export default function SiteLayout({ children }) {
  return (
-  <html lang="tr" suppressHydrationWarning>
-   <head>
-    <script
-     dangerouslySetInnerHTML={{
-      __html: `
-      (function() {
-        const theme = localStorage.getItem('theme') || 'light';
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-      })();
-    `,
-     }}
-    />
-   </head>
-   <body
-    className={`${inter.variable} ${cormorant.variable} font-sans bg-gray-50 dark:bg-dark-900 text-gray-950 dark:text-gray-50 transition-colors duration-300 antialiased`}
-   >
-    <SiteJsonLd />
-    <AppProvider>
-     <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">{children}</main>
-      <Footer />
-      <ScrollToTop />
-     </div>
-    </AppProvider>
-   </body>
-  </html>
+  <>
+   <SiteJsonLd />
+   <AppProvider>
+    <div className="min-h-screen flex flex-col">
+     <Header />
+     <main className="flex-1">{children}</main>
+     <Footer />
+     <ScrollToTop />
+    </div>
+   </AppProvider>
+  </>
  );
 }

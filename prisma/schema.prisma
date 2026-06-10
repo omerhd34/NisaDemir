@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Social {
+  id                Int      @id @default(1)
+  email             String
+  instagramUsername String
+  instagramUrl      String
+  updatedAt         DateTime @updatedAt
+}
+
+model HomeQuote {
+  id        Int    @id @default(autoincrement())
+  text      String @db.Text
+  title     String
+  book      String @default("")
+  image     String
+  sortOrder Int    @default(0)
+}
+
+model About {
+  id        Int      @id @default(1)
+  text1     String   @db.Text
+  text2     String   @db.Text
+  text3     String   @db.Text
+  updatedAt DateTime @updatedAt
+}
+
+model WorkSettings {
+  id        Int      @id @default(1)
+  subtitle  String
+  updatedAt DateTime @updatedAt
+}
+
+model WorkArea {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String @db.Text
+  icon        String @default("User")
+  sortOrder   Int    @default(0)
+}
+
+model Article {
+  id        Int      @id @default(autoincrement())
+  title     String
+  slug      String   @unique
+  image     String
+  excerpt   String   @db.Text
+  content   String   @db.Text
+  writer    String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contact {
+  id           Int      @id @default(1)
+  workingHours String
+  updatedAt    DateTime @updatedAt
+}

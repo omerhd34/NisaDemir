@@ -1,8 +1,9 @@
+'use client';
+
 import { Briefcase } from 'lucide-react';
-import { work } from '@/lib/siteData';
 import SectionHero from '../ui/SectionHero';
 
-const WorkHero = () => {
+const WorkHero = ({ work }) => {
  return (
   <SectionHero
    icon={Briefcase}

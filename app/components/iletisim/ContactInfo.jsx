@@ -1,10 +1,9 @@
 import { Clock, Mail, MapPin } from 'lucide-react';
-import { contact, social } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 
-const ContactInfo = () => {
+const ContactInfo = ({ contact, social }) => {
  const workingHours = contact?.workingHours || [];
 
  return (

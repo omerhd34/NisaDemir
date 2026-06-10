@@ -9,9 +9,9 @@ const staticPaths = [
  "/iletisim",
 ];
 
-export default function sitemap() {
+export default async function sitemap() {
  const baseUrl = (getSiteUrl() || "http://localhost:3000").replace(/\/$/, "");
- const articleSlugs = getArticleSlugs();
+ const articleSlugs = await getArticleSlugs();
 
  return [
   ...staticPaths.map((path) => ({

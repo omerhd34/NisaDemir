@@ -1,15 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, BookOpen } from 'lucide-react';
-import { articles as allArticles } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-const HomeArticles = () => {
- const articles = allArticles.slice(0, 3);
+const HomeArticles = ({ articles = [] }) => {
+ const featured = articles.slice(0, 3);
 
- if (articles.length === 0) return null;
+ if (featured.length === 0) return null;
 
  return (
   <section className="relative py-16 sm:py-20 md:py-24 lg:py-28 bg-paper section-curve-top overflow-hidden">
@@ -44,7 +43,7 @@ const HomeArticles = () => {
      </div>
 
      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-      {articles.map((article, index) => (
+      {featured.map((article, index) => (
        <Link
         key={article.slug || index}
         href={`/yazilarim/${article.slug}`}

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, GraduationCap, BookMarked, Sparkles } from 'lucide-react';
-import { about } from '@/lib/siteData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -13,8 +12,7 @@ const sections = [
  { key: 'text3', icon: Sparkles, label: 'Bugün' },
 ];
 
-const AboutMain = () => {
-
+const AboutMain = ({ about }) => {
  return (
   <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 max-w-6xl mx-auto animate-slideUp">
    <aside className="lg:col-span-4">

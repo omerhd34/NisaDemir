@@ -4,13 +4,14 @@ import { getSiteUrl } from "@/lib/site";
 import ArticleJsonLd from "@/app/components/seo/ArticleJsonLd";
 import ArticleDetailClient from "./ArticleDetailClient";
 
-export function generateStaticParams() {
- return getArticleSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+ const slugs = await getArticleSlugs();
+ return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {
  const { slug } = await params;
- const article = getArticleBySlug(slug);
+ const article = await getArticleBySlug(slug);
  if (!article) {
   return { title: "Yazı bulunamadı" };
  }
@@ -66,7 +67,7 @@ export async function generateMetadata({ params }) {
 
 export default async function ArticlePage({ params }) {
  const { slug } = await params;
- const article = getArticleBySlug(slug);
+ const article = await getArticleBySlug(slug);
  if (!article) {
   notFound();
  }

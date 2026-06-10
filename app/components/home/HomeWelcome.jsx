@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import { Quote } from 'lucide-react';
-import { home } from '@/lib/siteData';
 
-const HomeWelcome = () => {
+const HomeWelcome = ({ home }) => {
  const { texts, images, titles, books } = home;
 
  return (

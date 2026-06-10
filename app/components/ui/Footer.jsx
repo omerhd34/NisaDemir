@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa';
-import { contact, social } from '@/lib/siteData';
+import { getContact, getSocial } from '@/lib/siteData';
 
-export default function Footer() {
+export default async function Footer() {
+ const [contact, social] = await Promise.all([getContact(), getSocial()]);
  const currentYear = new Date().getFullYear();
 
  const socialMedia = [
