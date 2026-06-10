@@ -34,7 +34,8 @@ export async function POST(request) {
    return NextResponse.json({ url });
   } catch (error) {
    console.error("Image upload failed:", error);
-   const message = getUploadConfigurationError(error) || "Görsel yüklenemedi";
+   const message =
+    getUploadConfigurationError(error) || error.message || "Görsel yüklenemedi.";
    return NextResponse.json({ error: message }, { status: 500 });
   }
  });
