@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminHandler } from "@/lib/adminApi";
 import { prisma } from "@/lib/prisma";
+import { revalidateAboutPage } from "@/lib/revalidatePublic";
 
 export async function GET() {
  return adminHandler(async () => {
@@ -22,6 +23,8 @@ export async function PUT(request) {
    update: { text1, text2, text3 },
    create: { id: 1, text1, text2, text3 },
   });
+
+  revalidateAboutPage();
 
   return NextResponse.json(row);
  });

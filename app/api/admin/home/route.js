@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminHandler } from "@/lib/adminApi";
 import { prisma } from "@/lib/prisma";
+import { revalidateHomePage } from "@/lib/revalidatePublic";
 
 export async function GET() {
  return adminHandler(async () => {
@@ -31,6 +32,7 @@ export async function PUT(request) {
   }
 
   const updated = await prisma.homeQuote.findMany({ orderBy: { sortOrder: "asc" } });
+  revalidateHomePage();
   return NextResponse.json({ quotes: updated });
  });
 }

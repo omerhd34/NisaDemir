@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminHandler } from "@/lib/adminApi";
 import { prisma } from "@/lib/prisma";
+import { revalidateWorkPage } from "@/lib/revalidatePublic";
 
 export async function GET() {
  return adminHandler(async () => {
@@ -30,6 +31,7 @@ export async function PUT(request) {
   }
 
   const updated = await prisma.workArea.findMany({ orderBy: { sortOrder: "asc" } });
+  revalidateWorkPage();
   return NextResponse.json({ workAreas: updated });
  });
 }
