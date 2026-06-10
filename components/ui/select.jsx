@@ -15,7 +15,7 @@ const SelectTrigger = React.forwardRef(
   <SelectPrimitive.Trigger
    ref={ref}
    className={cn(
-    "flex h-11 w-full items-center justify-between rounded-xl border border-gray-300 dark:border-dark-500 bg-white dark:bg-dark-800 px-4 py-2 text-sm text-gray-900 dark:text-gray-50 ring-offset-background placeholder:text-gray-400 dark:placeholder:text-dark-200 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary dark:focus:ring-primary-dark/40 dark:focus:border-primary-dark disabled:cursor-not-allowed disabled:opacity-50 transition-colors [&>span]:line-clamp-1 data-placeholder:text-gray-400 dark:data-placeholder:text-dark-200",
+    "flex h-11 w-full cursor-pointer items-center justify-between rounded-xl border border-gray-300 dark:border-dark-500 bg-white dark:bg-dark-800 px-4 py-2 text-sm text-gray-900 dark:text-gray-50 ring-offset-background placeholder:text-gray-400 dark:placeholder:text-dark-200 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary dark:focus:ring-primary-dark/40 dark:focus:border-primary-dark disabled:cursor-not-allowed disabled:opacity-50 transition-colors [&>span]:line-clamp-1 data-placeholder:text-gray-400 dark:data-placeholder:text-dark-200",
     className
    )}
    {...props}
@@ -104,7 +104,7 @@ const SelectItem = React.forwardRef(({ className, children, ...props }, ref) => 
  <SelectPrimitive.Item
   ref={ref}
   className={cn(
-   "relative flex w-full cursor-default select-none items-center rounded-lg py-2 pl-8 pr-2 text-sm outline-none focus:bg-primary/10 dark:focus:bg-primary-dark/15 focus:text-primary dark:focus:text-primary-dark-light data-[state=checked]:text-primary dark:data-[state=checked]:text-primary-dark-light data-disabled:pointer-events-none data-disabled:opacity-50 transition-colors",
+   "relative flex w-full cursor-pointer select-none items-center rounded-lg py-2 pl-8 pr-2 text-sm outline-none focus:bg-primary/10 dark:focus:bg-primary-dark/15 focus:text-primary dark:focus:text-primary-dark-light data-[state=checked]:text-primary dark:data-[state=checked]:text-primary-dark-light data-disabled:pointer-events-none data-disabled:opacity-50 transition-colors",
    className
   )}
   {...props}
