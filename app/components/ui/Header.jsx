@@ -18,8 +18,8 @@ import { Separator } from '@/components/ui/separator';
 const menuItems = [
  { id: 'home', label: 'Ana Sayfa', icon: Home, href: '/' },
  { id: 'about', label: 'Tanışalım', icon: User, href: '/tanisalim' },
- { id: 'work', label: 'Çalışma Alanlarım', icon: Briefcase, href: '/calisma_alanlarim' },
- { id: 'articles', label: 'Yazılarım', icon: FileText, href: '/yazilarim' },
+ { id: 'work', label: 'Size Nasıl Yardımcı Olabilirim?', icon: Briefcase, href: '/calisma_alanlarim' },
+ { id: 'articles', label: 'Blog & Makaleler', icon: FileText, href: '/yazilarim' },
  { id: 'contact', label: 'İletişim', icon: Mail, href: '/iletisim' },
 ];
 
