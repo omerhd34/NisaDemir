@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminHandler } from "@/lib/adminApi";
 import { prisma } from "@/lib/prisma";
+import { revalidateArticlePages } from "@/lib/revalidatePublic";
 
 export async function GET(_request, { params }) {
  return adminHandler(async () => {
@@ -33,6 +34,8 @@ export async function PUT(request, { params }) {
    },
   });
 
+  revalidateArticlePages(article.slug);
+
   return NextResponse.json(article);
  });
 }
@@ -40,7 +43,15 @@ export async function PUT(request, { params }) {
 export async function DELETE(_request, { params }) {
  return adminHandler(async () => {
   const { id } = await params;
+  const article = await prisma.article.findUnique({
+   where: { id: Number(id) },
+   select: { slug: true },
+  });
+
   await prisma.article.delete({ where: { id: Number(id) } });
+
+  revalidateArticlePages(article?.slug);
+
   return NextResponse.json({ success: true });
  });
 }

@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
-import { randomUUID } from "crypto";
 import { adminHandler } from "@/lib/adminApi";
+import { getUploadConfigurationError, storeUploadedImage } from "@/lib/imageStorage";
 
 const MAX_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = new Map([
@@ -30,13 +28,14 @@ export async function POST(request) {
   }
 
   const ext = ALLOWED_TYPES.get(file.type);
-  const filename = `${randomUUID()}.${ext}`;
-  const uploadDir = path.join(process.cwd(), "public", "uploads");
-  await mkdir(uploadDir, { recursive: true });
 
-  const bytes = await file.arrayBuffer();
-  await writeFile(path.join(uploadDir, filename), Buffer.from(bytes));
-
-  return NextResponse.json({ url: `/uploads/${filename}` });
+  try {
+   const url = await storeUploadedImage(file, ext);
+   return NextResponse.json({ url });
+  } catch (error) {
+   console.error("Image upload failed:", error);
+   const message = getUploadConfigurationError(error) || "Görsel yüklenemedi";
+   return NextResponse.json({ error: message }, { status: 500 });
+  }
  });
 }

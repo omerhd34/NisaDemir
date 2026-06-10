@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminHandler } from "@/lib/adminApi";
 import { prisma } from "@/lib/prisma";
+import { revalidateArticlePages } from "@/lib/revalidatePublic";
 
 function slugify(value) {
  return value
@@ -40,6 +41,7 @@ export async function PATCH(request) {
   );
 
   const articles = await prisma.article.findMany({ orderBy: { sortOrder: "asc" } });
+  revalidateArticlePages();
   return NextResponse.json({ articles });
  });
 }
@@ -61,6 +63,8 @@ export async function POST(request) {
     sortOrder: count,
    },
   });
+
+  revalidateArticlePages(article.slug);
 
   return NextResponse.json(article, { status: 201 });
  });

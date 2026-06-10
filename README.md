@@ -87,6 +87,12 @@ ADMIN_SECRET="uzun-rastgele-gizli-anahtar"
 
 # İletişim formu e-postası
 RESEND_API_KEY="re_xxxxxxxx"
+
+# Görsel yükleme (production'da zorunlu — Vercel/Railway'de yerel disk yazılamaz)
+CLOUDINARY_CLOUD_NAME="ornek-cloud"
+CLOUDINARY_API_KEY="123456789012345"
+CLOUDINARY_API_SECRET="abcdefghijklmnopqrstuvwxyz"
+# CLOUDINARY_FOLDER="nisademir"  # opsiyonel klasör adı
 ```
 
 > **Not:** Geliştirme ortamında `ADMIN_*` değişkenleri tanımlanmazsa varsayılan `admin` / `admin123` kullanılır. Production'da mutlaka güçlü değerler atayın.
@@ -150,7 +156,8 @@ Proje [Vercel](https://vercel.com/) veya benzeri bir platforma deploy edilebilir
 2. `NEXT_PUBLIC_SITE_URL` değerini canlı domain ile eşleştirin.
 3. `DATABASE_URL` için erişilebilir bir MySQL bağlantısı sağlayın.
 4. Resend'de gönderici domain'inizi doğrulayın; `app/api/contact/route.js` içindeki `from` adresini buna göre güncelleyin.
-5. Build komutu: `npm run build` — Start komutu: `npm run start`
+5. Admin panelinden görsel yüklemek için [Cloudinary](https://cloudinary.com/) hesabı açın ve `CLOUDINARY_*` değişkenlerini ekleyin. Localhost'ta dosya diske yazılır; production'da Cloudinary kullanılır.
+6. Build komutu: `npm run build` — Start komutu: `npm run start`
 
 `VERCEL_URL` tanımlandığında site URL'si otomatik olarak türetilir; yine de `NEXT_PUBLIC_SITE_URL` kullanımı önerilir.
 

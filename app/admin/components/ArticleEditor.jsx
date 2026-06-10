@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import SaveButton, { fetchJson } from "@/app/admin/components/AdminForm";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import ImageUpload from "@/app/admin/components/ImageUpload";
+import ConfirmDialog from "@/app/admin/components/ConfirmDialog";
 
 const emptyArticle = {
  title: "",
@@ -24,6 +26,8 @@ export default function AdminArticleEditPage({ articleId }) {
  const router = useRouter();
  const isNew = articleId === "new";
  const [form, setForm] = useState(emptyArticle);
+ const [deleteOpen, setDeleteOpen] = useState(false);
+ const [deleting, setDeleting] = useState(false);
 
  useEffect(() => {
   if (isNew) return;
@@ -50,10 +54,17 @@ export default function AdminArticleEditPage({ articleId }) {
  }
 
  async function remove() {
-  if (!confirm("Bu yazıyı silmek istediğinize emin misiniz?")) return;
-  await fetchJson(`/api/admin/articles/${articleId}`, { method: "DELETE" });
-  router.push("/admin/articles");
-  router.refresh();
+  setDeleting(true);
+  try {
+   await fetchJson(`/api/admin/articles/${articleId}`, { method: "DELETE" });
+   setDeleteOpen(false);
+   router.push("/admin/articles");
+   router.refresh();
+  } catch (error) {
+   toast.error(error.message || "Yazı silinemedi");
+  } finally {
+   setDeleting(false);
+  }
  }
 
  return (
@@ -66,10 +77,24 @@ export default function AdminArticleEditPage({ articleId }) {
      <p className="text-body mt-2">Başlık, özet ve içerik alanlarını güncelleyin.</p>
     </div>
     {!isNew ? (
-     <Button variant="destructive" onClick={remove}>
-      <Trash2 />
-      Sil
-     </Button>
+     <>
+      <Button variant="destructive" onClick={() => setDeleteOpen(true)}>
+       <Trash2 />
+       Sil
+      </Button>
+      <ConfirmDialog
+       open={deleteOpen}
+       onOpenChange={(open) => {
+        if (deleting) return;
+        setDeleteOpen(open);
+       }}
+       title="Yazıyı sil"
+       description="Bu yazıyı silmek istediğinize emin misiniz? Bu işlem geri alınamaz."
+       confirmLabel="Evet, sil"
+       onConfirm={remove}
+       loading={deleting}
+      />
+     </>
     ) : null}
    </div>
 
