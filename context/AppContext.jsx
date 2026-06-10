@@ -12,25 +12,19 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }) => {
- const [theme, setTheme] = useState(() => {
-  if (typeof window !== 'undefined') {
-   return localStorage.getItem('theme') || 'light';
-  }
-  return 'light';
- });
+ const [theme, setTheme] = useState('light');
 
  useEffect(() => {
-  if (typeof document !== 'undefined') {
-   const root = document.documentElement;
-   if (theme === 'dark') {
-    root.classList.add('dark');
-   } else {
-    root.classList.remove('dark');
-   }
-   if (typeof window !== 'undefined') {
-    localStorage.setItem('theme', theme);
-   }
+  const stored = localStorage.getItem('theme');
+  if (stored === 'dark' || stored === 'light') {
+   setTheme(stored);
   }
+ }, []);
+
+ useEffect(() => {
+  const root = document.documentElement;
+  root.classList.toggle('dark', theme === 'dark');
+  localStorage.setItem('theme', theme);
  }, [theme]);
 
  const toggleTheme = () => {
