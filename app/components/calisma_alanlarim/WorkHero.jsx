@@ -3,13 +3,12 @@
 import { Briefcase } from 'lucide-react';
 import SectionHero from '../ui/SectionHero';
 
-const WorkHero = ({ work }) => {
+const WorkHero = () => {
  return (
   <SectionHero
    icon={Briefcase}
    pillText="Çalışma Alanlarım"
    title="Çalışma Alanlarım"
-   subtitle={work?.subtitle}
   />
  );
 };

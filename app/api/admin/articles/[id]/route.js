@@ -26,7 +26,6 @@ export async function PUT(request, { params }) {
    where: { id: Number(id) },
    data: {
     title: body.title,
-    slug: body.slug,
     image: body.image,
     excerpt: body.excerpt,
     content: body.content,

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import AdminNav from "@/app/admin/components/AdminNav";
 import SaveButton, { fetchJson } from "@/app/admin/components/AdminForm";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import ImageUpload from "@/app/admin/components/ImageUpload";
 
 const emptyArticle = {
  title: "",
@@ -57,64 +57,57 @@ export default function AdminArticleEditPage({ articleId }) {
  }
 
  return (
-  <>
-   <AdminNav />
-   <div className="flex-1 space-y-6">
-    <div className="flex items-start justify-between gap-4">
-     <div>
-      <h2 className="font-serif text-3xl text-heading">
-       {isNew ? "Yeni Yazı" : "Yazıyı Düzenle"}
-      </h2>
-      <p className="text-body mt-2">Başlık, slug, özet ve içerik alanlarını güncelleyin.</p>
-     </div>
-     {!isNew ? (
-      <Button variant="destructive" onClick={remove}>
-       <Trash2 />
-       Sil
-      </Button>
-     ) : null}
+  <div className="space-y-6">
+   <div className="flex items-start justify-between gap-4">
+    <div>
+     <h2 className="font-serif text-3xl text-heading">
+      {isNew ? "Yeni Yazı" : "Yazıyı Düzenle"}
+     </h2>
+     <p className="text-body mt-2">Başlık, özet ve içerik alanlarını güncelleyin.</p>
     </div>
-
-    <Card>
-     <CardContent className="p-6 space-y-4">
-      <div className="space-y-2">
-       <Label>Başlık</Label>
-       <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-      </div>
-      <div className="grid sm:grid-cols-2 gap-4">
-       <div className="space-y-2">
-        <Label>Slug</Label>
-        <Input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} />
-       </div>
-       <div className="space-y-2">
-        <Label>Görsel yolu</Label>
-        <Input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} />
-       </div>
-      </div>
-      <div className="space-y-2">
-       <Label>Yazar (opsiyonel)</Label>
-       <Input value={form.writer || ""} onChange={(e) => setForm({ ...form, writer: e.target.value })} />
-      </div>
-      <div className="space-y-2">
-       <Label>Özet</Label>
-       <Textarea
-        rows={3}
-        value={form.excerpt}
-        onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
-       />
-      </div>
-      <div className="space-y-2">
-       <Label>İçerik</Label>
-       <Textarea
-        rows={16}
-        value={form.content}
-        onChange={(e) => setForm({ ...form, content: e.target.value })}
-       />
-      </div>
-      <SaveButton onSave={save} label={isNew ? "Oluştur" : "Kaydet"} />
-     </CardContent>
-    </Card>
+    {!isNew ? (
+     <Button variant="destructive" onClick={remove}>
+      <Trash2 />
+      Sil
+     </Button>
+    ) : null}
    </div>
-  </>
+
+   <Card>
+    <CardContent className="p-6 space-y-4">
+     <div className="space-y-2">
+      <Label>Başlık</Label>
+      <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+     </div>
+     <ImageUpload
+      label="Görsel"
+      value={form.image}
+      onChange={(url) => setForm({ ...form, image: url })}
+     />
+     <div className="space-y-2">
+      <Label>Yazar (opsiyonel)</Label>
+      <Input value={form.writer || ""} onChange={(e) => setForm({ ...form, writer: e.target.value })} />
+     </div>
+     <div className="space-y-2">
+      <Label>Özet</Label>
+      <Textarea
+       rows={3}
+       value={form.excerpt}
+       onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
+       placeholder="En fazla 25 kelime yazın. Kartlarda 3 satır olarak görünür."
+      />
+     </div>
+     <div className="space-y-2">
+      <Label>İçerik</Label>
+      <Textarea
+       rows={16}
+       value={form.content}
+       onChange={(e) => setForm({ ...form, content: e.target.value })}
+      />
+     </div>
+     <SaveButton onSave={save} label={isNew ? "Oluştur" : "Kaydet"} />
+    </CardContent>
+   </Card>
+  </div>
  );
 }

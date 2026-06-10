@@ -45,12 +45,6 @@ async function main() {
   },
  });
 
- await prisma.workSettings.upsert({
-  where: { id: 1 },
-  update: { subtitle: work.subtitle },
-  create: { id: 1, subtitle: work.subtitle },
- });
-
  await prisma.contact.upsert({
   where: { id: 1 },
   update: { workingHours: JSON.stringify(contact.workingHours) },

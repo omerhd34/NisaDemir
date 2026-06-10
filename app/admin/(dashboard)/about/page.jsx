@@ -1,11 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AdminNav from "@/app/admin/components/AdminNav";
 import SaveButton, { fetchJson } from "@/app/admin/components/AdminForm";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
+
+const ABOUT_FIELDS = [
+ { key: "text1", label: "Eğitim" },
+ { key: "text2", label: "Süpervizyon ve Eğitimler" },
+ { key: "text3", label: "Bugün" },
+];
 
 export default function AdminAboutPage() {
  const [form, setForm] = useState({ text1: "", text2: "", text3: "" });
@@ -23,9 +28,7 @@ export default function AdminAboutPage() {
  }
 
  return (
-  <>
-   <AdminNav />
-   <div className="flex-1 space-y-6">
+  <div className="space-y-6">
     <div>
      <h2 className="font-serif text-3xl text-heading">Hakkımda</h2>
      <p className="text-body mt-2">Tanışalım sayfasındaki üç metin bloğunu düzenleyin.</p>
@@ -33,9 +36,9 @@ export default function AdminAboutPage() {
 
     <Card>
      <CardContent className="p-6 space-y-4">
-      {["text1", "text2", "text3"].map((key, index) => (
+      {ABOUT_FIELDS.map(({ key, label }) => (
        <div key={key} className="space-y-2">
-        <Label htmlFor={key}>Metin {index + 1}</Label>
+        <Label htmlFor={key}>{label}</Label>
         <Textarea
          id={key}
          rows={6}
@@ -47,7 +50,6 @@ export default function AdminAboutPage() {
       <SaveButton onSave={save} />
      </CardContent>
     </Card>
-   </div>
-  </>
+  </div>
  );
 }

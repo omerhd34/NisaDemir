@@ -8,7 +8,7 @@ export default async function WorkPage() {
  return (
   <div className="min-h-screen py-16 md:py-20 lg:py-24 bg-paper transition-colors duration-300">
    <div className="container mx-auto px-5 sm:px-6 lg:px-8">
-    <WorkHero work={work} />
+    <WorkHero />
     <WorkAreas work={work} />
    </div>
   </div>

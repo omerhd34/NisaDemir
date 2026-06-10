@@ -32,12 +32,6 @@ model About {
   updatedAt DateTime @updatedAt
 }
 
-model WorkSettings {
-  id        Int      @id @default(1)
-  subtitle  String
-  updatedAt DateTime @updatedAt
-}
-
 model WorkArea {
   id          Int    @id @default(autoincrement())
   title       String

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AdminNav from "@/app/admin/components/AdminNav";
 import SaveButton, { fetchJson } from "@/app/admin/components/AdminForm";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2 } from "lucide-react";
+import ImageUpload from "@/app/admin/components/ImageUpload";
 
 const emptyQuote = () => ({ text: "", title: "", book: "", image: "" });
 
@@ -32,9 +32,7 @@ export default function AdminHomePage() {
  }
 
  return (
-  <>
-   <AdminNav />
-   <div className="flex-1 space-y-6">
+  <div className="space-y-6">
     <div className="flex items-start justify-between gap-4">
      <div>
       <h2 className="font-serif text-3xl text-heading">Ana Sayfa Alıntıları</h2>
@@ -84,21 +82,17 @@ export default function AdminHomePage() {
           />
          </div>
         </div>
-        <div className="space-y-2">
-         <Label>Görsel yolu</Label>
-         <Input
-          value={quote.image}
-          onChange={(e) => updateQuote(index, "image", e.target.value)}
-          placeholder="/above.jpg"
-         />
-        </div>
+        <ImageUpload
+         label="Görsel"
+         value={quote.image}
+         onChange={(url) => updateQuote(index, "image", url)}
+        />
        </CardContent>
       </Card>
      ))}
     </div>
 
     <SaveButton onSave={save} />
-   </div>
-  </>
+  </div>
  );
 }

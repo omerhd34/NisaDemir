@@ -1,36 +1,43 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
+import { CircleCheck, CircleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function SaveButton({ onSave, label = "Kaydet" }) {
  const [loading, setLoading] = useState(false);
- const [message, setMessage] = useState("");
 
  async function handleClick() {
   setLoading(true);
-  setMessage("");
   try {
    await onSave();
-   setMessage("Kaydedildi");
+   toast.success("Kaydedildi.", {
+    icon: (
+     <CircleCheck
+      className="size-5 text-primary dark:text-white"
+      strokeWidth={2}
+     />
+    ),
+   });
   } catch (error) {
-   setMessage(error.message || "Kaydetme başarısız");
+   toast.error(error.message || "Kaydetme başarısız", {
+    icon: (
+     <CircleAlert
+      className="size-5 text-[#a86b5c] dark:text-[#d49a8a]"
+      strokeWidth={2}
+     />
+    ),
+   });
   } finally {
    setLoading(false);
   }
  }
 
  return (
-  <div className="flex items-center gap-3">
-   <Button onClick={handleClick} disabled={loading}>
-    {loading ? "Kaydediliyor..." : label}
-   </Button>
-   {message ? (
-    <span className={message === "Kaydedildi" ? "text-green-600 text-sm" : "text-red-500 text-sm"}>
-     {message}
-    </span>
-   ) : null}
-  </div>
+  <Button onClick={handleClick} disabled={loading}>
+   {loading ? "Kaydediliyor..." : label}
+  </Button>
  );
 }
 

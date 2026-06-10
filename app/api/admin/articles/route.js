@@ -22,6 +22,28 @@ export async function GET() {
  });
 }
 
+export async function PATCH(request) {
+ return adminHandler(async () => {
+  const { order } = await request.json();
+
+  if (!Array.isArray(order) || order.length === 0) {
+   return NextResponse.json({ error: "Geçersiz sıra" }, { status: 400 });
+  }
+
+  await Promise.all(
+   order.map((id, index) =>
+    prisma.article.update({
+     where: { id: Number(id) },
+     data: { sortOrder: index },
+    })
+   )
+  );
+
+  const articles = await prisma.article.findMany({ orderBy: { sortOrder: "asc" } });
+  return NextResponse.json({ articles });
+ });
+}
+
 export async function POST(request) {
  return adminHandler(async () => {
   const body = await request.json();

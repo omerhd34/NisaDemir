@@ -4,24 +4,14 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
  return adminHandler(async () => {
-  const row = await prisma.workSettings.findUnique({ where: { id: 1 } });
   const areas = await prisma.workArea.findMany({ orderBy: { sortOrder: "asc" } });
-  return NextResponse.json({
-   subtitle: row?.subtitle || "",
-   workAreas: areas,
-  });
+  return NextResponse.json({ workAreas: areas });
  });
 }
 
 export async function PUT(request) {
  return adminHandler(async () => {
-  const { subtitle, workAreas } = await request.json();
-
-  await prisma.workSettings.upsert({
-   where: { id: 1 },
-   update: { subtitle },
-   create: { id: 1, subtitle },
-  });
+  const { workAreas } = await request.json();
 
   await prisma.workArea.deleteMany();
 
@@ -32,7 +22,7 @@ export async function PUT(request) {
      data: {
       title: area.title,
       description: area.description,
-      icon: area.icon || "User",
+      icon: area.icon || "LuUser",
       sortOrder: i,
      },
     });
@@ -40,6 +30,6 @@ export async function PUT(request) {
   }
 
   const updated = await prisma.workArea.findMany({ orderBy: { sortOrder: "asc" } });
-  return NextResponse.json({ subtitle, workAreas: updated });
+  return NextResponse.json({ workAreas: updated });
  });
 }
