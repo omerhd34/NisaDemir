@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const NAV = [
- { href: "/admin", label: "Panel", icon: LayoutDashboard, exact: true },
  { href: "/admin/home", label: "Ana Sayfa", icon: Home },
  { href: "/admin/about", label: "Hakkımda", icon: UserCircle },
  { href: "/admin/work", label: "Çalışma Alanları", icon: Briefcase },

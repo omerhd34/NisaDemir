@@ -26,7 +26,7 @@ export default function AdminDashboardPage() {
      </p>
     </header>
 
-    <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div className="grid sm:grid-cols-2 gap-4">
      {SECTIONS.map(({ href, title, desc, icon: Icon }) => (
       <Link key={href} href={href} className="group block h-full">
        <Card className="h-full transition-all duration-300 hover:border-primary/30 dark:hover:border-primary-dark/30 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(40,30,20,0.08)] dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.35)]">

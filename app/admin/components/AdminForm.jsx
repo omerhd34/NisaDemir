@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { CircleCheck, CircleAlert } from "lucide-react";
+import { CircleCheck, CircleAlert, Loader2, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function SaveButton({ onSave, label = "Kaydet" }) {
@@ -36,6 +36,7 @@ export default function SaveButton({ onSave, label = "Kaydet" }) {
 
  return (
   <Button onClick={handleClick} disabled={loading}>
+   {loading ? <Loader2 className="animate-spin" /> : <Save />}
    {loading ? "Kaydediliyor..." : label}
   </Button>
  );
