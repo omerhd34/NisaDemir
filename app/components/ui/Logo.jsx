@@ -25,7 +25,7 @@ const Logo = () => {
    </div>
 
    <div className="flex flex-col select-none">
-    <span className="font-serif text-2xl sm:text-3xl font-normal tracking-wide text-[#f5e8cc] transition-colors duration-400 group-hover:text-[#d4a373]">
+    <span className="font-serif text-2xl sm:text-3xl font-normal tracking-wide text-gray-900 dark:text-[#f5e8cc] transition-colors duration-400 group-hover:text-primary dark:group-hover:text-[#d4a373]">
      Nisa Demir
     </span>
     <span className="mt-1 flex items-center gap-2.5 text-[10px] sm:text-[11px] font-medium tracking-[0.35em] text-[#c9913a] uppercase opacity-90">
