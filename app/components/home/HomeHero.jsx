@@ -2,18 +2,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Calendar, Mail } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa';
-import { about, social } from '@/lib/siteData';
 import { Button } from '@/components/ui/button';
 
-const SOCIALS = [
- { href: `mailto:${social.email}`, icon: Mail, label: 'E-posta', text: social.email },
- { href: social.instagram.url, icon: FaInstagram, label: 'Instagram', external: true },
-];
-
-const HomeHero = () => {
+const HomeHero = ({ social }) => {
+ const SOCIALS = [
+  { href: `mailto:${social.email}`, icon: Mail, label: 'E-posta', text: social.email },
+  { href: social.instagram.url, icon: FaInstagram, label: 'Instagram', external: true },
+ ];
 
  return (
-  <section className="relative overflow-hidden bg-paper">
+  <section className="relative overflow-hidden bg-paper min-h-[calc(100dvh-4rem)] lg:min-h-[calc(100dvh-5rem)] flex flex-col justify-center">
    <div
     aria-hidden
     className="pointer-events-none absolute -top-32 -right-32 w-112 h-112 rounded-full opacity-30 dark:opacity-20 blur-3xl"
@@ -25,8 +23,8 @@ const HomeHero = () => {
     style={{ background: 'radial-gradient(circle, var(--color-accent) 0%, transparent 70%)' }}
    />
 
-   <div className="container relative mx-auto px-5 sm:px-6 lg:px-8 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-16 md:pb-24">
-    <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-center lg:items-start max-w-7xl mx-auto">
+   <div className="container relative mx-auto px-5 sm:px-6 lg:px-8 py-8 md:py-12">
+    <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-center max-w-7xl mx-auto">
      <div className="lg:col-span-7 text-center lg:text-left animate-slideUp">
       <h1 className="display-serif mt-5 text-[3.25rem] sm:text-7xl md:text-[5.5rem] lg:text-[6.25rem] xl:text-[7rem] text-heading">
        Nisa <span className="italic font-normal text-primary dark:text-primary-dark-light">Demir</span>
@@ -74,7 +72,7 @@ const HomeHero = () => {
       </div>
 
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5 max-w-md mx-auto">
-       <SocialRow />
+       <SocialRow socials={SOCIALS} />
       </div>
      </div>
     </div>
@@ -83,10 +81,10 @@ const HomeHero = () => {
  );
 };
 
-function SocialRow() {
+function SocialRow({ socials }) {
  return (
   <div className="flex flex-wrap items-center justify-center gap-3 p-3.5 rounded-xl border border-gray-200 dark:border-dark-500 bg-white/70 dark:bg-dark-800/70 backdrop-blur-sm transition-colors duration-300">
-   {SOCIALS.map(({ href, icon: Icon, label, external, text }) => (
+   {socials.map(({ href, icon: Icon, label, external, text }) => (
     <Link
      key={label}
      href={href}
