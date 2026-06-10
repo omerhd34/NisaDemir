@@ -39,7 +39,7 @@ const HomeHero = () => {
        <div className="divider-line w-full mt-4" />
       </div>
       <p className="text-[0.95rem] sm:text-base leading-[1.7] text-body max-w-2xl mx-auto lg:mx-0 mb-9">
-       {about?.text3}
+       Uzman Klinik Psikolog Nisa Demir, İstanbul Ticaret Üniversitesi Psikoloji bölümünü 2021 yılında tamamladıktan sonra İstanbul Okan Üniversitesi Tezli Klinik Psikoloji Yüksek Lisans Programı'ndan mezun olarak uzman unvanını almıştır. Yüksek lisans döneminde psikanalitik yönelimli süpervizyon ve eğitimler almıştır. Güncel olarak yetişkinlerle yüzyüze ve online bireysel psikoterapi çalışmalarını psikanalitik psikoterapi yaklaşımıyla sürdürmekte; mesleki süpervizyonuna devam etmektedir.
       </p>
 
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">

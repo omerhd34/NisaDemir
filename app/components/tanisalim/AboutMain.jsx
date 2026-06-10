@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 const sections = [
  { key: 'text1', icon: GraduationCap, label: 'Eğitim' },
  { key: 'text2', icon: BookMarked, label: 'Süpervizyon ve Eğitimler' },
- { key: 'text4', icon: Sparkles, label: 'Bugün' },
+ { key: 'text3', icon: Sparkles, label: 'Bugün' },
 ];
 
 const AboutMain = () => {
