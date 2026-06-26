@@ -8,6 +8,7 @@ import {
  UserCircle,
  Briefcase,
  BookOpen,
+ CircleHelp,
  LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,7 @@ const NAV = [
  { href: "/admin/about", label: "Hakkımda", icon: UserCircle },
  { href: "/admin/work", label: "Çalışma Alanları", icon: Briefcase },
  { href: "/admin/articles", label: "Yazılar", icon: BookOpen },
+ { href: "/admin/faq", label: "SSS", icon: CircleHelp },
 ];
 
 export default function AdminNav() {

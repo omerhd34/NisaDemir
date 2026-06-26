@@ -121,7 +121,7 @@ export default function AdminHomePage() {
     <div>
      <h2 className="font-serif text-3xl text-heading">Ana Sayfa Alıntıları</h2>
      <p className="text-body mt-2 max-w-2xl">
-      Dinlemenin sanatı bölümündeki alıntıları düzenleyin. Sıralamak için tutamacı sürükleyin,
+      Sözler bölümündeki alıntıları düzenleyin. Sıralamak için tutamacı sürükleyin,
       düzenlemek için satıra tıklayın.
      </p>
     </div>
