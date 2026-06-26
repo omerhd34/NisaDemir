@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { PORTRAIT_ALT } from '@/lib/imageAlt';
 import Link from 'next/link';
 import { ArrowRight, GraduationCap, BookMarked, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -21,7 +22,7 @@ const AboutMain = ({ about }) => {
       <div className="relative aspect-4/5 rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 dark:ring-white/5">
        <Image
         src="/nisa.jpeg"
-        alt="Nisa Demir"
+        alt={PORTRAIT_ALT}
         fill
         sizes="(max-width: 1024px) 80vw, 30vw"
         className="object-cover"
@@ -50,7 +51,7 @@ const AboutMain = ({ about }) => {
        <Separator />
        <Button asChild className="w-full mt-2">
         <Link href="/iletisim">
-         Randevu Al
+         Ön Görüşme Talebi
          <ArrowRight />
         </Link>
        </Button>

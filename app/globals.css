@@ -426,7 +426,6 @@ input:-webkit-autofill:active {
   );
 }
 
-/* Animation delay utilities (used by Header/HomeHero) */
 .animation-delay-200 {
   animation-delay: 200ms;
 }

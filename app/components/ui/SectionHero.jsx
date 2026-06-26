@@ -2,11 +2,13 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
 
 const SectionHero = ({
  icon: Icon,
  pillText,
  title,
+ description,
  className = '',
 }) => {
  const words = (title || '').trim().split(' ');
@@ -14,7 +16,7 @@ const SectionHero = ({
  const leading = words.join(' ');
 
  return (
-  <div className={`text-center mb-12 md:mb-16 animate-fadeIn ${className}`}>
+  <div className={cn('text-center mb-12 md:mb-16 animate-fadeIn', className)}>
    {pillText && (
     <Badge variant="eyebrow" className="mx-auto">
      {Icon && <Icon className="w-3.5 h-3.5" />}
@@ -31,6 +33,11 @@ const SectionHero = ({
     )}
    </h1>
    <Separator className="w-16 h-px mx-auto bg-primary/50 dark:bg-primary-dark/50 my-5" />
+   {description && (
+    <p className="text-base sm:text-lg text-body max-w-2xl mx-auto leading-relaxed">
+     {description}
+    </p>
+   )}
   </div>
  );
 };
