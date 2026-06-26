@@ -15,24 +15,12 @@ import {
  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Plus, Trash2, GripVertical } from "lucide-react";
-import {
- Select,
- SelectContent,
- SelectItem,
- SelectTrigger,
- SelectValue,
-} from "@/components/ui/select";
-import {
- createUniqueCategorySlug,
- getFaqCategoryTitle,
-} from "@/lib/faqCategories";
 import { cn } from "@/lib/utils";
 
-function emptyItem(categorySlug = "") {
+function emptyItem() {
  return {
   question: "",
   answer: "",
-  category: categorySlug,
   _key: `new-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
  };
 }
@@ -50,10 +38,16 @@ function itemPreview(item) {
  return "Soru eklenmedi";
 }
 
+function itemMeta(item) {
+ if (item.answer?.trim()) {
+  const text = item.answer.trim();
+  return text.length > 56 ? `${text.slice(0, 56)}…` : text;
+ }
+ return "Cevap eklenmedi";
+}
+
 export default function AdminFaqPage() {
  const [items, setItems] = useState([]);
- const [categories, setCategories] = useState([]);
- const [newCategoryTitle, setNewCategoryTitle] = useState("");
  const [openItems, setOpenItems] = useState([]);
  const [dragIndex, setDragIndex] = useState(null);
  const [overIndex, setOverIndex] = useState(null);
@@ -62,7 +56,6 @@ export default function AdminFaqPage() {
  useEffect(() => {
   fetchJson("/api/admin/faq").then((data) => {
    setItems(data.items || []);
-   setCategories(data.categories || []);
   });
  }, []);
 
@@ -70,36 +63,28 @@ export default function AdminFaqPage() {
   setItems((prev) => prev.map((item, i) => (i === index ? { ...item, [field]: value } : item)));
  }
 
- function updateCategory(index, field, value) {
-  setCategories((prev) =>
-   prev.map((category, i) => (i === index ? { ...category, [field]: value } : category))
-  );
- }
-
- async function persistAll(nextItems, nextCategories, showToast = false) {
+ async function persistAll(nextItems, showToast = false) {
   const data = await fetchJson("/api/admin/faq", {
    method: "PUT",
    headers: { "Content-Type": "application/json" },
-   body: JSON.stringify({ items: nextItems, categories: nextCategories }),
+   body: JSON.stringify({ items: nextItems }),
   });
   setItems(data.items || nextItems);
-  setCategories(data.categories || nextCategories);
   if (showToast) toast.success("Sıra güncellendi.");
  }
 
  async function save() {
-  await persistAll(items, categories);
+  await persistAll(items);
  }
 
  async function saveOrder(nextItems) {
   setSavingOrder(true);
   try {
-   await persistAll(nextItems, categories, true);
+   await persistAll(nextItems, true);
   } catch (error) {
    toast.error(error.message || "Sıra kaydedilemedi");
    const data = await fetchJson("/api/admin/faq");
    setItems(data.items || []);
-   setCategories(data.categories || []);
   } finally {
    setSavingOrder(false);
    setDragIndex(null);
@@ -118,34 +103,8 @@ export default function AdminFaqPage() {
   saveOrder(next);
  }
 
- function addCategory() {
-  const title = newCategoryTitle.trim();
-  if (!title) {
-   toast.error("Kategori adı girin.");
-   return;
-  }
-
-  const slug = createUniqueCategorySlug(title, categories);
-  setCategories((prev) => [...prev, { slug, title }]);
-  setNewCategoryTitle("");
-  toast.success("Kategori eklendi. Kaydetmeyi unutmayın.");
- }
-
- function removeCategory(slug) {
-  if (categories.length <= 1) {
-   toast.error("En az bir kategori olmalı.");
-   return;
-  }
-
-  const fallback = categories.find((cat) => cat.slug !== slug)?.slug || "";
-  setCategories((prev) => prev.filter((cat) => cat.slug !== slug));
-  setItems((prev) =>
-   prev.map((item) => (item.category === slug ? { ...item, category: fallback } : item))
-  );
- }
-
  function addItem() {
-  const item = emptyItem(categories[0]?.slug || "");
+  const item = emptyItem();
   setItems((prev) => [...prev, item]);
   setOpenItems((prev) => [...prev, itemKey(item, items.length)]);
  }
@@ -156,25 +115,13 @@ export default function AdminFaqPage() {
   setOpenItems((prev) => prev.filter((item) => item !== key));
  }
 
- function itemMeta(item) {
-  if (item.question?.trim()) {
-   return getFaqCategoryTitle(item.category, categories);
-  }
-  if (item.answer?.trim()) {
-   const text = item.answer.trim();
-   return text.length > 56 ? `${text.slice(0, 56)}…` : text;
-  }
-  return "Cevap eklenmedi";
- }
-
  return (
   <div className="space-y-6">
    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
     <div>
      <h2 className="font-serif text-3xl text-heading">Sıkça Sorulan Sorular</h2>
      <p className="text-body mt-2 max-w-2xl">
-      Kategorileri ve soruları düzenleyin. Sıralamak için tutamacı sürükleyin,
-      düzenlemek için satıra tıklayın.
+      Soruları düzenleyin. Sıralamak için tutamacı sürükleyin, düzenlemek için satıra tıklayın.
      </p>
     </div>
     <Button variant="outline" className="shrink-0 self-start" onClick={addItem}>
@@ -182,61 +129,6 @@ export default function AdminFaqPage() {
      Soru Ekle
     </Button>
    </div>
-
-   <Card className="p-5 sm:p-6 space-y-4">
-    <div>
-     <h3 className="font-serif text-xl text-heading">Kategoriler</h3>
-     <p className="text-sm text-body mt-1">
-      SSS sayfasında görünecek kategori başlıklarını yönetin.
-     </p>
-    </div>
-
-    {categories.length === 0 ? (
-     <p className="text-sm text-body">Henüz kategori yok. Aşağıdan ekleyin.</p>
-    ) : (
-     <div className="space-y-2">
-      {categories.map((category, index) => (
-       <div
-        key={category.slug}
-        className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-center"
-       >
-        <Input
-         value={category.title}
-         onChange={(e) => updateCategory(index, "title", e.target.value)}
-         placeholder="Kategori adı"
-        />
-        <Button
-         variant="ghost"
-         size="icon"
-         className="shrink-0 text-muted hover:text-red-500 dark:hover:text-red-400"
-         onClick={() => removeCategory(category.slug)}
-         aria-label={`${category.title} kategorisini sil`}
-        >
-         <Trash2 className="w-4 h-4" />
-        </Button>
-       </div>
-      ))}
-     </div>
-    )}
-
-    <div className="flex flex-col sm:flex-row gap-2">
-     <Input
-      value={newCategoryTitle}
-      onChange={(e) => setNewCategoryTitle(e.target.value)}
-      placeholder="Yeni kategori adı"
-      onKeyDown={(e) => {
-       if (e.key === "Enter") {
-        e.preventDefault();
-        addCategory();
-       }
-      }}
-     />
-     <Button variant="outline" className="shrink-0" onClick={addCategory}>
-      <Plus />
-      Kategori Ekle
-     </Button>
-    </div>
-   </Card>
 
    {items.length === 0 ? (
     <Card className="p-10 text-center">
@@ -312,28 +204,6 @@ export default function AdminFaqPage() {
 
           <AccordionContent className="border-t border-gray-100 dark:border-dark-500/40">
            <div className="px-4 sm:px-5 pb-5 pt-4 space-y-4">
-            <div className="space-y-2">
-             <Label>Kategori</Label>
-             {categories.length === 0 ? (
-              <p className="text-sm text-body">Önce bir kategori ekleyin.</p>
-             ) : (
-              <Select
-               value={item.category || categories[0]?.slug}
-               onValueChange={(value) => updateItem(index, "category", value)}
-              >
-               <SelectTrigger>
-                <SelectValue placeholder="Kategori seçin" />
-               </SelectTrigger>
-               <SelectContent>
-                {categories.map((category) => (
-                 <SelectItem key={category.slug} value={category.slug}>
-                  {category.title}
-                 </SelectItem>
-                ))}
-               </SelectContent>
-              </Select>
-             )}
-            </div>
             <div className="space-y-2">
              <Label>Soru</Label>
              <Input

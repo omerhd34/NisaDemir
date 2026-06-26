@@ -19,7 +19,7 @@ const HomeWelcome = ({ home }) => {
     <div className="max-w-5xl mx-auto">
      <div className="text-center mb-8 md:mb-10 animate-fadeIn">
       <h2 className="display-serif text-2xl sm:text-3xl md:text-[2.1rem] mt-3 mb-2 text-heading">
-       <span className="italic font-normal">Psikoterapi Yolculuğunda Bize Eşlik Eden Sözler</span>
+       <span className="italic font-normal">Psikoterapi yolculuğunda bize eşlik eden sözler</span>
       </h2>
      </div>
 

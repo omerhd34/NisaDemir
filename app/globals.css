@@ -129,6 +129,7 @@
 
 .dark {
   color-scheme: dark;
+  scrollbar-color: var(--color-primary-dark) var(--color-dark-600);
 }
 
 /* Smoother default text rendering */
@@ -136,6 +137,56 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-gray-200);
+}
+
+.dark::-webkit-scrollbar-track {
+  background: var(--color-dark-600);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gray-200);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--color-primary) 0%,
+    var(--color-primary-light) 100%
+  );
+  border-radius: 9999px;
+  border: 2px solid var(--color-gray-200);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    var(--color-primary-light) 0%,
+    var(--color-primary) 100%
+  );
+}
+
+.dark::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--color-primary-dark) 0%,
+    var(--color-primary-dark-light) 100%
+  );
+  border-color: var(--color-dark-600);
+}
+
+.dark::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    var(--color-primary-dark-light) 0%,
+    var(--color-primary-dark) 100%
+  );
 }
 
 body {

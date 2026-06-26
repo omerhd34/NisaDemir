@@ -7,7 +7,7 @@ const WorkHero = () => {
  return (
   <SectionHero
    icon={Briefcase}
-   pillText="Çalışma Alanlarım"
+   pillText="Destek Verdiğim Konular"
    title="Çalışma Alanlarım"
    className="mb-5 md:mb-7"
   />

@@ -5,38 +5,16 @@ import { revalidateFaqPage } from "@/lib/revalidatePublic";
 
 export async function GET() {
  return adminHandler(async () => {
-  const [items, categories] = await Promise.all([
-   prisma.faqItem.findMany({ orderBy: { sortOrder: "asc" } }),
-   prisma.faqCategory.findMany({ orderBy: { sortOrder: "asc" } }),
-  ]);
-
-  return NextResponse.json({ items, categories });
+  const items = await prisma.faqItem.findMany({ orderBy: { sortOrder: "asc" } });
+  return NextResponse.json({ items });
  });
 }
 
 export async function PUT(request) {
  return adminHandler(async () => {
-  const { items, categories } = await request.json();
-  const defaultCategory = categories?.[0]?.slug || "genel";
+  const { items } = await request.json();
 
   await prisma.$transaction(async (tx) => {
-   await tx.faqCategory.deleteMany();
-
-   if (Array.isArray(categories)) {
-    for (let i = 0; i < categories.length; i++) {
-     const category = categories[i];
-     if (!category.slug?.trim() || !category.title?.trim()) continue;
-
-     await tx.faqCategory.create({
-      data: {
-       slug: category.slug.trim(),
-       title: category.title.trim(),
-       sortOrder: i,
-      },
-     });
-    }
-   }
-
    await tx.faqItem.deleteMany();
 
    if (Array.isArray(items)) {
@@ -46,7 +24,6 @@ export async function PUT(request) {
       data: {
        question: item.question,
        answer: item.answer,
-       category: item.category || defaultCategory,
        sortOrder: i,
       },
      });
@@ -54,12 +31,9 @@ export async function PUT(request) {
    }
   });
 
-  const [updatedItems, updatedCategories] = await Promise.all([
-   prisma.faqItem.findMany({ orderBy: { sortOrder: "asc" } }),
-   prisma.faqCategory.findMany({ orderBy: { sortOrder: "asc" } }),
-  ]);
+  const updatedItems = await prisma.faqItem.findMany({ orderBy: { sortOrder: "asc" } });
 
   revalidateFaqPage();
-  return NextResponse.json({ items: updatedItems, categories: updatedCategories });
+  return NextResponse.json({ items: updatedItems });
  });
 }

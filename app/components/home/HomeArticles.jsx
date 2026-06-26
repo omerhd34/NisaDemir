@@ -27,7 +27,7 @@ const HomeArticles = ({ articles = [] }) => {
         <span className="italic font-normal text-primary dark:text-primary-dark-light">Yazılarım</span>
        </h2>
        <p className="text-base sm:text-lg text-body mt-4 max-w-2xl leading-relaxed">
-        Ruh sağlığı, psikanaliz ve insan ruhuna dair yazılar.
+        Ruh sağlığına dair yazılar.
        </p>
       </div>
 

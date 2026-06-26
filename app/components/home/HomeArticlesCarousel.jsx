@@ -93,11 +93,11 @@ const HomeArticlesCarousel = ({ articles = [] }) => {
      <>
       <CarouselPrevious
        variant="default"
-       className="hidden sm:inline-flex h-12 w-12 md:h-14 md:w-14 [&_svg]:size-5 md:[&_svg]:size-6 -left-8 sm:-left-12 md:-left-16 lg:-left-20 xl:-left-24 border-0 shadow-md disabled:opacity-30"
+       className="hidden sm:inline-flex h-9 w-9 md:h-10 md:w-10 [&_svg]:size-4 -left-6 sm:-left-8 md:-left-10 lg:-left-12 xl:-left-14 border-0 shadow-md disabled:opacity-30"
       />
       <CarouselNext
        variant="default"
-       className="hidden sm:inline-flex h-12 w-12 md:h-14 md:w-14 [&_svg]:size-5 md:[&_svg]:size-6 -right-8 sm:-right-12 md:-right-16 lg:-right-20 xl:-right-24 border-0 shadow-md disabled:opacity-30"
+       className="hidden sm:inline-flex h-9 w-9 md:h-10 md:w-10 [&_svg]:size-4 -right-6 sm:-right-8 md:-right-10 lg:-right-12 xl:-right-14 border-0 shadow-md disabled:opacity-30"
       />
      </>
     ) : null}
