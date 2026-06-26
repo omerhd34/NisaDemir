@@ -39,7 +39,7 @@ const WorkAreas = ({ work }) => {
        <div className="mt-7 pt-5 border-t border-gray-200 dark:border-dark-500/60">
         <Button asChild variant="link" className="p-0 h-auto text-sm font-medium">
          <Link href="/iletisim" className="group/btn">
-          Randevu Al
+          Ön Görüşme Talebi
           <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
          </Link>
         </Button>

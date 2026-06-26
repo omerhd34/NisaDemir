@@ -9,6 +9,7 @@ const WorkHero = () => {
    icon={Briefcase}
    pillText="Çalışma Alanlarım"
    title="Çalışma Alanlarım"
+   className="mb-5 md:mb-7"
   />
  );
 };
