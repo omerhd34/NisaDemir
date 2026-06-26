@@ -1,7 +1,14 @@
 export const metadata = {
   title: "Çalışma Alanlarım",
   description:
-    "Terapi ve danışmanlık kapsamı: anksiyete, depresyon, ilişkiler, travma ve daha fazlası.",
+    "Anksiyete, depresyon, ilişkiler, travma ve kişisel gelişim — Kadıköy ve online terapi kapsamı.",
+  keywords: [
+    "bireysel terapi",
+    "online terapi",
+    "psikanalitik psikoterapi",
+    "Kadıköy psikoterapi",
+    "anksiyete terapisi",
+  ],
   alternates: { canonical: "/calisma_alanlarim" },
   openGraph: {
     title: "Çalışma Alanlarım | Nisa Demir",

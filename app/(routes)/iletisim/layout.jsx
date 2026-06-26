@@ -1,7 +1,13 @@
 export const metadata = {
   title: "İletişim",
   description:
-    "Randevu ve sorularınız için iletişim: online veya yüz yüze görüşme talebi.",
+    "Randevu ve sorularınız için iletişim — Kadıköy yüz yüze ve online görüşme talebi.",
+  keywords: [
+    "psikolog randevu",
+    "Kadıköy psikolog iletişim",
+    "online terapi randevu",
+    "Nisa Demir iletişim",
+  ],
   alternates: { canonical: "/iletisim" },
   openGraph: {
     title: "İletişim | Nisa Demir",

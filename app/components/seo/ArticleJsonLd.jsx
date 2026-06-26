@@ -1,54 +1,52 @@
-import { getSiteUrl } from "@/lib/site";
-
-function absoluteImageUrl(pathOrUrl) {
-  if (!pathOrUrl) return undefined;
-  if (pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://")) {
-    return pathOrUrl;
-  }
-  const base = getSiteUrl();
-  if (!base) return pathOrUrl;
-  const path = pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`;
-  return `${base}${path}`;
-}
+import { articleImageAlt } from "@/lib/imageAlt";
+import { absoluteImageUrl, absoluteUrl } from "@/lib/seo";
 
 export default function ArticleJsonLd({ article }) {
-  const base = getSiteUrl();
-  if (!article || !base) return null;
+ const base = absoluteUrl("/");
+ if (!article || !base) return null;
 
-  const url = `${base}/yazilarim/${article.slug}`;
-  const image = absoluteImageUrl(article.image);
-  const published = article.createdAt
-    ? new Date(article.createdAt).toISOString()
-    : undefined;
-  const modified = article.updatedAt
-    ? new Date(article.updatedAt).toISOString()
-    : published;
+ const url = absoluteUrl(`/yazilarim/${article.slug}`);
+ const image = absoluteImageUrl(article.image);
+ const published = article.createdAt
+  ? new Date(article.createdAt).toISOString()
+  : undefined;
+ const modified = article.updatedAt
+  ? new Date(article.updatedAt).toISOString()
+  : published;
 
-  const json = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: article.title,
-    description: article.excerpt,
-    url,
-    mainEntityOfPage: { "@type": "WebPage", "@id": url },
-    ...(image ? { image: [image] } : {}),
-    ...(published ? { datePublished: published } : {}),
-    ...(modified ? { dateModified: modified } : {}),
-    author: {
-      "@type": "Person",
-      name: article.writer || "Nisa Demir",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Nisa Demir",
-      url: base,
-    },
-  };
+ const json = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: article.title,
+  description: article.excerpt,
+  url,
+  mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  inLanguage: "tr-TR",
+  ...(image
+   ? { image: [{ "@type": "ImageObject", url: image, caption: articleImageAlt(article.title) }] }
+   : {}),
+  ...(published ? { datePublished: published } : {}),
+  ...(modified ? { dateModified: modified } : {}),
+  author: {
+   "@type": "Person",
+   name: article.writer || "Nisa Demir",
+   url: base,
+  },
+  publisher: {
+   "@type": "Organization",
+   name: "Nisa Demir",
+   url: base,
+   logo: {
+    "@type": "ImageObject",
+    url: absoluteImageUrl("/nisa.jpeg"),
+   },
+  },
+ };
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
-    />
-  );
+ return (
+  <script
+   type="application/ld+json"
+   dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+  />
+ );
 }

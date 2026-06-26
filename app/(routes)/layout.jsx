@@ -4,27 +4,28 @@ import Footer from "@/app/components/ui/Footer";
 import ScrollToTop from "@/app/components/ui/ScrollToTop";
 import SiteJsonLd from "@/app/components/seo/SiteJsonLd";
 import { getSiteUrl } from "@/lib/site";
+import {
+ DEFAULT_DESCRIPTION,
+ DEFAULT_KEYWORDS,
+ DEFAULT_TITLE,
+ LOCALE,
+ OG_IMAGE_PATH,
+ SITE_NAME,
+ absoluteUrl,
+ openGraphImages,
+} from "@/lib/seo";
 
 const siteUrl = getSiteUrl();
+const defaultOgImage = openGraphImages(absoluteUrl(OG_IMAGE_PATH));
 
 export const metadata = {
  metadataBase: siteUrl ? new URL(siteUrl.endsWith("/") ? siteUrl : `${siteUrl}/`) : undefined,
  title: {
-  default: "Uzman Klinik Psikolog Nisa Demir",
+  default: DEFAULT_TITLE,
   template: "%s | Nisa Demir",
  },
- description:
-  "Uzman Klinik Psikolog Nisa Demir — Bireysel terapi, online terapi ve psikolojik danışmanlık. Anksiyete, depresyon, stres yönetimi ve kişisel gelişim konularında profesyonel destek.",
- keywords: [
-  "psikolog",
-  "klinik psikolog",
-  "terapi",
-  "online terapi",
-  "bireysel terapi",
-  "psikolojik danışmanlık",
-  "online psikolog",
-  "Nisa Demir",
- ],
+ description: DEFAULT_DESCRIPTION,
+ keywords: DEFAULT_KEYWORDS,
  authors: [{ name: "Nisa Demir", ...(siteUrl ? { url: siteUrl } : {}) }],
  creator: "Nisa Demir",
  robots: {
@@ -38,17 +39,18 @@ export const metadata = {
  },
  openGraph: {
   type: "website",
-  locale: "tr_TR",
-  siteName: "Nisa Demir — Psikolog",
-  title: "Uzman Klinik Psikolog Nisa Demir",
-  description:
-   "Bireysel ve online terapi, psikolojik danışmanlık. Profesyonel ve güvenli terapi desteği.",
+  locale: LOCALE,
+  siteName: SITE_NAME,
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
   url: siteUrl || undefined,
+  ...(defaultOgImage ? { images: defaultOgImage } : {}),
  },
  twitter: {
   card: "summary_large_image",
-  title: "Uzman Klinik Psikolog Nisa Demir",
-  description: "Bireysel ve online terapi, psikolojik danışmanlık hizmetleri.",
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
+  ...(defaultOgImage ? { images: [defaultOgImage[0].url] } : {}),
  },
  category: "health",
 };

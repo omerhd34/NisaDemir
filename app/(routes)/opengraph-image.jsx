@@ -2,7 +2,8 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Uzman Klinik Psikolog Nisa Demir";
+export const alt =
+ "Uzman Klinik Psikolog Nisa Demir — Kadıköy bireysel ve online terapi";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -54,7 +55,7 @@ export default function OpenGraphImage() {
             textAlign: "center",
           }}
         >
-          Bireysel ve online terapi
+          Kadıköy · İstanbul — Bireysel ve online terapi
         </div>
       </div>
     ),
