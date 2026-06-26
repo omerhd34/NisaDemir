@@ -95,8 +95,8 @@ const ContactForm = () => {
  };
 
  return (
-  <Card className="w-full h-full animate-slideUp flex flex-col">
-   <CardHeader className="pb-2">
+  <Card className="w-full h-full min-h-full flex-1 flex flex-col animate-slideUp">
+   <CardHeader className="pb-2 shrink-0">
     <CardTitle className="font-serif text-2xl md:text-3xl text-heading">
      Benimle İletişime <span className="italic font-normal text-primary dark:text-primary-dark-light">Geçin</span>
     </CardTitle>
@@ -105,7 +105,7 @@ const ContactForm = () => {
     </p>
    </CardHeader>
 
-   <CardContent className="pt-4">
+   <CardContent className="flex-1 flex flex-col pt-4">
     {submitted && (
      <div className="mb-6 p-4 rounded-xl flex items-center gap-3 animate-fadeIn bg-primary/10 dark:bg-primary-dark/15 border border-primary/30 dark:border-primary-dark/30">
       <CheckCircle2 className="w-5 h-5 shrink-0 text-primary dark:text-primary-dark-light" />
@@ -121,7 +121,7 @@ const ContactForm = () => {
      </div>
     )}
 
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="flex flex-1 flex-col space-y-5">
      <div className="grid sm:grid-cols-2 gap-4">
       <div className="space-y-2">
        <Label htmlFor="name">
@@ -180,7 +180,7 @@ const ContactForm = () => {
       )}
      </div>
 
-     <div className="space-y-2">
+     <div className="space-y-2 flex-1 flex flex-col min-h-0">
       <Label htmlFor="message">
        Mesaj <span className="text-primary">*</span>
       </Label>
@@ -192,13 +192,14 @@ const ContactForm = () => {
        rows={6}
        placeholder="Mesajınızı buraya yazın..."
        aria-invalid={!!errors.message}
+       className="flex-1 min-h-36 resize-none"
       />
       {errors.message && (
        <p className="text-xs text-red-600 dark:text-red-400">{errors.message}</p>
       )}
      </div>
 
-     <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+     <Button type="submit" size="lg" className="w-full shrink-0 mt-auto" disabled={isSubmitting}>
       <Send className="w-4 h-4" />
       {isSubmitting ? 'Gönderiliyor...' : 'Gönder'}
      </Button>
