@@ -6,10 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { instagramAppUrl, mailLinkProps } from '@/lib/socialAppLinks';
-import {
- CONTACT_PHONE,
- contactPhoneTelUrl,
-} from '@/lib/contactPhone';
+import { phoneTelUrl } from '@/lib/contactPhone';
 const ContactInfo = ({ social }) => {
  return (
   <Card className="w-full h-full min-h-full flex-1 flex flex-col animate-slideUp">
@@ -36,10 +33,10 @@ const ContactInfo = ({ social }) => {
 
      <InfoRow icon={Phone} label="Telefon">
       <HrefLink
-       href={contactPhoneTelUrl}
+       href={phoneTelUrl(social.phone.tel)}
        className="text-sm sm:text-base text-heading hover:text-primary dark:hover:text-primary-dark-light transition-colors underline-offset-2 hover:underline"
       >
-       {CONTACT_PHONE.display}
+       {social.phone.display}
       </HrefLink>
      </InfoRow>
 

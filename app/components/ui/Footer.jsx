@@ -7,10 +7,9 @@ import { getSocial } from '@/lib/siteData';
 import { mainNavLinks, infoNavLinks } from '@/lib/siteNav';
 import { instagramAppUrl, mailLinkProps } from '@/lib/socialAppLinks';
 import {
- CONTACT_PHONE,
- contactPhoneTelUrl,
- contactPhoneWhatsAppAppUrl,
- contactPhoneWhatsAppUrl,
+ phoneTelUrl,
+ phoneWhatsAppAppUrl,
+ phoneWhatsAppUrl,
 } from '@/lib/contactPhone';
 
 function FooterSectionLabel({ children }) {
@@ -81,11 +80,11 @@ export default async function Footer() {
  const currentYear = new Date().getFullYear();
 
  const contactItems = [
-  { icon: Phone, href: contactPhoneTelUrl, text: CONTACT_PHONE.display },
+  { icon: Phone, href: phoneTelUrl(social.phone.tel), text: social.phone.display },
   {
    icon: FaWhatsapp,
-   href: contactPhoneWhatsAppUrl,
-   appHref: contactPhoneWhatsAppAppUrl,
+   href: phoneWhatsAppUrl(social.phone.tel),
+   appHref: phoneWhatsAppAppUrl(social.phone.tel),
    text: 'WhatsApp',
   },
   { icon: Mail, ...mailLinkProps(social.email), text: social.email },
@@ -167,28 +166,6 @@ export default async function Footer() {
      <p className="text-sm text-muted">
       © {currentYear} Nisa Demir
      </p>
-
-     <nav
-      aria-label="Yasal bağlantılar"
-      className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-muted"
-     >
-      <HrefLink
-       href="/kvkk"
-       className="hover:text-heading transition-colors duration-300"
-      >
-       KVKK Aydınlatma Metni
-      </HrefLink>
-      <span aria-hidden className="text-gray-300 dark:text-dark-500">
-       ·
-      </span>
-      <HrefLink
-       href="/cerez-politikasi"
-       className="hover:text-heading transition-colors duration-300"
-      >
-       Çerez Politikası
-      </HrefLink>
-     </nav>
-
      <p className="text-sm text-muted">Tüm hakları saklıdır.</p>
     </div>
    </div>

@@ -1,9 +1,9 @@
 import HrefLink from '@/components/ui/HrefLink';
 import SocialAppLink from '@/components/ui/SocialAppLink';
 import LegalPage from '@/app/components/ui/LegalPage';
-import { CONTACT_PHONE, contactPhoneTelUrl } from '@/lib/contactPhone';
 import { mailLinkProps } from '@/lib/socialAppLinks';
-import { social } from '@/lib/initialSiteData';
+import { phoneTelUrl } from '@/lib/contactPhone';
+import { getSocial } from '@/lib/siteData';
 import { getLegalLastUpdated } from '@/lib/getLegalLastUpdated';
 import { ChevronRight } from 'lucide-react';
 
@@ -32,7 +32,8 @@ const pathIcon = (
  />
 );
 
-export default function CookiePolicyPage() {
+export default async function CookiePolicyPage() {
+ const social = await getSocial();
  const lastUpdated = getLegalLastUpdated();
 
  return (
@@ -204,8 +205,8 @@ export default function CookiePolicyPage() {
     </li>
     <li className="pl-0.5">
      <strong className="font-semibold text-gray-900 dark:text-gray-50">Telefon:</strong>{' '}
-     <HrefLink href={contactPhoneTelUrl} className={contactLinkClass}>
-      {CONTACT_PHONE.display}
+     <HrefLink href={phoneTelUrl(social.phone.tel)} className={contactLinkClass}>
+      {social.phone.display}
      </HrefLink>
     </li>
    </ul>

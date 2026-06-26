@@ -1,5 +1,4 @@
-import { CONTACT_PHONE } from "@/lib/contactPhone";
-import { social } from "@/lib/initialSiteData";
+import { getSocial } from "@/lib/siteData";
 import {
  absoluteImageUrl,
  absoluteUrl,
@@ -7,10 +6,11 @@ import {
  DEFAULT_TITLE,
 } from "@/lib/seo";
 
-export default function SiteJsonLd() {
+export default async function SiteJsonLd() {
  const base = absoluteUrl("/");
  if (!base) return null;
 
+ const social = await getSocial();
  const image = absoluteImageUrl("/nisa.jpeg");
  const sameAs = [social.instagram.url].filter(Boolean);
 
@@ -33,7 +33,7 @@ export default function SiteJsonLd() {
   url: base,
   image,
   description: DEFAULT_DESCRIPTION,
-  telephone: CONTACT_PHONE.tel,
+  telephone: social.phone.tel,
   email: social.email,
   address: {
    "@type": "PostalAddress",

@@ -10,6 +10,8 @@ datasource db {
 model Social {
   id                Int      @id @default(1)
   email             String
+  phoneDisplay      String   @default("")
+  phoneTel          String   @default("")
   instagramUsername String
   instagramUrl      String
   updatedAt         DateTime @updatedAt

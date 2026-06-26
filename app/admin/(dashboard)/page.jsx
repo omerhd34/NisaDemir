@@ -7,6 +7,7 @@ import {
  Briefcase,
  BookOpen,
  CircleHelp,
+ Mail,
 } from "lucide-react";
 
 const SECTIONS = [
@@ -15,6 +16,7 @@ const SECTIONS = [
  { href: "/admin/work", title: "Çalışma Alanları", desc: "Terapi alanları ve açıklamalar", icon: Briefcase },
  { href: "/admin/articles", title: "Yazılar", desc: "Blog yazılarını ekle ve düzenle", icon: BookOpen },
  { href: "/admin/faq", title: "SSS", desc: "Sıkça sorulan sorular ve cevapları", icon: CircleHelp },
+ { href: "/admin/social", title: "İletişim", desc: "E-posta, telefon ve sosyal medya", icon: Mail },
 ];
 
 export default function AdminDashboardPage() {

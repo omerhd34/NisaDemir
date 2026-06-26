@@ -153,7 +153,7 @@ Uygulama [http://localhost:3000](http://localhost:3000) adresinde açılır. Adm
 Proje [Vercel](https://vercel.com/) veya benzeri bir platforma deploy edilebilir.
 
 1. Ortam değişkenlerinin tamamını platform paneline ekleyin.
-2. `NEXT_PUBLIC_SITE_URL` değerini canlı domain ile eşleştirin.
+2. `NEXT_PUBLIC_SITE_URL` değerini canlı domain ile eşleştirin (`https://www.nisademir.com`). Bu değişken sitemap, canonical URL ve Open Graph için zorunludur; ayarlanmazsa sitemap yanlış `*.vercel.app` adresleri üretebilir.
 3. `DATABASE_URL` için erişilebilir bir MySQL bağlantısı sağlayın.
 4. Resend'de gönderici domain'inizi doğrulayın; `app/api/contact/route.js` içindeki `from` adresini buna göre güncelleyin.
 5. Admin panelinden görsel yüklemek için [Cloudinary](https://cloudinary.com/) hesabı açın ve `CLOUDINARY_*` değişkenlerini ekleyin. Localhost'ta dosya diske yazılır; production'da Cloudinary kullanılır.

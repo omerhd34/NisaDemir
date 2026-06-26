@@ -6,12 +6,12 @@ import { FaInstagram } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import HrefLink from '@/components/ui/HrefLink';
 import SocialAppLink from '@/components/ui/SocialAppLink';
-import { CONTACT_PHONE, contactPhoneTelUrl } from '@/lib/contactPhone';
 import { instagramAppUrl, mailLinkProps } from '@/lib/socialAppLinks';
+import { phoneTelUrl } from '@/lib/contactPhone';
 
 const HomeHero = ({ social }) => {
  const SOCIALS = [
-  { href: contactPhoneTelUrl, icon: Phone, label: CONTACT_PHONE.display },
+  { href: phoneTelUrl(social.phone.tel), icon: Phone, label: social.phone.display },
   { ...mailLinkProps(social.email), icon: Mail, label: 'E-posta' },
   {
    href: social.instagram.url,
