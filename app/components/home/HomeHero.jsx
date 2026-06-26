@@ -1,13 +1,24 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Calendar, Mail } from 'lucide-react';
+import { PORTRAIT_ALT } from '@/lib/imageAlt';
+import { ArrowRight, Calendar, Mail, Phone } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
+import HrefLink from '@/components/ui/HrefLink';
+import SocialAppLink from '@/components/ui/SocialAppLink';
+import { CONTACT_PHONE, contactPhoneTelUrl } from '@/lib/contactPhone';
+import { instagramAppUrl, mailLinkProps } from '@/lib/socialAppLinks';
 
 const HomeHero = ({ social }) => {
  const SOCIALS = [
-  { href: `mailto:${social.email}`, icon: Mail, label: 'E-posta', text: social.email },
-  { href: social.instagram.url, icon: FaInstagram, label: 'Instagram', external: true },
+  { href: contactPhoneTelUrl, icon: Phone, label: CONTACT_PHONE.display },
+  { ...mailLinkProps(social.email), icon: Mail, label: 'E-posta' },
+  {
+   href: social.instagram.url,
+   appHref: instagramAppUrl(social.instagram.username),
+   icon: FaInstagram,
+   label: 'Instagram',
+  },
  ];
 
  return (
@@ -44,7 +55,7 @@ const HomeHero = ({ social }) => {
        <Button asChild size="lg" className="group">
         <Link href="/iletisim">
          <Calendar />
-         Randevu Al
+         Ön Görüşme Talebi
          <ArrowRight className="group-hover:translate-x-0.5 transition-transform" />
         </Link>
        </Button>
@@ -59,7 +70,7 @@ const HomeHero = ({ social }) => {
        <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 dark:ring-white/5">
         <Image
          src="/nisa.jpeg"
-         alt="Klinik Psikolog Nisa Demir, muayenehane ortamında portresi"
+         alt={PORTRAIT_ALT}
          fill
          sizes="(max-width: 768px) 80vw, (max-width: 1024px) 45vw, 32vw"
          className="object-cover"
@@ -84,28 +95,33 @@ const HomeHero = ({ social }) => {
 function SocialRow({ socials }) {
  return (
   <div className="flex flex-wrap items-center justify-center gap-3 p-3.5 rounded-xl border border-gray-200 dark:border-dark-500 bg-white/70 dark:bg-dark-800/70 backdrop-blur-sm transition-colors duration-300">
-   {socials.map(({ href, icon: Icon, label, external, text }) => (
-    <Link
-     key={label}
-     href={href}
-     target={external ? '_blank' : undefined}
-     rel={external ? 'noopener noreferrer' : undefined}
-     aria-label={label}
-     title={label}
-     className={`group relative inline-flex items-center justify-center h-11 ${text ? 'gap-2 px-4 rounded-full' : 'w-11 rounded-full'} border border-primary/25 dark:border-primary-dark/25 text-primary dark:text-primary-dark-light overflow-hidden transition-colors duration-300`}
-    >
-     <span
-      aria-hidden
-      className="absolute inset-0 scale-0 rounded-full bg-linear-to-br from-primary to-primary-light dark:from-primary-dark dark:to-primary-dark-light group-hover:scale-100 transition-transform duration-500 ease-out"
-     />
-     <Icon className="relative z-10 w-[18px] h-[18px] group-hover:text-white dark:group-hover:text-gray-950 transition-colors duration-300" />
-     {text ? (
-      <span className="relative z-10 text-sm font-medium tracking-wide group-hover:text-white dark:group-hover:text-gray-950 transition-colors duration-300">
-       {text}
-      </span>
-     ) : null}
-    </Link>
-   ))}
+   {socials.map(({ href, appHref, tryAppOnDesktop, icon: Icon, label, text }) => {
+    const LinkComponent = appHref ? SocialAppLink : HrefLink;
+    const linkProps = appHref
+     ? { appHref, webHref: href, tryAppOnDesktop }
+     : { href };
+
+    return (
+     <LinkComponent
+      key={label}
+      {...linkProps}
+      aria-label={label}
+      title={label}
+      className={`group relative inline-flex items-center justify-center h-11 ${text ? 'gap-2 px-4 rounded-full' : 'w-11 rounded-full'} border border-primary/25 dark:border-primary-dark/25 text-primary dark:text-primary-dark-light overflow-hidden transition-colors duration-300`}
+     >
+      <span
+       aria-hidden
+       className="absolute inset-0 scale-0 rounded-full bg-linear-to-br from-primary to-primary-light dark:from-primary-dark dark:to-primary-dark-light group-hover:scale-100 transition-transform duration-500 ease-out"
+      />
+      <Icon className="relative z-10 w-[18px] h-[18px] group-hover:text-white dark:group-hover:text-gray-950 transition-colors duration-300" />
+      {text ? (
+       <span className="relative z-10 text-sm font-medium tracking-wide group-hover:text-white dark:group-hover:text-gray-950 transition-colors duration-300">
+        {text}
+       </span>
+      ) : null}
+     </LinkComponent>
+    );
+   })}
   </div>
  );
 }
