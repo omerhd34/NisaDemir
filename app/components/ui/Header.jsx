@@ -15,12 +15,14 @@ import {
 } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 
+import { mainNavLinks } from '@/lib/siteNav';
+
 const menuItems = [
- { id: 'home', label: 'Ana Sayfa', icon: Home, href: '/' },
- { id: 'about', label: 'Tanışalım', icon: User, href: '/tanisalim' },
- { id: 'work', label: 'Size Nasıl Yardımcı Olabilirim?', icon: Briefcase, href: '/calisma_alanlarim' },
- { id: 'articles', label: 'Blog & Makaleler', icon: FileText, href: '/yazilarim' },
- { id: 'contact', label: 'İletişim', icon: Mail, href: '/iletisim' },
+ { id: 'home', label: 'Ana Sayfa', icon: Home, href: mainNavLinks[0].href },
+ { id: 'about', label: 'Tanışalım', icon: User, href: mainNavLinks[1].href },
+ { id: 'work', label: 'Çalışma Alanlarım', icon: Briefcase, href: mainNavLinks[2].href },
+ { id: 'articles', label: 'Blog & Makaleler', icon: FileText, href: mainNavLinks[3].href },
+ { id: 'contact', label: 'İletişim', icon: Mail, href: mainNavLinks[4].href },
 ];
 
 const Header = () => {
@@ -65,7 +67,7 @@ const Header = () => {
 
      <div className="flex items-center gap-2">
       <Button asChild size="sm" className="hidden md:inline-flex">
-       <Link href="/iletisim">Randevu Al</Link>
+       <Link href="/iletisim">Ön Görüşme Talebi</Link>
       </Button>
 
       <Button
@@ -125,7 +127,7 @@ const Header = () => {
         <div className="p-5 border-t border-gray-200 dark:border-dark-500/40">
          <Button asChild className="w-full" size="lg">
           <Link href="/iletisim" onClick={() => setOpen(false)}>
-           Randevu Al
+           Ön Görüşme Talebi
           </Link>
          </Button>
         </div>
