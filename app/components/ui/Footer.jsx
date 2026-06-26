@@ -1,72 +1,195 @@
-import Link from 'next/link';
-import { Clock, Mail, MapPin, Phone } from 'lucide-react';
-import { FaInstagram } from 'react-icons/fa';
-import { getContact, getSocial } from '@/lib/siteData';
+import HrefLink from '@/components/ui/HrefLink';
+import SocialAppLink from '@/components/ui/SocialAppLink';
+import Logo from '@/app/components/ui/Logo';
+import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react';
+import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import { getSocial } from '@/lib/siteData';
+import { mainNavLinks, infoNavLinks } from '@/lib/siteNav';
+import { instagramAppUrl, mailLinkProps } from '@/lib/socialAppLinks';
+import {
+ CONTACT_PHONE,
+ contactPhoneTelUrl,
+ contactPhoneWhatsAppAppUrl,
+ contactPhoneWhatsAppUrl,
+} from '@/lib/contactPhone';
 
-export default async function Footer() {
- const [contact, social] = await Promise.all([getContact(), getSocial()]);
- const currentYear = new Date().getFullYear();
+function FooterSectionLabel({ children }) {
+ return (
+  <p className="text-[0.65rem] font-medium uppercase tracking-[0.24em] text-muted mb-5">
+   {children}
+  </p>
+ );
+}
 
- const socialMedia = [
-  { icon: Mail, link: `mailto:${social.email}`, label: social.email },
-  { icon: FaInstagram, link: social.instagram.url, label: 'Instagram' },
- ];
+function FooterNavLinks({ links }) {
+ return (
+  <ul className="space-y-1">
+   {links.map(({ href, label }) => (
+    <li key={href}>
+     <HrefLink
+      href={href}
+      className="group relative block py-1.5 text-[0.95rem] text-body hover:text-heading transition-colors duration-300"
+     >
+      <span
+       aria-hidden
+       className="absolute top-1/2 -left-4 h-px w-0 -translate-y-1/2 bg-primary/70 dark:bg-primary-dark/70 transition-all duration-300 group-hover:w-3"
+      />
+      {label}
+     </HrefLink>
+    </li>
+   ))}
+  </ul>
+ );
+}
 
- const workingHours = contact?.workingHours || [];
+function FooterContactItem({ icon: Icon, href, appHref, tryAppOnDesktop, children }) {
+ const iconBox = (
+  <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-gray-200/80 bg-white/70 text-primary dark:border-dark-500/60 dark:bg-dark-800/70 dark:text-primary-dark-light">
+   <Icon className="h-3.5 w-3.5" />
+  </span>
+ );
+
+ if (href) {
+  const LinkComponent = appHref ? SocialAppLink : HrefLink;
+  const linkProps = appHref
+   ? { appHref, webHref: href, tryAppOnDesktop }
+   : { href };
+
+  return (
+   <li>
+    <LinkComponent
+     {...linkProps}
+     className="group flex items-start gap-3 text-sm text-body transition-colors duration-300 hover:text-heading"
+    >
+     {iconBox}
+     <span className="pt-1.5 leading-relaxed">{children}</span>
+    </LinkComponent>
+   </li>
+  );
+ }
 
  return (
-  <footer className="relative bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-500/40">
-   <div className="container mx-auto px-5 sm:px-6 lg:px-8 py-16 md:py-20">
-    <div className="flex flex-col items-center text-center">
-     <h4 className="font-serif text-2xl md:text-3xl font-medium text-heading mb-6">İletişim</h4>
-     <ul className="space-y-3.5 text-sm text-body inline-block text-left">
-      <li className="flex items-start gap-3">
-       <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary dark:text-primary-dark-light" />
-       <span>İstanbul/Kadıköy & Online</span>
-      </li>
-      {workingHours.length > 0 && (
-       <li className="flex items-start gap-3">
-        <Clock className="w-4 h-4 mt-0.5 shrink-0 text-primary dark:text-primary-dark-light" />
-        <p className="leading-relaxed">
-         <span>Çalışma saatleri:</span>{' '}
-         <span>{workingHours.join(', ')}</span>
-        </p>
-       </li>
-      )}
-      <li className="flex items-start gap-3">
-       <Phone className="w-4 h-4 mt-0.5 shrink-0 text-primary dark:text-primary-dark-light" />
-       <span>Ayrıntılı bilgi için lütfen telefonla bilgi alınız.</span>
-      </li>
-     </ul>
+  <li className="flex items-start gap-3 text-sm text-body">
+   {iconBox}
+   <span className="pt-1.5 leading-relaxed">{children}</span>
+  </li>
+ );
+}
 
-     <div className="mt-5 flex flex-wrap justify-center gap-3">
-      {socialMedia.map((s, i) => (
-       <Link
-        key={i}
-        href={s.link}
-        target={s.link.startsWith('http') ? '_blank' : undefined}
-        rel={s.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-        aria-label={s.label}
-        title={s.label}
-        className="group relative inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/25 dark:border-primary-dark/25 text-primary dark:text-primary-dark-light overflow-hidden transition-colors duration-300"
-       >
-        <span
-         aria-hidden
-         className="absolute inset-0 scale-0 rounded-full bg-linear-to-br from-primary to-primary-light dark:from-primary-dark dark:to-primary-dark-light group-hover:scale-100 transition-transform duration-500 ease-out"
-        />
-        <s.icon className="relative z-10 w-[18px] h-[18px] group-hover:text-white dark:group-hover:text-gray-950 transition-colors duration-300" />
-       </Link>
-      ))}
+export default async function Footer() {
+ const social = await getSocial();
+ const currentYear = new Date().getFullYear();
+
+ const contactItems = [
+  { icon: Phone, href: contactPhoneTelUrl, text: CONTACT_PHONE.display },
+  {
+   icon: FaWhatsapp,
+   href: contactPhoneWhatsAppUrl,
+   appHref: contactPhoneWhatsAppAppUrl,
+   text: 'WhatsApp',
+  },
+  { icon: Mail, ...mailLinkProps(social.email), text: social.email },
+  {
+   icon: FaInstagram,
+   href: social.instagram.url,
+   appHref: instagramAppUrl(social.instagram.username),
+   text: `@${social.instagram.username}`,
+  },
+ ];
+
+ return (
+  <footer className="relative overflow-hidden border-t border-gray-200/80 dark:border-dark-500/40 bg-gray-50 dark:bg-dark-900">
+   <div
+    aria-hidden
+    className="pointer-events-none absolute inset-0 opacity-60 dark:opacity-35"
+    style={{
+     backgroundImage:
+      'radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--color-primary) 7%, transparent), transparent 42%), radial-gradient(circle at 88% 100%, color-mix(in srgb, var(--color-accent) 6%, transparent), transparent 38%)',
+    }}
+   />
+
+   <div className="relative h-px bg-linear-to-r from-transparent via-primary/35 dark:via-primary-dark/35 to-transparent" />
+
+   <div className="container relative mx-auto px-5 sm:px-6 lg:px-8 py-14 md:py-16">
+    <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.35fr)_repeat(3,minmax(0,1fr))] xl:gap-x-10 2xl:gap-x-14">
+     <div className="sm:col-span-2 xl:col-span-1">
+      <Logo compact />
+
+      <p className="mt-5 max-w-sm text-sm leading-relaxed text-body">
+       Bireysel ve online terapi ile ruh sağlığınız için güvenli, profesyonel destek.
+      </p>
+
+      <blockquote className="mt-5 border-l-2 border-primary/35 dark:border-primary-dark/35 pl-4 font-serif text-base italic text-primary dark:text-primary-dark-light">
+       Ruhsallığınız için bir adım.
+      </blockquote>
+
+      <HrefLink
+       href="/iletisim"
+       className="mt-5 inline-flex h-10 items-center gap-2 rounded-full border border-primary/25 bg-white/80 px-5 text-sm font-medium text-primary shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/45 hover:bg-primary hover:text-white hover:shadow-md dark:border-primary-dark/30 dark:bg-dark-800/80 dark:text-primary-dark-light dark:hover:border-primary-dark dark:hover:bg-primary-dark dark:hover:text-gray-950"
+      >
+       Ön görüşme talebi
+       <ArrowRight className="h-4 w-4" />
+      </HrefLink>
+     </div>
+
+     <div>
+      <FooterSectionLabel>Sayfalar</FooterSectionLabel>
+      <FooterNavLinks links={mainNavLinks} />
+     </div>
+
+     <div>
+      <FooterSectionLabel>Bilgi</FooterSectionLabel>
+      <FooterNavLinks links={infoNavLinks} />
+     </div>
+
+     <div>
+      <FooterSectionLabel>İletişim</FooterSectionLabel>
+      <ul className="space-y-3.5">
+       <FooterContactItem icon={MapPin}>
+        İstanbul/Kadıköy & Online
+       </FooterContactItem>
+       {contactItems.map(({ icon, href, appHref, tryAppOnDesktop, text }) => (
+        <FooterContactItem
+         key={href}
+         icon={icon}
+         href={href}
+         appHref={appHref}
+         tryAppOnDesktop={tryAppOnDesktop}
+        >
+         {text}
+        </FooterContactItem>
+       ))}
+      </ul>
      </div>
     </div>
 
-    <div className="mt-14 md:mt-20 pt-8 md:pt-10 border-t border-gray-200 dark:border-dark-500/40 flex flex-col md:flex-row items-center justify-between gap-4">
-     <p className="text-sm md:text-[0.95rem] text-body order-2 md:order-1">
-      © {currentYear} <span className="font-serif text-heading font-medium">Nisa Demir</span>. Tüm hakları saklıdır.
+    <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-200/80 pt-6 text-center dark:border-dark-500/40 md:flex-row md:gap-6 md:text-left">
+     <p className="text-sm text-muted">
+      © {currentYear} Nisa Demir
      </p>
-     <p className="font-serif italic text-base md:text-lg text-primary dark:text-primary-dark-light order-1 md:order-2">
-      Ruhsallığınız için bir adım.
-     </p>
+
+     <nav
+      aria-label="Yasal bağlantılar"
+      className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-muted"
+     >
+      <HrefLink
+       href="/kvkk"
+       className="hover:text-heading transition-colors duration-300"
+      >
+       KVKK Aydınlatma Metni
+      </HrefLink>
+      <span aria-hidden className="text-gray-300 dark:text-dark-500">
+       ·
+      </span>
+      <HrefLink
+       href="/cerez-politikasi"
+       className="hover:text-heading transition-colors duration-300"
+      >
+       Çerez Politikası
+      </HrefLink>
+     </nav>
+
+     <p className="text-sm text-muted">Tüm hakları saklıdır.</p>
     </div>
    </div>
   </footer>
