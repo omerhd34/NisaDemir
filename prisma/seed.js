@@ -5,7 +5,8 @@ import {
  about,
  work,
  articles,
- contact,
+ faq,
+ faqCategories,
 } from "../lib/initialSiteData.js";
 
 const prisma = new PrismaClient();
@@ -14,6 +15,8 @@ async function main() {
  await prisma.article.deleteMany();
  await prisma.homeQuote.deleteMany();
  await prisma.workArea.deleteMany();
+ await prisma.faqItem.deleteMany();
+ await prisma.faqCategory.deleteMany();
 
  await prisma.social.upsert({
   where: { id: 1 },
@@ -42,15 +45,6 @@ async function main() {
    text1: about.text1,
    text2: about.text2,
    text3: about.text3,
-  },
- });
-
- await prisma.contact.upsert({
-  where: { id: 1 },
-  update: { workingHours: JSON.stringify(contact.workingHours) },
-  create: {
-   id: 1,
-   workingHours: JSON.stringify(contact.workingHours),
   },
  });
 
@@ -88,6 +82,29 @@ async function main() {
     excerpt: article.excerpt,
     content: article.content,
     writer: article.writer || null,
+    sortOrder: i,
+   },
+  });
+ }
+
+ for (let i = 0; i < faqCategories.length; i++) {
+  const category = faqCategories[i];
+  await prisma.faqCategory.create({
+   data: {
+    slug: category.slug,
+    title: category.title,
+    sortOrder: i,
+   },
+  });
+ }
+
+ for (let i = 0; i < faq.length; i++) {
+  const item = faq[i];
+  await prisma.faqItem.create({
+   data: {
+    question: item.question,
+    answer: item.answer,
+    category: item.category,
     sortOrder: i,
    },
   });
