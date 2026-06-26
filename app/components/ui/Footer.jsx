@@ -1,7 +1,8 @@
 import HrefLink from '@/components/ui/HrefLink';
 import SocialAppLink from '@/components/ui/SocialAppLink';
+import { Button } from '@/components/ui/button';
 import Logo from '@/app/components/ui/Logo';
-import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import { getSocial } from '@/lib/siteData';
 import { mainNavLinks, infoNavLinks } from '@/lib/siteNav';
@@ -122,13 +123,9 @@ export default async function Footer() {
        Ruhsallığınız için bir adım.
       </blockquote>
 
-      <HrefLink
-       href="/iletisim"
-       className="mt-5 inline-flex h-10 items-center gap-2 rounded-full border border-primary/25 bg-white/80 px-5 text-sm font-medium text-primary shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/45 hover:bg-primary hover:text-white hover:shadow-md dark:border-primary-dark/30 dark:bg-dark-800/80 dark:text-primary-dark-light dark:hover:border-primary-dark dark:hover:bg-primary-dark dark:hover:text-gray-950"
-      >
-       Ön görüşme talebi
-       <ArrowRight className="h-4 w-4" />
-      </HrefLink>
+      <Button asChild size="sm" className="mt-5">
+       <HrefLink href="/iletisim">Ön Görüşme Talebi</HrefLink>
+      </Button>
      </div>
 
      <div>
