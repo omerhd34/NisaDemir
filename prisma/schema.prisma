@@ -58,3 +58,18 @@ model Contact {
   workingHours String
   updatedAt    DateTime @updatedAt
 }
+
+model FaqCategory {
+  id        Int    @id @default(autoincrement())
+  slug      String @unique
+  title     String
+  sortOrder Int    @default(0)
+}
+
+model FaqItem {
+  id        Int    @id @default(autoincrement())
+  question  String
+  answer    String @db.Text
+  category  String @default("terapi-sureci")
+  sortOrder Int    @default(0)
+}
