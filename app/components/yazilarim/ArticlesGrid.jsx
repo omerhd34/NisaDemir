@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { articleImageAlt } from '@/lib/imageAlt';
+import ArticleReadMore, { articleLinkAriaLabel } from '@/app/components/yazilarim/ArticleReadMore';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -19,6 +21,7 @@ const ArticlesGrid = ({ articles = [] }) => {
     <Link
      key={article.slug || index}
      href={`/yazilarim/${article.slug}`}
+     aria-label={articleLinkAriaLabel(article.title)}
      className="group block animate-slideUp"
      style={{ animationDelay: `${(index % 9) * 60}ms` }}
     >
@@ -26,7 +29,7 @@ const ArticlesGrid = ({ articles = [] }) => {
       <div className="relative aspect-5/4 overflow-hidden">
        <Image
         src={article.image}
-        alt={article.title}
+        alt={articleImageAlt(article.title)}
         fill
         sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
         className="object-cover transition-transform duration-1200 ease-out group-hover:scale-110"
@@ -53,9 +56,7 @@ const ArticlesGrid = ({ articles = [] }) => {
        )}
 
        <div className="flex items-center justify-between pt-4 mt-auto border-t border-gray-100 dark:border-dark-500/30">
-        <span className="inline-flex items-center gap-2 text-sm font-medium text-primary dark:text-primary-dark-light">
-         Devamını oku
-        </span>
+        <ArticleReadMore title={article.title} />
         <span className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-primary/30 dark:border-primary-dark/30 text-primary dark:text-primary-dark-light group-hover:bg-primary group-hover:text-white group-hover:border-primary dark:group-hover:bg-primary-dark dark:group-hover:text-gray-950 dark:group-hover:border-primary-dark transition-all duration-500">
          <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
         </span>

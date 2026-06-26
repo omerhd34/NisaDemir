@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { articleImageAlt } from "@/lib/imageAlt";
 import { ArrowLeft, BookOpen, Quote, BookMarked } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -40,7 +41,7 @@ export default function ArticleDetailClient({ article }) {
      <div className="relative w-full aspect-video mb-10 rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 dark:ring-white/5 animate-fadeIn">
       <Image
        src={article.image}
-       alt={article.title}
+       alt={articleImageAlt(article.title)}
        fill
        className="object-cover"
        sizes="(max-width: 1280px) 100vw, 1024px"
@@ -106,7 +107,7 @@ export default function ArticleDetailClient({ article }) {
       </Button>
       <Button asChild>
        <Link href="/iletisim">
-        Randevu Al
+        Ön Görüşme Talebi
        </Link>
       </Button>
      </div>

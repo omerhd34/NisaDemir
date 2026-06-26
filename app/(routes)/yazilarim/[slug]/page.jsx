@@ -1,6 +1,11 @@
 import { notFound } from "next/navigation";
 import { getArticleBySlug, getArticleSlugs } from "@/lib/siteData";
-import { getSiteUrl } from "@/lib/site";
+import { articleImageAlt } from "@/lib/imageAlt";
+import {
+ absoluteImageUrl,
+ absoluteUrl,
+ openGraphImages,
+} from "@/lib/seo";
 import ArticleJsonLd from "@/app/components/seo/ArticleJsonLd";
 import ArticleDetailClient from "./ArticleDetailClient";
 
@@ -16,25 +21,20 @@ export async function generateMetadata({ params }) {
   return { title: "Yazı bulunamadı" };
  }
 
- const siteUrl = getSiteUrl();
  const path = `/yazilarim/${article.slug}`;
- const canonical = siteUrl ? `${siteUrl}${path}` : undefined;
- let ogImage;
- if (article.image) {
-  if (article.image.startsWith("http://") || article.image.startsWith("https://")) {
-   ogImage = article.image;
-  } else if (siteUrl) {
-   const p = article.image.startsWith("/") ? article.image : `/${article.image}`;
-   ogImage = `${siteUrl}${p}`;
-  }
- }
+ const canonical = absoluteUrl(path);
+ const ogImage = absoluteImageUrl(article.image);
+ const ogImages = openGraphImages(ogImage, articleImageAlt(article.title));
 
  return {
   title: article.title,
   description: article.excerpt,
+  authors: [{ name: article.writer || "Nisa Demir" }],
   keywords: [
    article.title,
    "psikolog",
+   "Kadıköy psikoterapi",
+   "Kadıköy psikolog",
    "blog",
    "ruh sağlığı",
    "terapi",
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }) {
    modifiedTime: article.updatedAt
     ? new Date(article.updatedAt).toISOString()
     : undefined,
-   ...(ogImage ? { images: [{ url: ogImage, alt: article.title }] } : {}),
+   ...(ogImages ? { images: ogImages } : {}),
   },
   twitter: {
    card: "summary_large_image",
