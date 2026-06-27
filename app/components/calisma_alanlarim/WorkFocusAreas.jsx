@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import HrefLink from '@/components/ui/HrefLink';
 import { Button } from '@/components/ui/button';
 
 const FOCUS_AREAS = [
@@ -35,10 +35,10 @@ const WorkFocusAreas = () => {
 
    <div className="mt-6 md:mt-7 flex justify-center">
     <Button asChild className="group">
-     <Link href="/iletisim">
+     <HrefLink href="/iletisim">
       Bu ve benzeri süreçler üzerine çalışmak ve randevu<br />  oluşturmak için iletişim sayfasını ziyaret edebilirsiniz
       <ArrowRight className="group-hover:translate-x-0.5 transition-transform shrink-0" />
-     </Link>
+     </HrefLink>
     </Button>
    </div>
   </section>

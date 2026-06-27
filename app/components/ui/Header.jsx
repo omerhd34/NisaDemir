@@ -14,6 +14,7 @@ import {
  SheetTrigger,
 } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
+import HrefLink from '@/components/ui/HrefLink';
 
 import { mainNavLinks } from '@/lib/siteNav';
 
@@ -47,7 +48,7 @@ const Header = () => {
       {menuItems.map((item) => {
        const active = isActive(item.href);
        return (
-        <Link
+        <HrefLink
          key={item.id}
          href={item.href}
          className={`relative px-3.5 py-2 rounded-md text-sm font-medium tracking-wide transition-colors duration-300 ${active
@@ -60,14 +61,14 @@ const Header = () => {
           className={`absolute left-3.5 right-3.5 -bottom-0.5 h-px bg-primary dark:bg-primary-dark transition-all duration-300 ${active ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-50'
            }`}
          />
-        </Link>
+        </HrefLink>
        );
       })}
      </nav>
 
      <div className="flex items-center gap-2">
       <Button asChild size="sm" className="hidden md:inline-flex">
-       <Link href="/iletisim">Ön Görüşme Talebi</Link>
+       <HrefLink href="/iletisim">Ön Görüşme Talebi</HrefLink>
       </Button>
 
       <Button
@@ -108,7 +109,7 @@ const Header = () => {
          {menuItems.map((item) => {
           const active = isActive(item.href);
           return (
-           <Link
+           <HrefLink
             key={item.id}
             href={item.href}
             onClick={() => setOpen(false)}
@@ -119,16 +120,16 @@ const Header = () => {
            >
             <item.icon size={18} className="shrink-0" />
             <span>{item.label}</span>
-           </Link>
+           </HrefLink>
           );
          })}
         </nav>
 
         <div className="p-5 border-t border-gray-200 dark:border-dark-500/40">
          <Button asChild className="w-full" size="lg">
-          <Link href="/iletisim" onClick={() => setOpen(false)}>
+          <HrefLink href="/iletisim" onClick={() => setOpen(false)}>
            Ön Görüşme Talebi
-          </Link>
+          </HrefLink>
          </Button>
         </div>
        </SheetContent>

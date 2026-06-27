@@ -9,7 +9,12 @@ function isNativeAnchorHref(href) {
 
 export default function HrefLink({ href, children, className, target, rel, onClick, ...rest }) {
  function handleClick(event) {
-  trackLinkClick(href, { label: typeof children === 'string' ? children : undefined });
+  const label =
+   (typeof children === 'string' ? children : undefined) ||
+   rest['aria-label'] ||
+   rest.title;
+
+  trackLinkClick(href, { label });
   onClick?.(event);
  }
 

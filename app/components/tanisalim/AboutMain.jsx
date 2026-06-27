@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { PORTRAIT_ALT } from '@/lib/imageAlt';
-import Link from 'next/link';
 import { ArrowRight, GraduationCap, BookMarked, Sparkles } from 'lucide-react';
+import HrefLink from '@/components/ui/HrefLink';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -50,10 +50,10 @@ const AboutMain = ({ about }) => {
        </div>
        <Separator />
        <Button asChild className="w-full mt-2">
-        <Link href="/iletisim">
+        <HrefLink href="/iletisim">
          Ön Görüşme Talebi
          <ArrowRight />
-        </Link>
+        </HrefLink>
        </Button>
       </CardContent>
      </Card>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import HrefLink from "@/components/ui/HrefLink";
 import Image from "next/image";
 import { articleImageAlt } from "@/lib/imageAlt";
 import { ArrowLeft, BookOpen, Quote, BookMarked } from "lucide-react";
@@ -106,9 +107,9 @@ export default function ArticleDetailClient({ article }) {
        </Link>
       </Button>
       <Button asChild>
-       <Link href="/iletisim">
+       <HrefLink href="/iletisim">
         Ön Görüşme Talebi
-       </Link>
+       </HrefLink>
       </Button>
      </div>
     </div>

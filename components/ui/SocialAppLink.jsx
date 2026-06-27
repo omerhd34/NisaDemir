@@ -16,7 +16,12 @@ export default function SocialAppLink({
  const webUrl = webHref ?? href;
 
  function handleClick(event) {
-  trackLinkClick(webUrl, { label: typeof children === 'string' ? children : undefined });
+  const label =
+   (typeof children === 'string' ? children : undefined) ||
+   rest['aria-label'] ||
+   rest.title;
+
+  trackLinkClick(webUrl, { label });
   onClick?.(event);
   if (event.defaultPrevented || !appHref) return;
 
