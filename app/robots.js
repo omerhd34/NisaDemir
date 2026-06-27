@@ -9,7 +9,7 @@ export default function robots() {
    {
     userAgent: "*",
     allow: "/",
-    disallow: ["/admin", "/api/admin"],
+    disallow: ["/admin", "/api/admin", "/kvkk", "/cerez-politikasi", "/yazilarim/"],
    },
   ],
   sitemap: `${host}/sitemap.xml`,

@@ -1,20 +1,15 @@
 export const metadata = {
-  title: "Yazılarım",
+ title: "Yazılarım",
+ description:
+  "Ruh sağlığı, kişisel gelişim, terapi ve psikoloji üzerine makale ve blog yazıları.",
+ alternates: { canonical: "/yazilarim" },
+ openGraph: {
+  title: "Yazılarım | Nisa Demir",
   description:
-    "Ruh sağlığı, kişisel gelişim, terapi ve psikoloji üzerine makale ve blog yazıları.",
-  alternates: { canonical: "/yazilarim" },
-  robots: {
-    index: false,
-    follow: true,
-    googleBot: { index: false, follow: true },
-  },
-  openGraph: {
-    title: "Yazılarım | Nisa Demir",
-    description:
-      "Psikoloji, terapi ve iyi oluş üzerine güncel içerikler.",
-  },
+   "Psikoloji, terapi ve iyi oluş üzerine güncel içerikler.",
+ },
 };
 
 export default function YazilarimLayout({ children }) {
-  return children;
+ return children;
 }

@@ -4,6 +4,7 @@ const staticRoutes = [
  { path: "", priority: 1, changeFrequency: "weekly" },
  { path: "/tanisalim", priority: 0.9, changeFrequency: "monthly" },
  { path: "/calisma_alanlarim", priority: 0.9, changeFrequency: "monthly" },
+ { path: "/yazilarim", priority: 0.85, changeFrequency: "weekly" },
  { path: "/iletisim", priority: 0.8, changeFrequency: "monthly" },
  { path: "/sss", priority: 0.75, changeFrequency: "monthly" },
 ];
