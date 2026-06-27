@@ -3,6 +3,11 @@ export const metadata = {
   description:
     "Ruh sağlığı, kişisel gelişim, terapi ve psikoloji üzerine makale ve blog yazıları.",
   alternates: { canonical: "/yazilarim" },
+  robots: {
+    index: false,
+    follow: true,
+    googleBot: { index: false, follow: true },
+  },
   openGraph: {
     title: "Yazılarım | Nisa Demir",
     description:

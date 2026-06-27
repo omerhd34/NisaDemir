@@ -11,6 +11,11 @@ export const metadata = {
  description:
   'Kişisel verilerinizin işlenmesine ilişkin 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında aydınlatma metni.',
  alternates: { canonical: '/kvkk' },
+ robots: {
+  index: false,
+  follow: true,
+  googleBot: { index: false, follow: true },
+ },
  openGraph: {
   title: 'KVKK Aydınlatma Metni | Nisa Demir',
   description: 'Kişisel verilerin korunması ve işlenmesine ilişkin aydınlatma metni.',

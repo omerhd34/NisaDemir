@@ -6,7 +6,6 @@ import {
  absoluteUrl,
  openGraphImages,
 } from "@/lib/seo";
-import ArticleJsonLd from "@/app/components/seo/ArticleJsonLd";
 import ArticleDetailClient from "./ArticleDetailClient";
 
 export async function generateStaticParams() {
@@ -61,7 +60,11 @@ export async function generateMetadata({ params }) {
    description: article.excerpt,
    ...(ogImage ? { images: [ogImage] } : {}),
   },
-  robots: { index: true, follow: true },
+  robots: {
+   index: false,
+   follow: true,
+   googleBot: { index: false, follow: true },
+  },
  };
 }
 
@@ -74,7 +77,6 @@ export default async function ArticlePage({ params }) {
 
  return (
   <>
-   <ArticleJsonLd article={article} />
    <ArticleDetailClient article={article} />
   </>
  );

@@ -11,6 +11,11 @@ export const metadata = {
  title: 'Çerez Politikası',
  description: 'Web sitesinde kullanılan çerezler ve tercih yönetimi hakkında bilgilendirme.',
  alternates: { canonical: '/cerez-politikasi' },
+ robots: {
+  index: false,
+  follow: true,
+  googleBot: { index: false, follow: true },
+ },
  openGraph: {
   title: 'Çerez Politikası | Nisa Demir',
   description: 'Çerez kullanımı ve gizlilik tercihleri hakkında bilgilendirme.',
