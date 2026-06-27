@@ -3,6 +3,8 @@ import Header from "@/app/components/ui/Header";
 import Footer from "@/app/components/ui/Footer";
 import ScrollToTop from "@/app/components/ui/ScrollToTop";
 import SiteJsonLd from "@/app/components/seo/SiteJsonLd";
+import GoogleTagManager from "@/app/components/analytics/GoogleTagManager";
+import { getGtmId } from "@/lib/analytics";
 import { getSiteUrl } from "@/lib/site";
 import {
  DEFAULT_DESCRIPTION,
@@ -61,8 +63,11 @@ export const viewport = {
 };
 
 export default function SiteLayout({ children }) {
+ const gtmId = getGtmId();
+
  return (
   <>
+   <GoogleTagManager gtmId={gtmId} />
    <SiteJsonLd />
    <AppProvider>
     <div className="min-h-screen flex flex-col">

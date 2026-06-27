@@ -53,11 +53,11 @@ const HomeHero = ({ social }) => {
 
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
        <Button asChild size="lg" className="group">
-        <Link href="/iletisim">
+        <HrefLink href="/iletisim">
          <Calendar />
          Ön Görüşme Talebi
          <ArrowRight className="group-hover:translate-x-0.5 transition-transform" />
-        </Link>
+        </HrefLink>
        </Button>
        <Button asChild variant="outline" size="lg">
         <Link href="/tanisalim">Hakkımda</Link>

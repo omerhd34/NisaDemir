@@ -1,5 +1,6 @@
 'use client';
 
+import { trackLinkClick } from '@/lib/analytics';
 import { openAppOrWeb } from '@/lib/socialAppLinks';
 
 export default function SocialAppLink({
@@ -15,6 +16,7 @@ export default function SocialAppLink({
  const webUrl = webHref ?? href;
 
  function handleClick(event) {
+  trackLinkClick(webUrl, { label: typeof children === 'string' ? children : undefined });
   onClick?.(event);
   if (event.defaultPrevented || !appHref) return;
 

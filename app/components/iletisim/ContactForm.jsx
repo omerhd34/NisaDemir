@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Send, CheckCircle2 } from 'lucide-react';
+import { pushDataLayerEvent } from '@/lib/analytics';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -66,6 +67,10 @@ const ContactForm = () => {
    });
    const result = await response.json();
    if (response.ok) {
+    pushDataLayerEvent('contact_form_submit', {
+     form_subject: formData.subject,
+     event_category: 'lead',
+    });
     setSubmitted(true);
     setFormData({ name: '', email: '', subject: '', message: '' });
     setErrors({});

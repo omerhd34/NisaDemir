@@ -1,10 +1,18 @@
+'use client';
+
 import Link from 'next/link';
+import { trackLinkClick } from '@/lib/analytics';
 
 function isNativeAnchorHref(href) {
  return typeof href === 'string' && /^(mailto:|tel:|https?:)/i.test(href);
 }
 
-export default function HrefLink({ href, children, className, target, rel, ...rest }) {
+export default function HrefLink({ href, children, className, target, rel, onClick, ...rest }) {
+ function handleClick(event) {
+  trackLinkClick(href, { label: typeof children === 'string' ? children : undefined });
+  onClick?.(event);
+ }
+
  if (isNativeAnchorHref(href)) {
   const isHttp = /^https?:/i.test(href);
 
@@ -14,6 +22,7 @@ export default function HrefLink({ href, children, className, target, rel, ...re
     className={className}
     target={target ?? (isHttp ? '_blank' : undefined)}
     rel={rel ?? (isHttp ? 'noopener noreferrer' : undefined)}
+    onClick={handleClick}
     {...rest}
    >
     {children}
@@ -22,7 +31,7 @@ export default function HrefLink({ href, children, className, target, rel, ...re
  }
 
  return (
-  <Link href={href} className={className} {...rest}>
+  <Link href={href} className={className} onClick={handleClick} {...rest}>
    {children}
   </Link>
  );
