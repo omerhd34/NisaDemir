@@ -33,10 +33,14 @@ const WorkFocusAreas = () => {
     ))}
    </ul>
 
-   <div className="mt-6 md:mt-7 flex justify-center">
+   <div className="mt-6 md:mt-7 flex flex-col items-center gap-3 text-center">
+    <p className="text-sm text-body max-w-md leading-relaxed">
+     Bu ve benzeri süreçler üzerine çalışmak ve randevu oluşturmak için iletişim
+     sayfasını ziyaret edebilirsiniz.
+    </p>
     <Button asChild className="group">
      <HrefLink href="/iletisim">
-      Bu ve benzeri süreçler üzerine çalışmak ve randevu<br />  oluşturmak için iletişim sayfasını ziyaret edebilirsiniz
+      İletişime Geç
       <ArrowRight className="group-hover:translate-x-0.5 transition-transform shrink-0" />
      </HrefLink>
     </Button>
