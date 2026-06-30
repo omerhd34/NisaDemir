@@ -42,9 +42,16 @@ export default function SaveButton({ onSave, label = "Kaydet" }) {
  );
 }
 
-async function fetchJson(url, options) {
- const res = await fetch(url, options);
+async function fetchJson(url, options = {}) {
+ const res = await fetch(url, {
+  ...options,
+  credentials: "same-origin",
+ });
  const data = await res.json();
+ if (res.status === 401) {
+  window.location.href = "/admin/login";
+  throw new Error("Oturum süresi doldu");
+ }
  if (!res.ok) {
   throw new Error(data.error || "İstek başarısız");
  }
