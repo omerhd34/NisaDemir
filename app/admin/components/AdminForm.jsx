@@ -47,14 +47,29 @@ async function fetchJson(url, options = {}) {
   ...options,
   credentials: "same-origin",
  });
- const data = await res.json();
+
+ const contentType = res.headers.get("content-type") || "";
+ let data = null;
+
+ if (contentType.includes("application/json")) {
+  data = await res.json();
+ } else {
+  await res.text();
+ }
+
  if (res.status === 401) {
   window.location.href = "/admin/login";
   throw new Error("Oturum süresi doldu");
  }
+
  if (!res.ok) {
-  throw new Error(data.error || "İstek başarısız");
+  throw new Error(data?.error || "İstek başarısız");
  }
+
+ if (data === null) {
+  throw new Error("Sunucu beklenmeyen yanıt döndürdü");
+ }
+
  return data;
 }
 
