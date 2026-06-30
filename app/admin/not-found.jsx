@@ -9,21 +9,20 @@ export const metadata = {
 
 export default function AdminNotFound() {
  return (
-  <div className="min-h-screen bg-gray-50 dark:bg-dark-900 flex items-center">
-   <ErrorPage
-    code="404"
-    title="Admin sayfası bulunamadı"
-    description="Erişmeye çalıştığınız yönetim paneli sayfası mevcut değil."
-    compact
-    links={[]}
-   >
+  <ErrorPage
+   className="min-h-screen py-0"
+   code="404"
+   title="Admin sayfası bulunamadı"
+   description="Erişmeye çalıştığınız yönetim paneli sayfası mevcut değil."
+   compact
+   links={[]}
+  >
     <Button asChild>
      <HrefLink href="/admin">Panele Dön</HrefLink>
     </Button>
     <Button variant="outline" asChild>
      <HrefLink href="/">Siteye Dön</HrefLink>
     </Button>
-   </ErrorPage>
-  </div>
+  </ErrorPage>
  );
 }
