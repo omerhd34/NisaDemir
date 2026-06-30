@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import SaveButton, { fetchJson } from "@/app/admin/components/AdminForm";
@@ -24,17 +24,26 @@ const emptyArticle = {
  category: "Psikoloji",
 };
 
-export default function AdminArticleEditPage({ articleId }) {
+function toFormState(article) {
+ if (!article) return emptyArticle;
+
+ return {
+  title: article.title || "",
+  slug: article.slug || "",
+  image: article.image || "/",
+  excerpt: article.excerpt || "",
+  content: article.content || "",
+  writer: article.writer || "",
+  category: article.category || "Psikoloji",
+ };
+}
+
+export default function AdminArticleEditPage({ articleId, initialArticle }) {
  const router = useRouter();
  const isNew = articleId === "new";
- const [form, setForm] = useState(emptyArticle);
+ const [form, setForm] = useState(() => toFormState(initialArticle));
  const [deleteOpen, setDeleteOpen] = useState(false);
  const [deleting, setDeleting] = useState(false);
-
- useEffect(() => {
-  if (isNew) return;
-  fetchJson(`/api/admin/articles/${articleId}`).then(setForm);
- }, [articleId, isNew]);
 
  async function save() {
   if (isNew) {
