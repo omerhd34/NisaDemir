@@ -19,7 +19,7 @@ export default function ErrorPage({
  return (
   <section
    className={cn(
-    'bg-paper flex items-center justify-center px-5 sm:px-6 lg:px-8',
+    'w-full bg-paper flex items-center justify-center px-5 sm:px-6 lg:px-8',
     compact ? 'py-16 md:py-24' : 'py-20 md:py-28 lg:py-32 min-h-[60vh]',
     className
    )}
