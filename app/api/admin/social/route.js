@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
 import { adminHandler } from "@/lib/adminApi";
+import { phoneTelFromDisplay } from "@/lib/contactPhone";
 import { prisma } from "@/lib/prisma";
 import { revalidateSocialPages } from "@/lib/revalidatePublic";
+import { instagramUrlFromUsername } from "@/lib/socialAppLinks";
 
 function mapSocial(row) {
  return {
   email: row?.email || "",
   phoneDisplay: row?.phoneDisplay || "",
-  phoneTel: row?.phoneTel || "",
   instagramUsername: row?.instagramUsername || "",
-  instagramUrl: row?.instagramUrl || "",
  };
 }
 
@@ -22,8 +22,9 @@ export async function GET() {
 
 export async function PUT(request) {
  return adminHandler(async () => {
-  const { email, phoneDisplay, phoneTel, instagramUsername, instagramUrl } =
-   await request.json();
+  const { email, phoneDisplay, instagramUsername } = await request.json();
+  const phoneTel = phoneTelFromDisplay(phoneDisplay);
+  const instagramUrl = instagramUrlFromUsername(instagramUsername);
 
   const row = await prisma.social.upsert({
    where: { id: 1 },
