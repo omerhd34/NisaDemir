@@ -4,9 +4,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { articleImageAlt } from '@/lib/imageAlt';
 import ArticleReadMore, { articleLinkAriaLabel } from '@/app/components/yazilarim/ArticleReadMore';
-import { ArrowRight, BookOpen } from 'lucide-react';
+import ArticleCategoryBadge from '@/app/components/yazilarim/ArticleCategoryBadge';
+import { ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
  Carousel,
  CarouselContent,
@@ -53,10 +53,7 @@ const HomeArticlesCarousel = ({ articles = [] }) => {
           />
 
           <div className="absolute top-4 left-4">
-           <Badge className="backdrop-blur-md bg-white/90 dark:bg-dark-900/85 border border-white/40 dark:border-white/10 text-primary dark:text-primary-dark-light shadow-sm">
-            <BookOpen className="w-3 h-3" />
-            Psikoloji
-           </Badge>
+           <ArticleCategoryBadge category={article.category} overlay />
           </div>
          </div>
 

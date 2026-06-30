@@ -7,6 +7,7 @@ import SaveButton, { fetchJson } from "@/app/admin/components/AdminForm";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import RichTextEditor from "@/app/admin/components/RichTextEditor";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
@@ -20,6 +21,7 @@ const emptyArticle = {
  excerpt: "",
  content: "",
  writer: "",
+ category: "Psikoloji",
 };
 
 export default function AdminArticleEditPage({ articleId }) {
@@ -104,19 +106,25 @@ export default function AdminArticleEditPage({ articleId }) {
       <Label>Başlık</Label>
       <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
      </div>
-     <ImageUpload
-      label="Görsel"
-      value={form.image}
-      onChange={(url) => setForm({ ...form, image: url })}
-     />
-     <div className="space-y-2">
-      <Label>Yazar (opsiyonel)</Label>
-      <Input value={form.writer || ""} onChange={(e) => setForm({ ...form, writer: e.target.value })} />
+     <div className="grid sm:grid-cols-2 gap-4">
+      <div className="space-y-2">
+       <Label>Kategori</Label>
+       <Input
+        value={form.category || ""}
+        onChange={(e) => setForm({ ...form, category: e.target.value })}
+        placeholder="Boş bırakılırsa Psikoloji olarak kaydedilir"
+       />
+      </div>
+      <div className="space-y-2">
+       <Label>Yazar (opsiyonel)</Label>
+       <Input value={form.writer || ""} onChange={(e) => setForm({ ...form, writer: e.target.value })} />
+      </div>
      </div>
      <div className="space-y-2">
       <Label>Özet</Label>
       <Textarea
-       rows={3}
+       rows={2}
+       className="min-h-0"
        value={form.excerpt}
        onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
        placeholder="En fazla 25 kelime yazın. Kartlarda 3 satır olarak görünür."
@@ -124,12 +132,20 @@ export default function AdminArticleEditPage({ articleId }) {
      </div>
      <div className="space-y-2">
       <Label>İçerik</Label>
-      <Textarea
-       rows={16}
+      <p className="text-xs text-muted">
+       Metnin bir bölümünü seçip stil uygulayabilirsiniz.
+      </p>
+      <RichTextEditor
        value={form.content}
-       onChange={(e) => setForm({ ...form, content: e.target.value })}
+       onChange={(content) => setForm({ ...form, content })}
       />
      </div>
+     <ImageUpload
+      label="Görsel"
+      value={form.image}
+      onChange={(url) => setForm({ ...form, image: url })}
+      large
+     />
      <SaveButton onSave={save} label={isNew ? "Oluştur" : "Kaydet"} />
     </CardContent>
    </Card>

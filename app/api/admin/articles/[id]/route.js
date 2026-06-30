@@ -2,6 +2,13 @@ import { NextResponse } from "next/server";
 import { adminHandler } from "@/lib/adminApi";
 import { prisma } from "@/lib/prisma";
 import { revalidateArticlePages } from "@/lib/revalidatePublic";
+import { isHtmlContent, sanitizeArticleHtml } from "@/lib/articleContent";
+
+function normalizeContent(content) {
+ if (!content) return "";
+ if (isHtmlContent(content)) return sanitizeArticleHtml(content);
+ return content;
+}
 
 export async function GET(_request, { params }) {
  return adminHandler(async () => {
@@ -29,8 +36,9 @@ export async function PUT(request, { params }) {
     title: body.title,
     image: body.image,
     excerpt: body.excerpt,
-    content: body.content,
+    content: normalizeContent(body.content),
     writer: body.writer || null,
+    category: body.category?.trim() || "Psikoloji",
    },
   });
 

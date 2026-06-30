@@ -10,7 +10,7 @@ function hasPreview(value) {
  return Boolean(value && value !== "/");
 }
 
-export default function ImageUpload({ value, onChange, label = "Görsel" }) {
+export default function ImageUpload({ value, onChange, label = "Görsel", large = false }) {
  const inputRef = useRef(null);
  const [uploading, setUploading] = useState(false);
  const [error, setError] = useState("");
@@ -52,9 +52,15 @@ export default function ImageUpload({ value, onChange, label = "Görsel" }) {
   <div className="space-y-2">
    <Label>{label}</Label>
 
-   <div className="flex items-center gap-3 flex-wrap">
+   <div className={large ? "space-y-3" : "flex items-center gap-3 flex-wrap"}>
     {hasPreview(value) ? (
-     <div className="relative w-32 h-24 shrink-0 rounded-xl overflow-hidden border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-900 group">
+     <div
+      className={
+       large
+        ? "relative w-full aspect-video rounded-xl overflow-hidden border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-900 group"
+        : "relative w-32 h-24 shrink-0 rounded-xl overflow-hidden border border-gray-200 dark:border-dark-500 bg-gray-50 dark:bg-dark-900 group"
+      }
+     >
       <Image src={value} alt="" fill className="object-cover" unoptimized />
       <button
        type="button"

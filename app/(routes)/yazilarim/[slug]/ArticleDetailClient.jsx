@@ -4,13 +4,17 @@ import Link from "next/link";
 import HrefLink from "@/components/ui/HrefLink";
 import Image from "next/image";
 import { articleImageAlt } from "@/lib/imageAlt";
-import { ArrowLeft, BookOpen, Quote, BookMarked } from "lucide-react";
+import { ArrowLeft, Quote, BookMarked } from "lucide-react";
+import ArticleCategoryBadge from "@/app/components/yazilarim/ArticleCategoryBadge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { prepareArticleContentForDisplay } from "@/lib/articleContent";
 
 export default function ArticleDetailClient({ article }) {
+ const content = prepareArticleContentForDisplay(article.content);
+
  return (
   <div className="min-h-screen py-12 md:py-16 lg:py-20 bg-paper transition-colors duration-300">
    <div className="container mx-auto px-5 sm:px-6 lg:px-8">
@@ -23,10 +27,7 @@ export default function ArticleDetailClient({ article }) {
      </Button>
 
      <div className="mb-8 flex flex-wrap items-center gap-3 animate-fadeIn">
-      <Badge>
-       <BookOpen className="w-3 h-3" />
-       Psikoloji
-      </Badge>
+      <ArticleCategoryBadge category={article.category} />
      </div>
 
      <h1 className="display-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] mb-6 text-heading animate-slideUp">
@@ -73,9 +74,16 @@ export default function ArticleDetailClient({ article }) {
 
      <Card className="mb-8 animate-slideUp">
       <CardContent className="p-7 md:p-10 lg:p-12">
-       <div className="prose-content text-[1.02rem] md:text-lg leading-[1.9] whitespace-pre-line text-body font-light">
-        {article.content}
-       </div>
+       {content.type === "html" ? (
+        <div
+         className="prose-content text-[1.02rem] md:text-lg leading-[1.9] text-body font-light"
+         dangerouslySetInnerHTML={{ __html: content.html }}
+        />
+       ) : (
+        <div className="prose-content text-[1.02rem] md:text-lg leading-[1.9] whitespace-pre-line text-body font-light">
+         {content.text}
+        </div>
+       )}
       </CardContent>
      </Card>
 
