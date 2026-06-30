@@ -11,22 +11,21 @@ export default function AdminError({ error, reset }) {
  }, [error]);
 
  return (
-  <div className="min-h-screen bg-gray-50 dark:bg-dark-900 flex items-center">
-   <ErrorPage
-    code="500"
-    title="Admin panelinde hata oluştu"
-    description="İşlem sırasında beklenmeyen bir sorun oluştu. Tekrar deneyebilir veya panele dönebilirsiniz."
-    compact
-    links={[]}
-   >
-    <Button onClick={reset}>Tekrar Dene</Button>
-    <Button variant="outline" asChild>
-     <HrefLink href="/admin">Panele Dön</HrefLink>
-    </Button>
-    <Button variant="ghost" asChild>
-     <HrefLink href="/">Siteye Dön</HrefLink>
-    </Button>
-   </ErrorPage>
-  </div>
+  <ErrorPage
+   className="min-h-screen py-0"
+   code="500"
+   title="Admin panelinde hata oluştu"
+   description="İşlem sırasında beklenmeyen bir sorun oluştu. Tekrar deneyebilir veya panele dönebilirsiniz."
+   compact
+   links={[]}
+  >
+   <Button onClick={reset}>Tekrar Dene</Button>
+   <Button variant="outline" asChild>
+    <HrefLink href="/admin">Panele Dön</HrefLink>
+   </Button>
+   <Button variant="ghost" asChild>
+    <HrefLink href="/">Siteye Dön</HrefLink>
+   </Button>
+  </ErrorPage>
  );
 }
