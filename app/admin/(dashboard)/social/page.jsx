@@ -1,37 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { formatPhoneDisplay } from "@/lib/contactPhone";
 import SaveButton, { fetchJson } from "@/app/admin/components/AdminForm";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import { useEffect, useState } from "react";
 
 const emptyForm = {
  email: "",
  phoneDisplay: "",
- phoneTel: "",
  instagramUsername: "",
- instagramUrl: "",
 };
 
 export default function AdminSocialPage() {
  const [form, setForm] = useState(emptyForm);
 
  useEffect(() => {
-  fetchJson("/api/admin/social").then(setForm);
+  fetchJson("/api/admin/social").then((data) => {
+   setForm({
+    ...data,
+    phoneDisplay: formatPhoneDisplay(data.phoneDisplay || ""),
+   });
+  });
  }, []);
 
  function updateField(key, value) {
-  setForm((prev) => {
-   const next = { ...prev, [key]: value };
-   if (key === "instagramUsername" && !prev.instagramUrl) {
-    const username = value.replace(/^@/, "").trim();
-    if (username) {
-     next.instagramUrl = `https://instagram.com/${username}`;
-    }
-   }
-   return next;
-  });
+  setForm((prev) => ({
+   ...prev,
+   [key]: key === "phoneDisplay" ? formatPhoneDisplay(value) : value,
+  }));
  }
 
  async function save() {
@@ -53,20 +51,20 @@ export default function AdminSocialPage() {
    </div>
 
    <Card>
-    <CardContent className="p-5 sm:p-6 space-y-5">
-     <div className="space-y-2">
-      <Label htmlFor="email">E-posta</Label>
-      <Input
-       id="email"
-       type="email"
-       value={form.email}
-       onChange={(e) => updateField("email", e.target.value)}
-      />
-     </div>
-
-     <div className="grid sm:grid-cols-2 gap-5">
+    <CardContent className="p-5 sm:p-6">
+     <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
       <div className="space-y-2">
-       <Label htmlFor="phoneDisplay">Telefon (görünen)</Label>
+       <Label htmlFor="email">E-posta</Label>
+       <Input
+        id="email"
+        type="email"
+        value={form.email}
+        onChange={(e) => updateField("email", e.target.value)}
+       />
+      </div>
+
+      <div className="space-y-2">
+       <Label htmlFor="phoneDisplay">Telefon</Label>
        <Input
         id="phoneDisplay"
         value={form.phoneDisplay}
@@ -74,19 +72,7 @@ export default function AdminSocialPage() {
         placeholder="0536 640 47 01"
        />
       </div>
-      <div className="space-y-2">
-       <Label htmlFor="phoneTel">Telefon (arama linki)</Label>
-       <Input
-        id="phoneTel"
-        value={form.phoneTel}
-        onChange={(e) => updateField("phoneTel", e.target.value)}
-        placeholder="+905366404701"
-       />
-       <p className="text-xs text-muted">tel: ve WhatsApp linkleri bu değerden üretilir.</p>
-      </div>
-     </div>
 
-     <div className="grid sm:grid-cols-2 gap-5">
       <div className="space-y-2">
        <Label htmlFor="instagramUsername">Instagram kullanıcı adı</Label>
        <Input
@@ -94,15 +80,6 @@ export default function AdminSocialPage() {
         value={form.instagramUsername}
         onChange={(e) => updateField("instagramUsername", e.target.value)}
         placeholder="psikolognisademir"
-       />
-      </div>
-      <div className="space-y-2">
-       <Label htmlFor="instagramUrl">Instagram URL</Label>
-       <Input
-        id="instagramUrl"
-        value={form.instagramUrl}
-        onChange={(e) => updateField("instagramUrl", e.target.value)}
-        placeholder="https://instagram.com/psikolognisademir"
        />
       </div>
      </div>
