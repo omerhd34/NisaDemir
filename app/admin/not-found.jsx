@@ -17,12 +17,12 @@ export default function AdminNotFound() {
    compact
    links={[]}
   >
-    <Button asChild>
-     <HrefLink href="/admin">Panele Dön</HrefLink>
-    </Button>
-    <Button variant="outline" asChild>
-     <HrefLink href="/">Siteye Dön</HrefLink>
-    </Button>
+   <Button asChild>
+    <HrefLink href="/admin">Panele Dön</HrefLink>
+   </Button>
+   <Button variant="outline" asChild>
+    <HrefLink href="/">Siteye Dön</HrefLink>
+   </Button>
   </ErrorPage>
  );
 }
