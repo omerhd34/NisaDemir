@@ -125,7 +125,11 @@ export default function AdminHomePage() {
       düzenlemek için satıra tıklayın.
      </p>
     </div>
-    <Button variant="outline" className="shrink-0 self-start" onClick={addQuote}>
+    <Button
+     variant="outline"
+     className="shrink-0 self-start hover:scale-[1.02] hover:shadow-md"
+     onClick={addQuote}
+    >
      <Plus />
      Alıntı Ekle
     </Button>
