@@ -2,12 +2,8 @@ import { NextResponse } from "next/server";
 import { adminHandler } from "@/lib/adminApi";
 import { prisma } from "@/lib/prisma";
 import { revalidateArticlePages } from "@/lib/revalidatePublic";
-import { isHtmlContent, sanitizeArticleHtml } from "@/lib/articleContent";
-
 function normalizeContent(content) {
- if (!content) return "";
- if (isHtmlContent(content)) return sanitizeArticleHtml(content);
- return content;
+ return content || "";
 }
 
 export async function GET(_request, { params }) {
