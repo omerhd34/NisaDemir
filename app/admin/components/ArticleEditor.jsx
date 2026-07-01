@@ -62,6 +62,8 @@ export default function AdminArticleEditPage({ articleId, initialArticle }) {
    headers: { "Content-Type": "application/json" },
    body: JSON.stringify(form),
   });
+  router.push("/admin/articles");
+  router.refresh();
  }
 
  async function remove() {
