@@ -10,7 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { prepareArticleContentForDisplay } from "@/lib/articleContent";
+import { prepareArticleContentForDisplay } from "@/lib/articleSanitize";
 
 export default function ArticleDetailClient({ article }) {
  const content = prepareArticleContentForDisplay(article.content);
