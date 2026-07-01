@@ -568,7 +568,17 @@ input:-webkit-autofill:active {
   color: var(--color-dark-200);
 }
 
+.prose-content strong,
+.prose-content b {
+  font-weight: 700;
+}
+
 /* TipTap editor */
+.tiptap strong,
+.tiptap b {
+  font-weight: 700;
+}
+
 .tiptap p {
   margin-bottom: 0.85em;
 }

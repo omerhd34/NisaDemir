@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { articleImageAlt } from '@/lib/imageAlt';
 import ArticleReadMore, { articleLinkAriaLabel } from '@/app/components/yazilarim/ArticleReadMore';
 import ArticleCategoryBadge from '@/app/components/yazilarim/ArticleCategoryBadge';
+import ArticleExcerpt from '@/app/components/yazilarim/ArticleExcerpt';
 import { ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -46,11 +47,7 @@ const ArticlesGrid = ({ articles = [] }) => {
         {article.title}
        </h3>
 
-       {article.excerpt && (
-        <p className="text-sm leading-relaxed text-body line-clamp-3 mb-6 flex-1">
-         {article.excerpt}
-        </p>
-       )}
+       <ArticleExcerpt excerpt={article.excerpt} />
 
        <div className="flex items-center justify-between pt-4 mt-auto border-t border-gray-100 dark:border-dark-500/30">
         <ArticleReadMore title={article.title} />

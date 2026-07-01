@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import SaveButton, { fetchJson } from "@/app/admin/components/AdminForm";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import RichTextEditor from "@/app/admin/components/RichTextEditor";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -133,19 +132,17 @@ export default function AdminArticleEditPage({ articleId, initialArticle }) {
      </div>
      <div className="space-y-2">
       <Label>Özet</Label>
-      <Textarea
-       rows={2}
-       className="min-h-0"
+      <p className="text-xs text-muted">
+       Kartlarda 3 satır olarak görünür.
+      </p>
+      <RichTextEditor
        value={form.excerpt}
-       onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
-       placeholder="En fazla 25 kelime yazın. Kartlarda 3 satır olarak görünür."
+       onChange={(excerpt) => setForm({ ...form, excerpt })}
+       editorMinHeight="72px"
       />
      </div>
      <div className="space-y-2">
       <Label>İçerik</Label>
-      <p className="text-xs text-muted">
-       Metnin bir bölümünü seçip stil uygulayabilirsiniz.
-      </p>
       <RichTextEditor
        value={form.content}
        onChange={(content) => setForm({ ...form, content })}
@@ -156,8 +153,9 @@ export default function AdminArticleEditPage({ articleId, initialArticle }) {
       value={form.image}
       onChange={(url) => setForm({ ...form, image: url })}
       large
-     />
-     <SaveButton onSave={save} label={isNew ? "Oluştur" : "Kaydet"} />
+     >
+      <SaveButton onSave={save} label={isNew ? "Oluştur" : "Kaydet"} />
+     </ImageUpload>
     </CardContent>
    </Card>
   </div>

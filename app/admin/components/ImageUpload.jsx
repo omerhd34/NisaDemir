@@ -10,7 +10,7 @@ function hasPreview(value) {
  return Boolean(value && value !== "/");
 }
 
-export default function ImageUpload({ value, onChange, label = "Görsel", large = false }) {
+export default function ImageUpload({ value, onChange, label = "Görsel", large = false, children }) {
  const inputRef = useRef(null);
  const [uploading, setUploading] = useState(false);
  const [error, setError] = useState("");
@@ -71,10 +71,12 @@ export default function ImageUpload({ value, onChange, label = "Görsel", large 
       <button
        type="button"
        onClick={() => onChange("")}
-       className="absolute top-1.5 right-1.5 z-10 inline-flex items-center justify-center size-7 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors cursor-pointer"
+       className={`absolute z-10 inline-flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors cursor-pointer ${
+        large ? "top-2 right-2 size-9" : "top-1.5 right-1.5 size-7"
+       }`}
        aria-label="Görseli kaldır"
       >
-       <X className="size-3.5" />
+       <X className={large ? "size-5" : "size-3.5"} />
       </button>
      </div>
     ) : null}
@@ -109,15 +111,18 @@ export default function ImageUpload({ value, onChange, label = "Görsel", large 
      onChange={handleFile}
     />
 
-    <Button
-     type="button"
-     variant="outline"
-     onClick={() => inputRef.current?.click()}
-     disabled={uploading}
-    >
-     <ImagePlus />
-     {uploading ? "Yükleniyor..." : hasPreview(value) ? "Görseli Değiştir" : "Görsel Yükle"}
-    </Button>
+    <div className="flex items-center justify-center gap-3 flex-wrap">
+     <Button
+      type="button"
+      variant="outline"
+      onClick={() => inputRef.current?.click()}
+      disabled={uploading}
+     >
+      <ImagePlus />
+      {uploading ? "Yükleniyor..." : hasPreview(value) ? "Görseli Değiştir" : "Görsel Yükle"}
+     </Button>
+     {children}
+    </div>
    </div>
 
    {error ? <p className="text-sm text-red-500">{error}</p> : null}

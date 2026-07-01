@@ -1,4 +1,5 @@
 import { articleImageAlt } from "@/lib/imageAlt";
+import { htmlToPlainText } from "@/lib/articleContent";
 import { absoluteImageUrl, absoluteUrl } from "@/lib/seo";
 
 export default function ArticleJsonLd({ article }) {
@@ -18,7 +19,7 @@ export default function ArticleJsonLd({ article }) {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: article.title,
-  description: article.excerpt,
+  description: htmlToPlainText(article.excerpt),
   url,
   mainEntityOfPage: { "@type": "WebPage", "@id": url },
   inLanguage: "tr-TR",

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getArticles } from '@/lib/siteData';
 import ArticlesPageClient from './ArticlesPageClient';
 

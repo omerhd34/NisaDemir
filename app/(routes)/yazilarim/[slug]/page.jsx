@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getArticleBySlug, getArticleSlugs } from "@/lib/siteData";
+import { htmlToPlainText } from "@/lib/articleContent";
 import { articleImageAlt } from "@/lib/imageAlt";
 import {
  absoluteImageUrl,
@@ -7,6 +8,8 @@ import {
  openGraphImages,
 } from "@/lib/seo";
 import ArticleDetailClient from "./ArticleDetailClient";
+
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
  const slugs = await getArticleSlugs();
@@ -24,10 +27,11 @@ export async function generateMetadata({ params }) {
  const canonical = absoluteUrl(path);
  const ogImage = absoluteImageUrl(article.image);
  const ogImages = openGraphImages(ogImage, articleImageAlt(article.title));
+ const description = htmlToPlainText(article.excerpt);
 
  return {
   title: article.title,
-  description: article.excerpt,
+  description,
   authors: [{ name: article.writer || "Nisa Demir" }],
   keywords: [
    article.title,
@@ -43,7 +47,7 @@ export async function generateMetadata({ params }) {
   openGraph: {
    type: "article",
    title: article.title,
-   description: article.excerpt,
+   description,
    url: canonical,
    locale: "tr_TR",
    publishedTime: article.createdAt
@@ -57,7 +61,7 @@ export async function generateMetadata({ params }) {
   twitter: {
    card: "summary_large_image",
    title: article.title,
-   description: article.excerpt,
+   description,
    ...(ogImage ? { images: [ogImage] } : {}),
   },
   robots: {
